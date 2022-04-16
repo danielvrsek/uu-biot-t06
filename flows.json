@@ -1,0 +1,414 @@
+[
+    {
+        "id": "d43633168e4459a9",
+        "type": "tab",
+        "label": "Read and save data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "29c8a5b747bc6b4a",
+        "type": "inject",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "props": [
+            {
+                "p": "timestamp",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "payload.temperature",
+                "v": "12",
+                "vt": "num"
+            },
+            {
+                "p": "payload.humidity",
+                "v": "50",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "collectin data",
+        "x": 100,
+        "y": 80,
+        "wires": [
+            [
+                "43fe6477e150b718"
+            ]
+        ]
+    },
+    {
+        "id": "dca4a3c9d4ba1b9e",
+        "type": "serial in",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "serial": "0ec898aff92b268b",
+        "x": 70,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e9f552d65d34be59",
+        "type": "debug",
+        "z": "d43633168e4459a9",
+        "name": "Cloud reponse - No arduino data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "43fe6477e150b718",
+        "type": "switch",
+        "z": "d43633168e4459a9",
+        "name": "checkPayloadValues",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "9b2cd4fde685b139"
+            ],
+            [
+                "1d779556f33ca78d"
+            ]
+        ]
+    },
+    {
+        "id": "e9d61cc6a5a4ec44",
+        "type": "http request",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 870,
+        "y": 80,
+        "wires": [
+            [
+                "e9f552d65d34be59"
+            ]
+        ]
+    },
+    {
+        "id": "b6d4ec56fd2edd95",
+        "type": "json",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 710,
+        "y": 80,
+        "wires": [
+            [
+                "e9d61cc6a5a4ec44"
+            ]
+        ]
+    },
+    {
+        "id": "1d779556f33ca78d",
+        "type": "function",
+        "z": "d43633168e4459a9",
+        "name": "seDataToFlow",
+        "func": "\nlet temperatureFlow = flow.get(\"temperatureFlow\") || [];\nlet humidityFlow = flow.get(\"humidityFlow\") || [];\n\n\ntemperatureFlow.push({value: msg.payload.temperature, timestamp: msg.timestamp })\nhumidityFlow.push({value: msg.payload.humidity, timestamp: msg.timestamp})    \n    \n   flow.set(\"temperatureFlow\", temperatureFlow)\n   flow.set(\"humidityFlow\", humidityFlow)\n\n    msg.payload ={temperature: [...temperatureFlow], humidity:[...humidityFlow]  }\n   return msg; \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 220,
+        "wires": [
+            [
+                "05d22435e2e0b377"
+            ]
+        ]
+    },
+    {
+        "id": "3f75c4fc0db947a1",
+        "type": "inject",
+        "z": "d43633168e4459a9",
+        "name": "setPayloadToTemperature",
+        "props": [
+            {
+                "p": "sent",
+                "v": "false",
+                "vt": "bool"
+            },
+            {
+                "p": "payload"
+            },
+            {
+                "p": "collection",
+                "v": "Temperature",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "temperatureFlow",
+        "payloadType": "flow",
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "6885812c842adc44"
+            ]
+        ]
+    },
+    {
+        "id": "8203eb5204fb87fe",
+        "type": "function",
+        "z": "d43633168e4459a9",
+        "name": "median",
+        "func": "// set up 59 as env.variable\n\nif(msg.payload.length < 59){\nreturn\n}else {\n    let sorted = msg.payload.slice().sort((a,b)=> (a.value > b.value) ? 1 :((b.value > a.value  ) ? -1 : 0))\n  \n   let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle].value\n   let timestamp = sorted[middle].timestamp\n \n\n    \n    if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1].value + sorted[middle].value )/ 2\n        timestamp = (sorted[middle - 1].timestamp + sorted[middle].timestamp )/ 2\n    }\n   \n    msg.payload = {\n       value: median, \n       timestamp,\n       \n      \n    }\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 380,
+        "wires": [
+            [
+                "ebdfe70a292d15dd",
+                "3c422cf9d53556ed"
+            ]
+        ]
+    },
+    {
+        "id": "9b2cd4fde685b139",
+        "type": "change",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "No data from arduino!",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "headers.content-type",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 80,
+        "wires": [
+            [
+                "b6d4ec56fd2edd95"
+            ]
+        ]
+    },
+    {
+        "id": "f235a8e142269a2f",
+        "type": "inject",
+        "z": "d43633168e4459a9",
+        "name": "setPayloadToHumidity",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "sent",
+                "v": "false",
+                "vt": "bool"
+            },
+            {
+                "p": "collection",
+                "v": "Humidity",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "humidityFlow",
+        "payloadType": "flow",
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "57c84dfbcff3b8a9"
+            ]
+        ]
+    },
+    {
+        "id": "3c422cf9d53556ed",
+        "type": "debug",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "6885812c842adc44",
+        "type": "change",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "temperatureFlow",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 320,
+        "wires": [
+            [
+                "8203eb5204fb87fe"
+            ]
+        ]
+    },
+    {
+        "id": "05d22435e2e0b377",
+        "type": "debug",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "57c84dfbcff3b8a9",
+        "type": "change",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "humidityFlow",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 420,
+        "wires": [
+            [
+                "8203eb5204fb87fe"
+            ]
+        ]
+    },
+    {
+        "id": "ebdfe70a292d15dd",
+        "type": "mongodb out",
+        "z": "d43633168e4459a9",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 880,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "0ec898aff92b268b",
+        "type": "serial-port",
+        "serialport": "COM5",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "ecb43e63847ff54b",
+        "type": "mongodb",
+        "hostname": "127.0.0.1",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "meteodata",
+        "name": ""
+    }
+]
