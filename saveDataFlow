@@ -1,13 +1,5 @@
 [
     {
-        "id": "8bda790e95754780",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "d43633168e4459a9",
         "type": "tab",
         "label": "Read and save data",
@@ -36,7 +28,7 @@
     {
         "id": "0ec898aff92b268b",
         "type": "serial-port",
-        "serialport": "COM5",
+        "serialport": "/dev/ttyUSB0",
         "serialbaud": "9600",
         "databits": "8",
         "parity": "none",
@@ -53,43 +45,23 @@
         "responsetimeout": "10000"
     },
     {
-        "id": "29c8a5b747bc6b4a",
-        "type": "inject",
-        "z": "d43633168e4459a9",
-        "name": "",
-        "props": [
-            {
-                "p": "timestamp",
-                "v": "",
-                "vt": "date"
-            },
-            {
-                "p": "payload.temperature",
-                "v": "12",
-                "vt": "num"
-            },
-            {
-                "p": "payload.humidity",
-                "v": "50",
-                "vt": "num"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "5",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "collectin data",
-        "x": 100,
-        "y": 80,
-        "wires": [
-            [
-                "43fe6477e150b718"
-            ]
-        ]
+        "id": "51f8c5a457df2941",
+        "type": "serial-port",
+        "serialport": "COM3",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
     },
     {
         "id": "dca4a3c9d4ba1b9e",
@@ -100,7 +72,9 @@
         "x": 70,
         "y": 160,
         "wires": [
-            []
+            [
+                "def27718eb1f3216"
+            ]
         ]
     },
     {
@@ -116,7 +90,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1110,
+        "x": 1230,
         "y": 80,
         "wires": []
     },
@@ -129,16 +103,16 @@
         "propertyType": "msg",
         "rules": [
             {
-                "t": "null"
+                "t": "empty"
             },
             {
-                "t": "nnull"
+                "t": "nempty"
             }
         ],
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 280,
+        "x": 480,
         "y": 160,
         "wires": [
             [
@@ -163,7 +137,7 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 870,
+        "x": 990,
         "y": 80,
         "wires": [
             [
@@ -179,7 +153,7 @@
         "property": "payload",
         "action": "str",
         "pretty": false,
-        "x": 710,
+        "x": 830,
         "y": 80,
         "wires": [
             [
@@ -198,7 +172,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
+        "x": 720,
         "y": 220,
         "wires": [
             [
@@ -253,7 +227,7 @@
         "finalize": "",
         "libs": [],
         "x": 660,
-        "y": 380,
+        "y": 360,
         "wires": [
             [
                 "ebdfe70a292d15dd",
@@ -287,7 +261,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 540,
+        "x": 660,
         "y": 80,
         "wires": [
             [
@@ -335,15 +309,16 @@
         "type": "debug",
         "z": "d43633168e4459a9",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
         "x": 850,
-        "y": 420,
+        "y": 440,
         "wires": []
     },
     {
@@ -380,10 +355,11 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 750,
+        "x": 890,
         "y": 220,
         "wires": []
     },
@@ -426,6 +402,49 @@
         "x": 880,
         "y": 320,
         "wires": []
+    },
+    {
+        "id": "def27718eb1f3216",
+        "type": "json",
+        "z": "d43633168e4459a9",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 230,
+        "y": 160,
+        "wires": [
+            [
+                "47af435c563b8d99"
+            ]
+        ]
+    },
+    {
+        "id": "47af435c563b8d99",
+        "type": "change",
+        "z": "d43633168e4459a9",
+        "name": "setTimestamp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "43fe6477e150b718"
+            ]
+        ]
     },
     {
         "id": "2879fe723d976fab",
@@ -480,22 +499,12 @@
         "type": "inject",
         "z": "bc7cdf4bb4dff9c6",
         "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
+        "props": [],
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "",
-        "payloadType": "str",
         "x": 110,
         "y": 140,
         "wires": [
@@ -504,5 +513,35 @@
                 "6ffcd7abf4e5e787"
             ]
         ]
+    },
+    {
+        "id": "863939886756ec78",
+        "type": "mongodb out",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 400,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "0c691eddf1f6f0c3",
+        "type": "mongodb out",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 390,
+        "y": 300,
+        "wires": []
     }
 ]
