@@ -1,0 +1,188 @@
+[
+    {
+        "id": "27692126db14bfea",
+        "type": "tab",
+        "label": "Send Data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cc471dbf80093e2e",
+        "type": "mongodb-node",
+        "z": "27692126db14bfea",
+        "mongodb": "f10da0de8417fe0a",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "find",
+        "upsert": false,
+        "multi": false,
+        "x": 490,
+        "y": 240,
+        "wires": [
+            [
+                "ed9fe43566a1c2f2"
+            ]
+        ]
+    },
+    {
+        "id": "90b9151f54766053",
+        "type": "mongodb-node",
+        "z": "27692126db14bfea",
+        "mongodb": "f10da0de8417fe0a",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "find",
+        "upsert": false,
+        "multi": false,
+        "x": 500,
+        "y": 140,
+        "wires": [
+            [
+                "ed9fe43566a1c2f2"
+            ]
+        ]
+    },
+    {
+        "id": "a1888ad4788cfdce",
+        "type": "mongodb-node",
+        "z": "27692126db14bfea",
+        "mongodb": "f10da0de8417fe0a",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "update",
+        "upsert": false,
+        "multi": true,
+        "x": 1120,
+        "y": 340,
+        "wires": [
+            [
+                "3cd45fcafe447cb1"
+            ]
+        ]
+    },
+    {
+        "id": "257c5a12d7d2c0fa",
+        "type": "mongodb-node",
+        "z": "27692126db14bfea",
+        "mongodb": "f10da0de8417fe0a",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "update",
+        "upsert": false,
+        "multi": true,
+        "x": 1110,
+        "y": 420,
+        "wires": [
+            [
+                "3cd45fcafe447cb1"
+            ]
+        ]
+    },
+    {
+        "id": "3cd45fcafe447cb1",
+        "type": "debug",
+        "z": "27692126db14bfea",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ed9fe43566a1c2f2",
+        "type": "http request",
+        "z": "27692126db14bfea",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://httpbin.org/anything",
+        "tls": "6507b3b62947470a",
+        "persist": true,
+        "proxy": "",
+        "authType": "bearer",
+        "senderr": false,
+        "x": 790,
+        "y": 200,
+        "wires": [
+            [
+                "f0203310f119b8f5"
+            ]
+        ]
+    },
+    {
+        "id": "391b0e3c785fbccc",
+        "type": "inject",
+        "z": "27692126db14bfea",
+        "name": "sendDataToCloud",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"dataSent\":true}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "90b9151f54766053",
+                "cc471dbf80093e2e"
+            ]
+        ]
+    },
+    {
+        "id": "f0203310f119b8f5",
+        "type": "function",
+        "z": "27692126db14bfea",
+        "name": "",
+        "func": "let updateMsg = {};\n\nupdateMsg.query = {\"dataSent\": { \"$in\": [false]}};\n\nupdateMsg.payload = {\"$set\": {\"dataSent\": true}};\n\nreturn updateMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 380,
+        "wires": [
+            [
+                "a1888ad4788cfdce",
+                "257c5a12d7d2c0fa"
+            ]
+        ]
+    },
+    {
+        "id": "f10da0de8417fe0a",
+        "type": "mongodb-config",
+        "hostname": "127.0.0.1",
+        "port": "27017",
+        "db": "meteodata",
+        "name": ""
+    },
+    {
+        "id": "6507b3b62947470a",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    }
+]
