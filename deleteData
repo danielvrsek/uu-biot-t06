@@ -1,0 +1,97 @@
+[
+    {
+        "id": "ae7e25a3cf75a51c",
+        "type": "tab",
+        "label": "Delete data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "74930509a7a56120",
+        "type": "mongodb-node",
+        "z": "ae7e25a3cf75a51c",
+        "mongodb": "f10da0de8417fe0a",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "delete",
+        "upsert": false,
+        "multi": false,
+        "x": 540,
+        "y": 120,
+        "wires": [
+            [
+                "ad746e9bac568cf9"
+            ]
+        ]
+    },
+    {
+        "id": "ad746e9bac568cf9",
+        "type": "debug",
+        "z": "ae7e25a3cf75a51c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "97be7a9945caaed9",
+        "type": "mongodb-node",
+        "z": "ae7e25a3cf75a51c",
+        "mongodb": "f10da0de8417fe0a",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "delete",
+        "upsert": false,
+        "multi": false,
+        "x": 530,
+        "y": 200,
+        "wires": [
+            [
+                "ad746e9bac568cf9"
+            ]
+        ]
+    },
+    {
+        "id": "258211246372aac3",
+        "type": "inject",
+        "z": "ae7e25a3cf75a51c",
+        "name": "deleteDataFromDatabase",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 03 * * *",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "{\"dataSent\":true}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 160,
+        "wires": [
+            [
+                "74930509a7a56120",
+                "97be7a9945caaed9"
+            ]
+        ]
+    },
+    {
+        "id": "f10da0de8417fe0a",
+        "type": "mongodb-config",
+        "hostname": "127.0.0.1",
+        "port": "27017",
+        "db": "meteodata",
+        "name": ""
+    }
+]
