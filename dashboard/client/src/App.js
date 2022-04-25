@@ -1,13 +1,11 @@
 import { useState, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { UserContext } from './components/context/UserContext';
+import FooterNavBar from './components/navBars/FooterNavBar';
 
-import TopAppBar from './components/core/TopAppBar';
+import TopAppBar from './components/navBars/TopAppBar';
 
-import Home from './pages/Home';
-import Login from './pages/Login';
-import UserDashboard from './pages/UserDashboard';
-import AdminDashboard from './pages/AdminDashboard';
+import routes from './components/routes/Routes';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -19,11 +17,16 @@ function App() {
       <BrowserRouter>
         <TopAppBar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/user" element={<UserDashboard />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              element={<route.component />}
+            ></Route>
+          ))}
         </Routes>
+        <FooterNavBar />
       </BrowserRouter>
     </UserContext.Provider>
   );
