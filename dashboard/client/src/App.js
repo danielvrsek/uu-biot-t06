@@ -26,6 +26,7 @@ function App() {
             ></Route>
           ))}
         </Routes>
+        <div style={{ minHeight: '100px' }}></div>
         <FooterNavBar />
       </BrowserRouter>
     </UserContext.Provider>

@@ -2,6 +2,8 @@ import Admin from '../../pages/AdminDashboard';
 import Home from '../../pages/Home';
 import User from '../../pages/UserDashboard';
 import Login from '../../pages/Login';
+import CustomerInfo from '../../pages/CustomerInfo';
+import InDevelopment from '../inDevelopment/InDevelopment';
 
 const routes = [
   {
@@ -30,6 +32,20 @@ const routes = [
     exact: true,
     component: Login,
     name: 'Login',
+    protected: false,
+  },
+  {
+    path: '/customer-info',
+    exact: true,
+    component: CustomerInfo,
+    name: 'Customer Information page',
+    protected: false,
+  },
+  {
+    path: '/in-development',
+    exact: true,
+    component: InDevelopment,
+    name: 'Page is in development mode',
     protected: false,
   },
 ];
