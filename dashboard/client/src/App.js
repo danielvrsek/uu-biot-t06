@@ -11,7 +11,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
-  console.log(user);
+
   return (
     <UserContext.Provider value={value}>
       <BrowserRouter>

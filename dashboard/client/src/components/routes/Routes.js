@@ -4,6 +4,7 @@ import User from '../../pages/UserDashboard';
 import Login from '../../pages/Login';
 import CustomerInfo from '../../pages/CustomerInfo';
 import InDevelopment from '../inDevelopment/InDevelopment';
+import SignUpPolicy from '../../pages/SignInPolicy';
 
 const routes = [
   {
@@ -47,6 +48,13 @@ const routes = [
     component: InDevelopment,
     name: 'Page is in development mode',
     protected: false,
+  },
+  {
+    path: '/sign-in',
+    exact: true,
+    component: SignUpPolicy,
+    name: 'Sign in',
+    protected: true,
   },
 ];
 

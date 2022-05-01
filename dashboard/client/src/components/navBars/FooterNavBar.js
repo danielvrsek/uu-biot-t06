@@ -38,9 +38,9 @@ export default function BottomAppBar() {
           </NavLink>
 
           <NavLink to="/in-development" className="item">
-            <a href="/" className="item">
+            <div href="/" className="item">
               Obchodní podmínky
-            </a>
+            </div>
           </NavLink>
         </div>
       </div>

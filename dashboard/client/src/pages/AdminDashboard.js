@@ -1,12 +1,10 @@
-import React from 'react';
-import { Container } from '@mui/material';
+import React, { useContext } from 'react';
+import { UserContext } from '../components/context/UserContext';
 
 const AdminDashboard = () => {
-  return (
-    <Container style={{ height: '500px' }}>
-      <div>AdminDashboard</div>
-    </Container>
-  );
+  const { user, setUser } = useContext(UserContext);
+  console.log(user);
+  return <div></div>;
 };
 
 export default AdminDashboard;
