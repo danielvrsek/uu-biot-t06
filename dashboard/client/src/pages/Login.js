@@ -17,7 +17,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import axios from 'axios';
-import { UserContext } from '../components/context/UserContext';
+import { UserTokenContext } from '../components/context/UserTokenContext';
 
 const Login = () => {
   //Style
@@ -34,7 +34,7 @@ const Login = () => {
   const [redirect, setRedirect] = React.useState(false);
   const [username, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const { user, setUser } = React.useContext(UserContext);
+  const { userToken, setUserToken } = React.useContext(UserTokenContext);
 
   // Functionality
   const handleClickShowPassword = () => {
@@ -56,7 +56,7 @@ const Login = () => {
       username,
       password,
     });
-    setUser(response.data);
+    setUserToken(response.data);
     setRedirect(true);
   };
 

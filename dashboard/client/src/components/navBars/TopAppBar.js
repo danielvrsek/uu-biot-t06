@@ -15,7 +15,8 @@ export default function MenuAppBar() {
         </NavLink>
         <div className="right menu">
           <div className="ui item">
-            <UserLogedIn />
+            {' '}
+            <UserLogedIn />{' '}
           </div>
           <div className="ui item" style={{ marginRight: '30px' }}>
             <h2>- MeteoStanice -</h2>

@@ -1,19 +1,18 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from '../components/context/UserContext';
+
 import CreateUser from '../components/AdminDashboard/CreateUser';
 import ActiveUsers from '../components/AdminDashboard/ActiveUsers';
 import Profile from '../components/Profile/Profile';
 
 const AdminDashboard = () => {
-  const { user } = useContext(UserContext);
-  const [activeComponent, setActiveComponent] = useState('');
+  const [activeComponent, setActiveComponent] = useState(null);
 
   function setActive() {
     if (activeComponent === '1') {
-      return <CreateUser />;
+      return <ActiveUsers />;
     }
     if (activeComponent === '2') {
-      return <ActiveUsers />;
+      return <CreateUser />;
     }
     if (activeComponent === '3') {
       return <Profile />;
@@ -23,7 +22,7 @@ const AdminDashboard = () => {
   return (
     <div className="ui middle aligned stackable grid container">
       <div className="row">
-        <div className="four wide column" style={{ marginTop: '50px' }}>
+        <div className="five wide column" style={{ marginTop: '50px' }}>
           <div className="ui vertical pointing menu">
             <a
               className={`item ${activeComponent === '1' ? 'active' : ''}`}
@@ -45,7 +44,13 @@ const AdminDashboard = () => {
             </a>
           </div>
         </div>
-        <div className="twelve wide column">{setActive()}</div>
+        <div className="/ten wide column">
+          {activeComponent === null ? (
+            <div>"Vítejte v administrativním rozhraní. "</div>
+          ) : (
+            <div>{setActive()}</div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,20 +1,21 @@
 import React, { useContext, useState } from 'react';
 import { UserContext } from '../components/context/UserContext';
+import { UserTokenContext } from '../components/context/UserTokenContext';
 import axios from 'axios';
 import { getBasePath } from '../components/utils/pathHelper';
 import { Navigate } from 'react-router-dom';
 
 const SignUpPolicy = () => {
   const { user, setUser } = useContext(UserContext);
+  const { userToken } = useContext(UserTokenContext);
   const [redirectAdmin, setRedirectAdmin] = useState(false);
   const [redirectUser, setRedirectUser] = useState(false);
-  const userNeed = user.payload;
 
-  if (userNeed === undefined) {
+  if (user === null) {
     axios
       .get(`${getBasePath()}/profile`, {
         headers: {
-          Authorization: `Bearer ${user.access_token}`,
+          Authorization: `Bearer ${userToken.access_token}`,
           'Content-Type': 'application/json',
         },
       })
@@ -25,8 +26,6 @@ const SignUpPolicy = () => {
         }
         if (res.data.payload.role === 'User') {
           setRedirectUser(true);
-        } else {
-          console.log('Uživatel nemá zadanou roli.');
         }
       });
   }
