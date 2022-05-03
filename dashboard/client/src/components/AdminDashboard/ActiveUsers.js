@@ -6,7 +6,6 @@ import axios from 'axios';
 const ActiveUsers = () => {
   const { userToken } = useContext(UserTokenContext);
   const [users, setUsers] = useState([]);
-  console.log(users);
 
   useEffect(() => {
     if (userToken === null) {
@@ -27,7 +26,7 @@ const ActiveUsers = () => {
 
   return (
     <div className="ui cards" style={{ marginTop: '50px' }}>
-      {users.lenght === undefined ? (
+      {users.length === undefined ? (
         <div> Relace vypršela prosím přihlašte se znovu</div>
       ) : (
         users.map((user, i) => {

@@ -1,10 +1,52 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { getBasePath } from '../utils/pathHelper';
+import { UserTokenContext } from '../context/UserTokenContext';
+import axios from 'axios';
 
 const CreateUser = () => {
+  const { userToken } = useContext(UserTokenContext);
+  console.log(userToken);
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [verifyPassword, setVerifyPassword] = useState('');
+  const [role, setRole] = useState('');
+
+  function matchPassword() {
+    if (verifyPassword !== password) {
+      return <div style={{ color: 'red' }}>"Zadané hesla se neshodují"</div>;
+    }
+  }
+
+  const submit = async (e) => {
+    e.preventDefault();
+
+    axios
+      .post(
+        `${getBasePath()}/users`,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken.access_token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+        {
+          body: { email: name, password: password },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+
   return (
     <div>
       <form className="ui form" style={{ marginTop: '50px' }}>
-        <h4 className="ui dividing header">Vytvořit nový profil</h4>
+        <h4 className="ui dividing header">Přidat nového uživatele</h4>
         <div className="field">
           <label>Jméno</label>
           <div className="two fields">
@@ -13,6 +55,7 @@ const CreateUser = () => {
                 type="text"
                 name="shipping[first-name]"
                 placeholder="Jméno"
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="field">
@@ -20,6 +63,7 @@ const CreateUser = () => {
                 type="text"
                 name="shipping[last-name]"
                 placeholder="Příjmení"
+                onChange={(e) => setSurname(e.target.value)}
               />
             </div>
           </div>
@@ -28,13 +72,18 @@ const CreateUser = () => {
           <label>Přihlašovací údaje</label>
           <div className="fields">
             <div className="twelve wide field">
-              <input type="text" name="shipping[address]" placeholder="Email" />
+              <input
+                type="text"
+                name="shipping[address]"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="four wide field">
-              <select>
+              <select onChange={(e) => setRole(e.target.value)}>
                 <option value="">Role</option>
-                <option value="1">User</option>
-                <option value="0">Admin</option>
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
               </select>
             </div>
           </div>
@@ -47,6 +96,7 @@ const CreateUser = () => {
                 type="password"
                 name="shipping[first-name]"
                 placeholder="Heslo"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="field">
@@ -54,12 +104,14 @@ const CreateUser = () => {
                 type="password"
                 name="password2"
                 placeholder="Ověření hesla"
+                onChange={(e) => setVerifyPassword(e.target.value)}
               />
             </div>
           </div>
+          {matchPassword()}
         </div>
 
-        <div className="ui button" tabindex="0">
+        <div className="ui button" onClick={submit}>
           Vytvořit uživatele
         </div>
       </form>
