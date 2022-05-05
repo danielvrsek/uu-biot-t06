@@ -30,7 +30,6 @@ export class UsersController {
   }
 
   @Post()
-  @UseGuards(RoleGuard(Role.Admin))
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersServices.create(createUserDto);
   }

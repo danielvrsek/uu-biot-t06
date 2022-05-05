@@ -9,13 +9,13 @@ const TopHome = () => {
           Změříme cokoli - kdekoli - a přesně!
         </h1>
         <h2>Jednodušší už to být nemůže ...</h2>
-        <NavLink to="/">
+        <NavLink to="/customer-info">
           <div className="ui huge primary button" id="topButton">
             "Jak vše funguje?"
             <i className="right arrow icon" />
           </div>
         </NavLink>
-        <NavLink to="/">
+        <NavLink to="/login">
           <div className="ui huge primary button" id="topButton">
             "Přihlášení"
             <i className="right arrow icon" />

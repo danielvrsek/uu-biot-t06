@@ -5,7 +5,6 @@ import axios from 'axios';
 
 const CreateUser = () => {
   const { userToken } = useContext(UserTokenContext);
-  console.log(userToken);
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
@@ -18,29 +17,27 @@ const CreateUser = () => {
       return <div style={{ color: 'red' }}>"Zadané hesla se neshodují"</div>;
     }
   }
-
   const submit = async (e) => {
     e.preventDefault();
-
-    axios
+    const response = await axios
       .post(
         `${getBasePath()}/users`,
         {
-          headers: {
-            Authorization: `Bearer ${userToken.access_token}`,
-            'Content-Type': 'application/json',
-          },
+          email: email,
+          name: name,
+          password: password,
+          role: role,
+          surname: surname,
         },
         {
-          body: { email: name, password: password },
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${userToken.access_token}`,
+          },
         }
       )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
+      .then((res) => {});
+    console.log(response);
   };
 
   return (

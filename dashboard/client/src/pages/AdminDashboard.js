@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import CreateUser from '../components/AdminDashboard/CreateUser';
 import ActiveUsers from '../components/AdminDashboard/ActiveUsers';

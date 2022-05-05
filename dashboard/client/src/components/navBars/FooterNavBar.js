@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { UserContext } from '../context/UserContext';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 export default function BottomAppBar() {
