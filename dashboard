@@ -1,0 +1,483 @@
+[
+    {
+        "id": "d33cc7818c34de8e",
+        "type": "tab",
+        "label": "Dashboard",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cca400525c60c60a",
+        "type": "ui_text",
+        "z": "d33cc7818c34de8e",
+        "group": "8f6f2228677d6b3c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Unsent samples:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1270,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "329360c8acfcc9cc",
+        "type": "debug",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6a5e9e764482c468",
+        "type": "inject",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"dataSent\":false}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "30bad141c55b854d",
+                "c28ac7fc465620d4"
+            ]
+        ]
+    },
+    {
+        "id": "e1f2d13000eecbe0",
+        "type": "join",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 810,
+        "y": 200,
+        "wires": [
+            [
+                "443a57b72f667dbe"
+            ]
+        ]
+    },
+    {
+        "id": "443a57b72f667dbe",
+        "type": "change",
+        "z": "d33cc7818c34de8e",
+        "name": "$sum(payload)",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$sum(payload)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 200,
+        "wires": [
+            [
+                "cca400525c60c60a",
+                "329360c8acfcc9cc"
+            ]
+        ]
+    },
+    {
+        "id": "30bad141c55b854d",
+        "type": "mongodb in",
+        "z": "d33cc7818c34de8e",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "count",
+        "x": 540,
+        "y": 120,
+        "wires": [
+            [
+                "e1f2d13000eecbe0"
+            ]
+        ]
+    },
+    {
+        "id": "c28ac7fc465620d4",
+        "type": "mongodb in",
+        "z": "d33cc7818c34de8e",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "count",
+        "x": 530,
+        "y": 240,
+        "wires": [
+            [
+                "e1f2d13000eecbe0"
+            ]
+        ]
+    },
+    {
+        "id": "7fdd378819e4f6a3",
+        "type": "ui_chart",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "group": "e711d80e5f0c27c7",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No data!",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1290,
+        "y": 420,
+        "wires": [
+            [
+                "c91150f046e6be7f"
+            ]
+        ]
+    },
+    {
+        "id": "b10bd71b0021e17b",
+        "type": "ui_chart",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "group": "dcc71e1f9e87e372",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No data!",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1230,
+        "y": 660,
+        "wires": [
+            [
+                "b290d57b9a1c6428"
+            ]
+        ]
+    },
+    {
+        "id": "467e39202548a9c1",
+        "type": "mongodb in",
+        "z": "d33cc7818c34de8e",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "aggregate",
+        "x": 480,
+        "y": 420,
+        "wires": [
+            [
+                "b2c7bdc4a543f3c1"
+            ]
+        ]
+    },
+    {
+        "id": "c91150f046e6be7f",
+        "type": "debug",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "07d6cb1b47d2f7d7",
+        "type": "mongodb in",
+        "z": "d33cc7818c34de8e",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "aggregate",
+        "x": 490,
+        "y": 560,
+        "wires": [
+            [
+                "39a24255976513a0"
+            ]
+        ]
+    },
+    {
+        "id": "b290d57b9a1c6428",
+        "type": "debug",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "910772f080675284",
+        "type": "inject",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "jsonata",
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "467e39202548a9c1",
+                "07d6cb1b47d2f7d7"
+            ]
+        ]
+    },
+    {
+        "id": "b2c7bdc4a543f3c1",
+        "type": "change",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "*.payload",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "3434a289203e76da"
+            ]
+        ]
+    },
+    {
+        "id": "3434a289203e76da",
+        "type": "function",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "func": "let payload=msg.payload;\nlet data_out=[];\nlet a1=[];\nfor(let i=0;i<payload.length;i++)\n{\n    let temp1={ \"x\": payload[i].timestamp, \"y\": payload[i].value };\n    a1.push(temp1);\n}\ndata_out= [a1] ;\nmsg.payload=[{\n\n    \"series\": [],\n    \"data\":data_out,\n    \"labels\": []    \n}];\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 420,
+        "wires": [
+            [
+                "7fdd378819e4f6a3"
+            ]
+        ]
+    },
+    {
+        "id": "39a24255976513a0",
+        "type": "change",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "*.payload",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 560,
+        "wires": [
+            [
+                "7776f41eaf28582c"
+            ]
+        ]
+    },
+    {
+        "id": "7776f41eaf28582c",
+        "type": "function",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "func": "let payload=msg.payload;\nlet data_out=[];\nlet a1=[];\nfor(let i=0;i<payload.length;i++)\n{\n    let temp1={ \"x\": payload[i].timestamp, \"y\": payload[i].value };\n    a1.push(temp1);\n}\ndata_out= [a1] ;\nmsg.payload=[{\n\n    \"series\": [],\n    \"data\":data_out,\n    \"labels\": []    \n}];\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 560,
+        "wires": [
+            [
+                "b10bd71b0021e17b"
+            ]
+        ]
+    },
+    {
+        "id": "8f6f2228677d6b3c",
+        "type": "ui_group",
+        "name": "Data",
+        "tab": "cea36955c49d9397",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ecb43e63847ff54b",
+        "type": "mongodb",
+        "hostname": "127.0.0.1",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "meteodata",
+        "name": ""
+    },
+    {
+        "id": "e711d80e5f0c27c7",
+        "type": "ui_group",
+        "name": "Temperature",
+        "tab": "cea36955c49d9397",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dcc71e1f9e87e372",
+        "type": "ui_group",
+        "name": "Humidity",
+        "tab": "cea36955c49d9397",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cea36955c49d9397",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
