@@ -11,18 +11,16 @@ const UserDashboard = () => {
       <div className="row">
         <div className="five wide column" style={{ marginTop: '50px' }}>
           <div className="ui vertical pointing menu">
-            <NavLink to="/Profile" className="item">
-              <a>Profil</a>
-            </NavLink>
-            <NavLink to="/SimpleLineChart" className="item">
-              <a>Graf</a>
-            </NavLink>
-            <NavLink to="/logout" className="item">
-              <a>Odhlásit se</a>
-            </NavLink>
+            <a className={`item active`}>Profile</a>
+
+            <a className={`item `}>Data</a>
+
+            <a className={`item `}>Odhlásit se</a>
           </div>
         </div>
-        <div className="/ten wide column"></div>
+        <div className="/ten wide column">
+          <Profile />
+        </div>
       </div>
     </div>
   );
