@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Profile from '../components/Profile/Profile';
 import ChartMainPage from '../components/charts/ChartMainPage';
+import Logout from '../components/logOut/Logout';
 
 import RightMenu from '../components/navBars/RightMenu';
 import MidContentDisplay from '../components/contentDisplay/MidContentDisplay';
@@ -10,7 +11,7 @@ const UserDashboard = () => {
   const [activeComponent, setActiveComponent] = useState(null);
 
   const MenuData = ['Profil', 'Data', 'Odhlásit se'];
-  const MidData = [<Profile />, <ChartMainPage />];
+  const MidData = [<Profile />, <ChartMainPage />, <Logout />];
 
   return (
     <div className="ui middle aligned stackable grid container">
