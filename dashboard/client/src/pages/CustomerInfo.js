@@ -1,6 +1,6 @@
 import React from 'react';
-import TextCustomer from '../components/CustomerInfo/TextCustomer';
-import TopCustomer from '../components/CustomerInfo/TopCustomer';
+import TextCustomer from '../components/customerInfo/TextCustomer';
+import TopCustomer from '../components/customerInfo/TopCustomer';
 
 const CustomerInfo = () => {
   return (
