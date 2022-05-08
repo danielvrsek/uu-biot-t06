@@ -1,0 +1,1333 @@
+[
+    {
+        "id": "ae7e25a3cf75a51c",
+        "type": "tab",
+        "label": "Delete data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a38b0109bb246abb",
+        "type": "tab",
+        "label": "Read and save data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "bc7cdf4bb4dff9c6",
+        "type": "tab",
+        "label": "Read from db",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "27692126db14bfea",
+        "type": "tab",
+        "label": "Send Data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d33cc7818c34de8e",
+        "type": "tab",
+        "label": "Dashboard",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "bb9b66bd47c2e63f",
+        "type": "mqtt-broker",
+        "name": "Test",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "cea36955c49d9397",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "a2a09973aa4e0c89",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "e711d80e5f0c27c7",
+        "type": "ui_group",
+        "name": "Temperature",
+        "tab": "cea36955c49d9397",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dcc71e1f9e87e372",
+        "type": "ui_group",
+        "name": "Humidity",
+        "tab": "cea36955c49d9397",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8f6f2228677d6b3c",
+        "type": "ui_group",
+        "name": "Data",
+        "tab": "cea36955c49d9397",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ecb43e63847ff54b",
+        "type": "mongodb",
+        "hostname": "127.0.0.1",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "meteodata",
+        "name": ""
+    },
+    {
+        "id": "6507b3b62947470a",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "5d34336a2efa806c",
+        "type": "serial-port",
+        "serialport": "/dev/tty.usbserial-1110",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "3109dbfbb8eb0e04",
+        "type": "mongodb out",
+        "z": "ae7e25a3cf75a51c",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "Temperature",
+        "collection": "Temperature",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 550,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9680ffdd53fee597",
+        "type": "mongodb out",
+        "z": "ae7e25a3cf75a51c",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "Humidity",
+        "collection": "Humidity",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 540,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "258211246372aac3",
+        "type": "inject",
+        "z": "ae7e25a3cf75a51c",
+        "name": "deleteDataFromDatabase",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 03 * * *",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "{\"dataSent\":true}",
+        "payloadType": "json",
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "3109dbfbb8eb0e04",
+                "9680ffdd53fee597"
+            ]
+        ]
+    },
+    {
+        "id": "bcdf10040f9eca83",
+        "type": "debug",
+        "z": "a38b0109bb246abb",
+        "name": "Cloud reponse - No arduino data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "66d628122a8127b9",
+        "type": "switch",
+        "z": "a38b0109bb246abb",
+        "name": "checkPayloadValues",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "empty"
+            },
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 480,
+        "y": 160,
+        "wires": [
+            [
+                "247a29459a567c95"
+            ],
+            [
+                "3dcdc57706b299a4"
+            ]
+        ]
+    },
+    {
+        "id": "43ea08191d0c282e",
+        "type": "http request",
+        "z": "a38b0109bb246abb",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 990,
+        "y": 80,
+        "wires": [
+            [
+                "bcdf10040f9eca83"
+            ]
+        ]
+    },
+    {
+        "id": "1815739de15a120d",
+        "type": "json",
+        "z": "a38b0109bb246abb",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 830,
+        "y": 80,
+        "wires": [
+            [
+                "43ea08191d0c282e"
+            ]
+        ]
+    },
+    {
+        "id": "3dcdc57706b299a4",
+        "type": "function",
+        "z": "a38b0109bb246abb",
+        "name": "seDataToFlow",
+        "func": "\nlet temperatureFlow = flow.get(\"temperatureFlow\") || [];\nlet humidityFlow = flow.get(\"humidityFlow\") || [];\n\n\ntemperatureFlow.push({value: msg.payload.temperature, timestamp: msg.timestamp })\nhumidityFlow.push({value: msg.payload.humidity, timestamp: msg.timestamp})    \n    \n   flow.set(\"temperatureFlow\", temperatureFlow)\n   flow.set(\"humidityFlow\", humidityFlow)\n\n    msg.payload ={temperature: [...temperatureFlow], humidity:[...humidityFlow]  }\n   return msg; \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 220,
+        "wires": [
+            [
+                "a54bf1fdb76d6683"
+            ]
+        ]
+    },
+    {
+        "id": "f5c9c8be62db4510",
+        "type": "inject",
+        "z": "a38b0109bb246abb",
+        "name": "setPayloadToTemperature",
+        "props": [
+            {
+                "p": "sent",
+                "v": "false",
+                "vt": "bool"
+            },
+            {
+                "p": "payload"
+            },
+            {
+                "p": "collection",
+                "v": "Temperature",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "temperatureFlow",
+        "payloadType": "flow",
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "fcc95e8a43f4530e"
+            ]
+        ]
+    },
+    {
+        "id": "1f2770dd594745fc",
+        "type": "function",
+        "z": "a38b0109bb246abb",
+        "name": "median",
+        "func": "// set up 59 as env.variable\n\nif(msg.payload.length < 59){\nreturn\n}else {\n    let sorted = msg.payload.slice().sort((a,b)=> (a.value > b.value) ? 1 :((b.value > a.value  ) ? -1 : 0))\n  \n   let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle].value\n   let timestamp = sorted[middle].timestamp\n \n\n    \n    if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1].value + sorted[middle].value )/ 2\n        timestamp = (sorted[middle - 1].timestamp + sorted[middle].timestamp )/ 2\n    }\n   \n    msg.payload = {\n       value: median, \n       timestamp,\n       \n      \n    }\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 360,
+        "wires": [
+            [
+                "519e84e5c8e2a983",
+                "90cdd9b377cca1a6"
+            ]
+        ]
+    },
+    {
+        "id": "247a29459a567c95",
+        "type": "change",
+        "z": "a38b0109bb246abb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "No data from arduino!",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "headers.content-type",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 80,
+        "wires": [
+            [
+                "1815739de15a120d"
+            ]
+        ]
+    },
+    {
+        "id": "ebd0351f1a826964",
+        "type": "inject",
+        "z": "a38b0109bb246abb",
+        "name": "setPayloadToHumidity",
+        "props": [
+            {
+                "p": "sent",
+                "v": "false",
+                "vt": "bool"
+            },
+            {
+                "p": "payload"
+            },
+            {
+                "p": "collection",
+                "v": "Humidity",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "humidityFlow",
+        "payloadType": "flow",
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "d2a21a73120d01a4"
+            ]
+        ]
+    },
+    {
+        "id": "90cdd9b377cca1a6",
+        "type": "debug",
+        "z": "a38b0109bb246abb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "fcc95e8a43f4530e",
+        "type": "change",
+        "z": "a38b0109bb246abb",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "temperatureFlow",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 320,
+        "wires": [
+            [
+                "1f2770dd594745fc"
+            ]
+        ]
+    },
+    {
+        "id": "a54bf1fdb76d6683",
+        "type": "debug",
+        "z": "a38b0109bb246abb",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d2a21a73120d01a4",
+        "type": "change",
+        "z": "a38b0109bb246abb",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "humidityFlow",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 420,
+        "wires": [
+            [
+                "1f2770dd594745fc"
+            ]
+        ]
+    },
+    {
+        "id": "519e84e5c8e2a983",
+        "type": "mongodb out",
+        "z": "a38b0109bb246abb",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 880,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "f07b38b32b1ae156",
+        "type": "json",
+        "z": "a38b0109bb246abb",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 230,
+        "y": 160,
+        "wires": [
+            [
+                "dfcda743bbf9f2ed"
+            ]
+        ]
+    },
+    {
+        "id": "dfcda743bbf9f2ed",
+        "type": "change",
+        "z": "a38b0109bb246abb",
+        "name": "setTimestamp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "66d628122a8127b9"
+            ]
+        ]
+    },
+    {
+        "id": "d96baa91b9889862",
+        "type": "inject",
+        "z": "a38b0109bb246abb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2879fe723d976fab",
+        "type": "mongodb in",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "find",
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "1c16571fea27bb7c"
+            ]
+        ]
+    },
+    {
+        "id": "1c16571fea27bb7c",
+        "type": "debug",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "6ffcd7abf4e5e787",
+        "type": "mongodb in",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "find",
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "1c16571fea27bb7c"
+            ]
+        ]
+    },
+    {
+        "id": "2f7f8b49de3ba0d9",
+        "type": "inject",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "2879fe723d976fab",
+                "6ffcd7abf4e5e787"
+            ]
+        ]
+    },
+    {
+        "id": "ed9fe43566a1c2f2",
+        "type": "http request",
+        "z": "27692126db14bfea",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://httpbin.org/anything",
+        "tls": "6507b3b62947470a",
+        "persist": true,
+        "proxy": "",
+        "authType": "bearer",
+        "senderr": false,
+        "x": 790,
+        "y": 200,
+        "wires": [
+            [
+                "f0203310f119b8f5"
+            ]
+        ]
+    },
+    {
+        "id": "391b0e3c785fbccc",
+        "type": "inject",
+        "z": "27692126db14bfea",
+        "name": "sendDataToCloud",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"dataSent\":false}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "2ebe02c35c32194f",
+                "677d4f0506c9488f"
+            ]
+        ]
+    },
+    {
+        "id": "f0203310f119b8f5",
+        "type": "function",
+        "z": "27692126db14bfea",
+        "name": "",
+        "func": "let updateMsg = {};\n\nupdateMsg.query = {\"dataSent\": { \"$in\": [false]}};\n\nupdateMsg.payload = {\"$set\": {\"dataSent\": true}};\n\nreturn updateMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 380,
+        "wires": [
+            [
+                "e1fe4698b8935836",
+                "134d84d4b9849aa4"
+            ]
+        ]
+    },
+    {
+        "id": "2ebe02c35c32194f",
+        "type": "mongodb in",
+        "z": "27692126db14bfea",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "find",
+        "x": 480,
+        "y": 120,
+        "wires": [
+            [
+                "ed9fe43566a1c2f2"
+            ]
+        ]
+    },
+    {
+        "id": "677d4f0506c9488f",
+        "type": "mongodb in",
+        "z": "27692126db14bfea",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "find",
+        "x": 470,
+        "y": 220,
+        "wires": [
+            [
+                "ed9fe43566a1c2f2"
+            ]
+        ]
+    },
+    {
+        "id": "e1fe4698b8935836",
+        "type": "mongodb out",
+        "z": "27692126db14bfea",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "payonly": false,
+        "upsert": false,
+        "multi": true,
+        "operation": "update",
+        "x": 1140,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "134d84d4b9849aa4",
+        "type": "mongodb out",
+        "z": "27692126db14bfea",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "payonly": false,
+        "upsert": false,
+        "multi": true,
+        "operation": "update",
+        "x": 1130,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "cca400525c60c60a",
+        "type": "ui_text",
+        "z": "d33cc7818c34de8e",
+        "group": "8f6f2228677d6b3c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Unsent samples:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1270,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "329360c8acfcc9cc",
+        "type": "debug",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6a5e9e764482c468",
+        "type": "inject",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"dataSent\":false}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "30bad141c55b854d",
+                "c28ac7fc465620d4"
+            ]
+        ]
+    },
+    {
+        "id": "e1f2d13000eecbe0",
+        "type": "join",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 810,
+        "y": 200,
+        "wires": [
+            [
+                "443a57b72f667dbe"
+            ]
+        ]
+    },
+    {
+        "id": "443a57b72f667dbe",
+        "type": "change",
+        "z": "d33cc7818c34de8e",
+        "name": "$sum(payload)",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$sum(payload)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 200,
+        "wires": [
+            [
+                "cca400525c60c60a",
+                "329360c8acfcc9cc"
+            ]
+        ]
+    },
+    {
+        "id": "30bad141c55b854d",
+        "type": "mongodb in",
+        "z": "d33cc7818c34de8e",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "count",
+        "x": 540,
+        "y": 120,
+        "wires": [
+            [
+                "e1f2d13000eecbe0"
+            ]
+        ]
+    },
+    {
+        "id": "c28ac7fc465620d4",
+        "type": "mongodb in",
+        "z": "d33cc7818c34de8e",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "count",
+        "x": 530,
+        "y": 240,
+        "wires": [
+            [
+                "e1f2d13000eecbe0"
+            ]
+        ]
+    },
+    {
+        "id": "7fdd378819e4f6a3",
+        "type": "ui_chart",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "group": "e711d80e5f0c27c7",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No data!",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1290,
+        "y": 420,
+        "wires": [
+            [
+                "c91150f046e6be7f"
+            ]
+        ]
+    },
+    {
+        "id": "b10bd71b0021e17b",
+        "type": "ui_chart",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "group": "dcc71e1f9e87e372",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No data!",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1230,
+        "y": 660,
+        "wires": [
+            [
+                "b290d57b9a1c6428"
+            ]
+        ]
+    },
+    {
+        "id": "467e39202548a9c1",
+        "type": "mongodb in",
+        "z": "d33cc7818c34de8e",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "aggregate",
+        "x": 480,
+        "y": 420,
+        "wires": [
+            [
+                "b2c7bdc4a543f3c1"
+            ]
+        ]
+    },
+    {
+        "id": "c91150f046e6be7f",
+        "type": "debug",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "07d6cb1b47d2f7d7",
+        "type": "mongodb in",
+        "z": "d33cc7818c34de8e",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "aggregate",
+        "x": 490,
+        "y": 560,
+        "wires": [
+            [
+                "39a24255976513a0"
+            ]
+        ]
+    },
+    {
+        "id": "b290d57b9a1c6428",
+        "type": "debug",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "910772f080675284",
+        "type": "inject",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "jsonata",
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "467e39202548a9c1",
+                "07d6cb1b47d2f7d7"
+            ]
+        ]
+    },
+    {
+        "id": "b2c7bdc4a543f3c1",
+        "type": "change",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "*.payload",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "3434a289203e76da"
+            ]
+        ]
+    },
+    {
+        "id": "3434a289203e76da",
+        "type": "function",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "func": "let payload=msg.payload;\nlet data_out=[];\nlet a1=[];\nfor(let i=0;i<payload.length;i++)\n{\n    let temp1={ \"x\": payload[i].timestamp, \"y\": payload[i].value };\n    a1.push(temp1);\n}\ndata_out= [a1] ;\nmsg.payload=[{\n\n    \"series\": [],\n    \"data\":data_out,\n    \"labels\": []    \n}];\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 420,
+        "wires": [
+            [
+                "7fdd378819e4f6a3"
+            ]
+        ]
+    },
+    {
+        "id": "39a24255976513a0",
+        "type": "change",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "*.payload",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 560,
+        "wires": [
+            [
+                "7776f41eaf28582c"
+            ]
+        ]
+    },
+    {
+        "id": "7776f41eaf28582c",
+        "type": "function",
+        "z": "d33cc7818c34de8e",
+        "name": "",
+        "func": "let payload=msg.payload;\nlet data_out=[];\nlet a1=[];\nfor(let i=0;i<payload.length;i++)\n{\n    let temp1={ \"x\": payload[i].timestamp, \"y\": payload[i].value };\n    a1.push(temp1);\n}\ndata_out= [a1] ;\nmsg.payload=[{\n\n    \"series\": [],\n    \"data\":data_out,\n    \"labels\": []    \n}];\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 560,
+        "wires": [
+            [
+                "b10bd71b0021e17b"
+            ]
+        ]
+    }
+]
