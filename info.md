@@ -1,5 +1,14 @@
 # Team 6
 
+k 8.5.2022
+Vyřešit arduino kod - Víťa
+spojit flows node-red - Víťa a Lukáš
+vyřešit autorizaci gateway vuči serveru - Víťa
+rozdělit kolekce databáze - Jakub
+odesílat správný formát - Lukáš
+Server - Patrik Kuba
+
+
 ## Problems
 
 1. Work with UU or with conventional FW?
