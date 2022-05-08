@@ -1,8 +1,10 @@
 import React from 'react';
 import { UserContext } from '../context/UserContext';
+import { NavLink } from 'react-router-dom';
 
 const Profile = () => {
   const { user } = React.useContext(UserContext);
+
   return (
     <div>
       {user === null ? (
@@ -13,6 +15,7 @@ const Profile = () => {
             <img
               className="right floated mini ui image"
               src="https://semantic-ui.com/images/avatar/large/elliot.jpg"
+              alt="avatar"
             />
             <div className="header">
               {user.payload.name} {user.payload.surname}
@@ -26,8 +29,18 @@ const Profile = () => {
           </div>
           <div className="extra content">
             <div className="ui two buttons">
-              <div className="ui basic green button">Editovat</div>
-              <div className="ui basic red button">Odstranit</div>
+              <NavLink
+                to={`/edit/${user.payload.id}`}
+                className="ui basic green button"
+              >
+                Editovat
+              </NavLink>
+              <NavLink
+                to={`/delete/${user.payload.id}`}
+                className="ui basic red button"
+              >
+                Odstranit
+              </NavLink>
             </div>
           </div>
         </div>

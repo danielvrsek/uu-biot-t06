@@ -8,7 +8,7 @@ import RightMenu from '../components/navBars/RightMenu';
 import MidContentDisplay from '../components/contentDisplay/MidContentDisplay';
 
 const UserDashboard = () => {
-  const [activeComponent, setActiveComponent] = useState(null);
+  const [activeComponent, setActiveComponent] = useState(0);
 
   const MenuData = ['Profil', 'Data', 'Odhlásit se'];
   const MidData = [<Profile />, <ChartMainPage />, <Logout />];

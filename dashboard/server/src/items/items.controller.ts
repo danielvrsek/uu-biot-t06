@@ -10,21 +10,23 @@ import {
 import { CreateTemperatureDto } from './dto/create-temperature.dto';
 import { ItemsService } from './items.service';
 import { Temperature } from './interfaces/temperature.interface';
+import { Public } from 'src/auth/decorator/jwt.decorator';
 
 @Controller('items')
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
+  @Public()
   @Get()
   findAll(): Promise<Temperature[]> {
     return this.itemsService.findAll();
   }
-
+  @Public()
   @Get(':id')
   findOne(@Param('id') id): Promise<Temperature> {
     return this.itemsService.findOne(id);
   }
-
+  @Public()
   @Post()
   create(@Body() createItemDto: CreateTemperatureDto): Promise<Temperature> {
     return this.itemsService.create(createItemDto);
@@ -34,7 +36,7 @@ export class ItemsController {
   delete(@Param('id') id): Promise<Temperature> {
     return this.itemsService.delete(id);
   }
-
+  @Public()
   @Put(':id')
   update(
     @Body() updateItemDto: CreateTemperatureDto,

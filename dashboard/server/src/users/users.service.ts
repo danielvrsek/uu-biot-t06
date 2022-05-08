@@ -12,13 +12,25 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     return await this.userModel.find();
   }
+
+  async findId(id: string): Promise<User> {
+    const user = await this.userModel.findById(id);
+    if (user) {
+      return user;
+    }
+    throw new HttpException(
+      'User with this ID does not exist',
+      HttpStatus.NOT_FOUND,
+    );
+  }
+
   async findOne(email: string): Promise<User> {
     const user = await this.userModel.findOne({ email });
     if (user) {
       return user;
     }
     throw new HttpException(
-      'User with this email does not exist',
+      'User with this mail does not exist',
       HttpStatus.NOT_FOUND,
     );
   }

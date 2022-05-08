@@ -47,6 +47,11 @@ code {
   
 }
 
+#RightMenu:hover {
+  background-color: #c8c8c8;
+  cursor: pointer;
+}
+
 h1.ui.inverted.header {
   font-size: 44px;
   margin-top: 1em;

@@ -7,16 +7,23 @@ import Logout from '../components/logOut/Logout';
 
 import RightMenu from '../components/navBars/RightMenu';
 import MidContentDisplay from '../components/contentDisplay/MidContentDisplay';
+import EditUser from '../components/EditUser/EditUser';
 
 const AdminDashboard = () => {
-  const [activeComponent, setActiveComponent] = useState(null);
+  const [activeComponent, setActiveComponent] = useState(0);
   const MenuData = [
     'Aktivní úživatele',
     'Přidat uživatele',
     'Můj profil',
     'Odhlásit se',
   ];
-  const MidData = [<ActiveUsers />, <CreateUser />, <Profile />, <Logout />];
+  const MidData = [
+    <ActiveUsers />,
+    <CreateUser />,
+    <Profile />,
+    <Logout />,
+    <EditUser />,
+  ];
 
   return (
     <div className="ui middle aligned stackable grid container">
@@ -34,6 +41,7 @@ const AdminDashboard = () => {
           <MidContentDisplay
             MidData={MidData}
             activeComponent={activeComponent}
+            setActiveCOmponent={setActiveComponent}
           />
         </div>
       </div>

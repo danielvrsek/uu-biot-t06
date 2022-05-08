@@ -6,7 +6,6 @@ const UserLogedIn = () => {
 
   return (
     <div>
-      {' '}
       {user === null ? (
         <div></div>
       ) : (

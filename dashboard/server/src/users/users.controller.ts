@@ -13,6 +13,7 @@ import { UsersService } from './users.service';
 import { User } from './interfaces/user.interface';
 import { Role } from './interfaces/role.enum';
 import RoleGuard from './guards/roles.guard';
+import { Public } from 'src/auth/decorator/jwt.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -22,6 +23,12 @@ export class UsersController {
   @UseGuards(RoleGuard(Role.Admin))
   findAll(): Promise<User[]> {
     return this.usersServices.findAll();
+  }
+
+  @Public()
+  @Get('user/:id')
+  findId(@Param('id') id): Promise<User> {
+    return this.usersServices.findId(id);
   }
 
   @Get(':id')

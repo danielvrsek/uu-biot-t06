@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserTokenContext } from '../context/UserTokenContext';
 import { getBasePath } from '../utils/pathHelper';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 
 const ActiveUsers = () => {
@@ -22,11 +23,12 @@ const ActiveUsers = () => {
           setUsers(res.data);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="ui cards" style={{ marginTop: '50px' }}>
-      {users.length === undefined ? (
+      {users.length === 0 ? (
         <div> Relace vypršela prosím přihlašte se znovu</div>
       ) : (
         users.map((user, i) => {
@@ -36,6 +38,7 @@ const ActiveUsers = () => {
                 <img
                   className="right floated mini ui image"
                   src="https://semantic-ui.com/images/avatar/large/elliot.jpg"
+                  alt="avatar"
                 />
                 <div className="header">{user.name}</div>
                 <div className="meta">{user.email}</div>
@@ -47,8 +50,18 @@ const ActiveUsers = () => {
               </div>
               <div className="extra content">
                 <div className="ui two buttons">
-                  <div className="ui basic green button">Editovat</div>
-                  <div className="ui basic red button">Odstranit</div>
+                  <NavLink
+                    to={`/edit/${user._id}`}
+                    className="ui basic green button"
+                  >
+                    Editovat
+                  </NavLink>
+                  <NavLink
+                    to={`/delete/${user._id}`}
+                    className="ui basic red button"
+                  >
+                    Odstranit
+                  </NavLink>
                 </div>
               </div>
             </div>

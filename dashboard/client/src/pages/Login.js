@@ -34,7 +34,7 @@ const Login = () => {
   const [redirect, setRedirect] = React.useState(false);
   const [username, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const { userToken, setUserToken } = React.useContext(UserTokenContext);
+  const { setUserToken } = React.useContext(UserTokenContext);
 
   // Functionality
   const handleClickShowPassword = () => {

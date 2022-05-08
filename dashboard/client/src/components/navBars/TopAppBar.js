@@ -3,7 +3,6 @@ import { UserContext } from '../context/UserContext';
 import { NavLink } from 'react-router-dom';
 
 import UserLogedIn from '../login/UserLogedIn';
-import { render } from '@testing-library/react';
 
 export default function MenuAppBar() {
   const { user } = React.useContext(UserContext);

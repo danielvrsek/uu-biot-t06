@@ -5,6 +5,8 @@ import Login from '../../pages/Login';
 import CustomerInfo from '../../pages/CustomerInfo';
 import InDevelopment from '../inDevelopment/InDevelopment';
 import SignUpPolicy from '../../pages/SignInPolicy';
+import EditUser from '../EditUser/EditUser';
+import DeleteUser from '../deleteUser/DeleteUser';
 
 const routes = [
   {
@@ -54,6 +56,20 @@ const routes = [
     exact: true,
     component: SignUpPolicy,
     name: 'Sign in',
+    protected: true,
+  },
+  {
+    path: '/edit/:id',
+    exact: true,
+    component: EditUser,
+    name: 'Edit user',
+    protected: true,
+  },
+  {
+    path: '/delete/:id',
+    exact: true,
+    component: DeleteUser,
+    name: 'Delete user',
     protected: true,
   },
 ];

@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { getBasePath } from '../utils/pathHelper';
 import { UserTokenContext } from '../context/UserTokenContext';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 const CreateUser = () => {
   const { userToken } = useContext(UserTokenContext);
@@ -11,35 +12,37 @@ const CreateUser = () => {
   const [password, setPassword] = useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
   const [role, setRole] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
   function matchPassword() {
     if (verifyPassword !== password) {
       return <div style={{ color: 'red' }}>"Zadané hesla se neshodují"</div>;
     }
   }
-  const submit = async (e) => {
+  const submit = (e) => {
     e.preventDefault();
-    const response = await axios
-      .post(
-        `${getBasePath()}/users`,
-        {
-          email: email,
-          name: name,
-          password: password,
-          role: role,
-          surname: surname,
+    axios.post(
+      `${getBasePath()}/users`,
+      {
+        email: email,
+        name: name,
+        password: password,
+        role: role,
+        surname: surname,
+      },
+      {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.access_token}`,
         },
-        {
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${userToken.access_token}`,
-          },
-        }
-      )
-      .then((res) => {});
-    console.log(response);
-  };
+      }
+    );
 
+    setRedirect(true);
+  };
+  if (redirect) {
+    return <Navigate to={'/'} />;
+  }
   return (
     <div>
       <form className="ui form" style={{ marginTop: '50px' }}>

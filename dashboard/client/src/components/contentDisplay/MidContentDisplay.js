@@ -3,9 +3,10 @@ import React from 'react';
 const MidContentDisplay = ({ MidData, activeComponent }) => {
   return (
     <>
-      {MidData.map((component, index) => {
-        if (index === activeComponent)
-          return <div key={index}>{component}</div>;
+      {MidData.filter(
+        (component) => MidData.indexOf(component) === activeComponent
+      ).map((component, i) => {
+        return <div key={i}>{component}</div>;
       })}
     </>
   );
