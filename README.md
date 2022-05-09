@@ -1,4 +1,4 @@
-# uu-biot-t06 -arduino code
+# arduino code
 For succesfully running this code, you need to:
 - Add dht11NoDelay to dht11NoDelay folder
 - In Arduino IDE:
@@ -10,4 +10,3 @@ For succesfully running this code, you need to:
 - Connect your Arduino UNO
 - Press upload
 - Check values in serial monitor
--
