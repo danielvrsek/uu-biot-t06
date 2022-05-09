@@ -6,3 +6,7 @@ For succesfully running this code, you need to:
   - Install DHT sensor library by Adafruit 1.4.3
   - Set Arduino UNO as your board
   - Set COM3
+- Follow the defined pinout
+- Connect your Arduino UNO
+- Press upload
+- Check values in serial monitor
