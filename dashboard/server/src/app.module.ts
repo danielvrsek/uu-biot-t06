@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ArrayItemsModule } from './array-items/array-items.module';
 import config from './config/keys';
 
 @Module({
@@ -15,6 +16,7 @@ import config from './config/keys';
     MongooseModule.forRoot(config.mongoURI),
     UsersModule,
     AuthModule,
+    ArrayItemsModule,
   ],
   controllers: [AppController, ItemsController, UsersController],
   providers: [AppService /* , { provide: APP_GUARD, useClass: RolesGuard } */],

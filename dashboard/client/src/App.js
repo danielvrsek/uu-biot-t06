@@ -4,6 +4,7 @@ import { UserContext } from './components/context/UserContext';
 import { UserTokenContext } from './components/context/UserTokenContext';
 import FooterNavBar from './components/navBars/FooterNavBar';
 
+import AuthRoute from './components/AuthRoute/AuthRoute';
 import TopAppBar from './components/navBars/TopAppBar';
 
 import routes from './components/routes/Routes';
@@ -17,7 +18,7 @@ function App() {
     () => ({ userToken, setUserToken }),
     [userToken, setUserToken]
   );
-
+  console.log(user);
   return (
     <UserTokenContext.Provider value={valueToken}>
       <UserContext.Provider value={value}>
@@ -29,7 +30,15 @@ function App() {
                 key={index}
                 path={route.path}
                 exact={route.exact}
-                element={<route.component />}
+                element={
+                  route.protected ? (
+                    <AuthRoute>
+                      <route.component></route.component>
+                    </AuthRoute>
+                  ) : (
+                    <route.component />
+                  )
+                }
               ></Route>
             ))}
           </Routes>

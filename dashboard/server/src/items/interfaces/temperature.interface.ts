@@ -1,6 +1,6 @@
 export interface Temperature {
   id?: string;
-  timeStamp: Date;
+  timestamp: Date;
   temperature: Number;
   humidity: Number;
 }

@@ -1,5 +1,5 @@
 export class CreateTemperatureDto {
-  readonly timeStamp: Date;
+  readonly timestamp: Date;
   readonly temperature: Number;
   readonly humidity: Number;
 }

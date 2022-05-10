@@ -22,6 +22,7 @@ const routes = [
     component: Admin,
     name: 'Admin Dashboard',
     protected: true,
+    role: [Admin],
   },
   {
     path: '/user',
@@ -29,6 +30,7 @@ const routes = [
     component: User,
     name: 'User Dashboard',
     protected: true,
+    role: [Admin, User],
   },
   {
     path: '/login',
@@ -64,6 +66,7 @@ const routes = [
     component: EditUser,
     name: 'Edit user',
     protected: true,
+    role: [Admin, User],
   },
   {
     path: '/delete/:id',
@@ -71,6 +74,7 @@ const routes = [
     component: DeleteUser,
     name: 'Delete user',
     protected: true,
+    role: [Admin, User],
   },
 ];
 

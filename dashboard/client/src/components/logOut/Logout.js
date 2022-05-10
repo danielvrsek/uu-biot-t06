@@ -20,7 +20,7 @@ const Logout = ({}) => {
   return (
     <div>
       <h2>Opravdu se chcete odhlásit?</h2>
-      <button class="ui left floated button" onClick={submit}>
+      <button className="ui left floated button" onClick={submit}>
         Odhlásit se
       </button>
     </div>

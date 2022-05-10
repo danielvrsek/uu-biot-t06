@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 export const TemperatureSchema = new mongoose.Schema({
-  timeStamp: Date,
+  timestamp: Number,
   temperature: Number,
   humidity: Number,
 });

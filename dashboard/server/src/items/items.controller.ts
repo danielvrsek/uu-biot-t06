@@ -21,6 +21,7 @@ export class ItemsController {
   findAll(): Promise<Temperature[]> {
     return this.itemsService.findAll();
   }
+
   @Public()
   @Get(':id')
   findOne(@Param('id') id): Promise<Temperature> {
@@ -30,6 +31,12 @@ export class ItemsController {
   @Post()
   create(@Body() createItemDto: CreateTemperatureDto): Promise<Temperature> {
     return this.itemsService.create(createItemDto);
+  }
+
+  @Public()
+  @Post()
+  createArray(): [] {
+    return [];
   }
 
   @Delete(':id')
