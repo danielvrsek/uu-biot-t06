@@ -1,19 +1,25 @@
-import React, { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
-import routes from '../routes/Routes';
-import { Admin, User } from './Roles';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const AuthRoute = (props) => {
-  const { children } = props;
-  const { user } = useContext(UserContext);
+    const [auth] = useAuth();
+    const { children } = props;
+    const navigate = useNavigate();
 
-  /*   if (!user) {
-    console.log('Nepřihlášený uživatel');
+    useEffect(() => {
+        if (auth.user == null) {
+            navigate("/login");
+        }
+    }, [auth]);
 
-    return <Navigate to="/login" />;
-  } */
-  return <div>{children}</div>;
+    console.log(`AuthRoute: ${auth.user}`);
+
+    if (!auth.user) {
+        return <></>;
+    }
+
+    return <div>{children}</div>;
 };
 
 export default AuthRoute;

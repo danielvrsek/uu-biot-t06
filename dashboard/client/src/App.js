@@ -1,53 +1,43 @@
-import { useState, useMemo } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { UserContext } from './components/context/UserContext';
-import { UserTokenContext } from './components/context/UserTokenContext';
-import FooterNavBar from './components/navBars/FooterNavBar';
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthContext } from "./components/context/AuthContext";
+import FooterNavBar from "./components/navBars/FooterNavBar";
 
-import AuthRoute from './components/AuthRoute/AuthRoute';
-import TopAppBar from './components/navBars/TopAppBar';
+import AuthRoute from "./components/AuthRoute/AuthRoute";
+import TopAppBar from "./components/navBars/TopAppBar";
 
-import routes from './components/routes/Routes';
+import routes from "./components/routes/Routes";
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [userToken, setUserToken] = useState(null);
+    const [auth, setAuth] = useState({ user: null, userToken: null });
 
-  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
-  const valueToken = useMemo(
-    () => ({ userToken, setUserToken }),
-    [userToken, setUserToken]
-  );
-  console.log(user);
-  return (
-    <UserTokenContext.Provider value={valueToken}>
-      <UserContext.Provider value={value}>
-        <BrowserRouter>
-          <TopAppBar />
-          <Routes>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                element={
-                  route.protected ? (
-                    <AuthRoute>
-                      <route.component></route.component>
-                    </AuthRoute>
-                  ) : (
-                    <route.component />
-                  )
-                }
-              ></Route>
-            ))}
-          </Routes>
-          <div style={{ minHeight: '100px' }}></div>
-          <FooterNavBar />
-        </BrowserRouter>
-      </UserContext.Provider>
-    </UserTokenContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={[auth, setAuth]}>
+            <BrowserRouter>
+                <TopAppBar />
+                <Routes>
+                    {routes.map((route, index) => (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            exact={route.exact}
+                            element={
+                                route.protected ? (
+                                    <AuthRoute>
+                                        <route.component></route.component>
+                                    </AuthRoute>
+                                ) : (
+                                    <route.component />
+                                )
+                            }
+                        ></Route>
+                    ))}
+                </Routes>
+                <div style={{ minHeight: "100px" }}></div>
+                <FooterNavBar />
+            </BrowserRouter>
+        </AuthContext.Provider>
+    );
 }
 
 export default App;

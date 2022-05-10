@@ -1,30 +1,24 @@
-import React, { useContext, useState } from 'react';
-import { UserContext } from '../context/UserContext';
-import { UserTokenContext } from '../context/UserTokenContext';
-import { Navigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useClearAuth } from "../context/AuthContext";
 
-const Logout = ({}) => {
-  const { setUser } = React.useContext(UserContext);
-  const { setUserToken } = useContext(UserTokenContext);
-  const [redirect, setRedirect] = useState(false);
+const Logout = () => {
+    const clearAuth = useClearAuth();
+    const navigate = useNavigate();
 
-  const submit = () => {
-    setUser(null);
-    setUserToken(null);
-    setRedirect(true);
-  };
+    const submit = () => {
+        clearAuth();
+        navigate("/");
+    };
 
-  if (redirect) {
-    return <Navigate to={'/'} />;
-  }
-  return (
-    <div>
-      <h2>Opravdu se chcete odhlásit?</h2>
-      <button className="ui left floated button" onClick={submit}>
-        Odhlásit se
-      </button>
-    </div>
-  );
+    return (
+        <div>
+            <h2>Opravdu se chcete odhlásit?</h2>
+            <button className="ui left floated button" onClick={submit}>
+                Odhlásit se
+            </button>
+        </div>
+    );
 };
 
 export default Logout;
