@@ -1,0 +1,335 @@
+[
+    {
+        "id": "bc7cdf4bb4dff9c6",
+        "type": "tab",
+        "label": "Send to cloud",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2879fe723d976fab",
+        "type": "mongodb in",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "find",
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "2eb80cb3e0a9e05f"
+            ]
+        ]
+    },
+    {
+        "id": "2f7f8b49de3ba0d9",
+        "type": "inject",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"sent\": false}",
+        "payloadType": "json",
+        "x": 100,
+        "y": 80,
+        "wires": [
+            [
+                "2879fe723d976fab"
+            ]
+        ]
+    },
+    {
+        "id": "863939886756ec78",
+        "type": "mongodb out",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 200,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "0c691eddf1f6f0c3",
+        "type": "mongodb out",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 210,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "433e27fdc2ff2343",
+        "type": "http request",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://iotbe.herokuapp.com/items",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 530,
+        "y": 160,
+        "wires": [
+            [
+                "764674a70ef04d5a",
+                "5d1afc9019dad198"
+            ]
+        ]
+    },
+    {
+        "id": "2eb80cb3e0a9e05f",
+        "type": "change",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "temperature",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"sent\": false}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 80,
+        "wires": [
+            [
+                "6ffcd7abf4e5e787"
+            ]
+        ]
+    },
+    {
+        "id": "6ffcd7abf4e5e787",
+        "type": "mongodb in",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "find",
+        "x": 830,
+        "y": 80,
+        "wires": [
+            [
+                "d2cfa72ff6285f3d"
+            ]
+        ]
+    },
+    {
+        "id": "d2cfa72ff6285f3d",
+        "type": "change",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "humidity",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 80,
+        "wires": [
+            [
+                "e07acb26496a6d7e",
+                "aa8210cddc719b57"
+            ]
+        ]
+    },
+    {
+        "id": "aa8210cddc719b57",
+        "type": "function",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "func": "let dataToCloud = []\n\nfor(let i = 0; i < msg.temperature.length || i< msg.humidity.length; i++){\n  let temperature =  msg.temperature[i].payload.value\n  let humidity = msg.humidity[i].payload.value\n  let timestamp = msg.temperature[i].payload.timestamp\n  let measuring = {temperature, humidity, timestamp}\n  dataToCloud.push(measuring)\n}\n    \nmsg.payload = dataToCloud    \n    \n    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 120,
+        "y": 160,
+        "wires": [
+            [
+                "42b6c8431ee00e9e"
+            ]
+        ]
+    },
+    {
+        "id": "764674a70ef04d5a",
+        "type": "debug",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "42b6c8431ee00e9e",
+        "type": "json",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 270,
+        "y": 160,
+        "wires": [
+            [
+                "433e27fdc2ff2343",
+                "764674a70ef04d5a",
+                "91cd7abf785a9a25"
+            ]
+        ]
+    },
+    {
+        "id": "403cedd92d3169b0",
+        "type": "mongodb out",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "payonly": false,
+        "upsert": false,
+        "multi": true,
+        "operation": "update",
+        "x": 960,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "3395ce42b3c4dc2a",
+        "type": "mongodb out",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "payonly": false,
+        "upsert": false,
+        "multi": true,
+        "operation": "update",
+        "x": 950,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "e07acb26496a6d7e",
+        "type": "debug",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "5d1afc9019dad198",
+        "type": "function",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "func": "\nmsg.query = {\"sent\": false};\nmsg.payload = {\"$set\": {\"sent\": true}};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 240,
+        "wires": [
+            [
+                "403cedd92d3169b0",
+                "3395ce42b3c4dc2a"
+            ]
+        ]
+    },
+    {
+        "id": "91cd7abf785a9a25",
+        "type": "debug",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 410,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "ecb43e63847ff54b",
+        "type": "mongodb",
+        "hostname": "127.0.0.1",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "meteodata",
+        "name": ""
+    }
+]
