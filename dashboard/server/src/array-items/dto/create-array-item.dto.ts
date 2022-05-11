@@ -1,3 +1,4 @@
+import { CreateTemperatureDto } from 'src/items/dto/create-temperature.dto';
 export class CreateArrayItemDto {
-  arrayItems: [{ temperature: Number; humidity: Number; timestamp: Date }];
+  readonly CreateItemsArray: CreateTemperatureDto[];
 }

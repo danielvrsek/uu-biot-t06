@@ -30,6 +30,7 @@ export class ItemsController {
   @Public()
   @Post()
   create(@Body() createItemDto: CreateTemperatureDto): Promise<Temperature> {
+    console.log(createItemDto);
     return this.itemsService.create(createItemDto);
   }
 

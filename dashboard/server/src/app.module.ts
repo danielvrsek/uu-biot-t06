@@ -8,6 +8,7 @@ import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ArrayItemsModule } from './array-items/array-items.module';
+import { ArrayItemsController } from './array-items/array-items.controller';
 import config from './config/keys';
 
 @Module({
@@ -18,7 +19,12 @@ import config from './config/keys';
     AuthModule,
     ArrayItemsModule,
   ],
-  controllers: [AppController, ItemsController, UsersController],
+  controllers: [
+    AppController,
+    ItemsController,
+    UsersController,
+    ArrayItemsController,
+  ],
   providers: [AppService /* , { provide: APP_GUARD, useClass: RolesGuard } */],
 })
 export class AppModule {}
