@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateTemperatureDto } from './dto/create-temperature.dto';
 import { ItemsService } from './items.service';
-import { Temperature } from './interfaces/temperature.interface';
+import { Temperature } from 'src/interface/temperature.interface';
 import { Public } from 'src/auth/decorator/jwt.decorator';
 
 @Controller('items')

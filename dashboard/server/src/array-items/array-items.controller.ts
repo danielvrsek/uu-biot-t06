@@ -12,7 +12,7 @@ import { Public } from 'src/auth/decorator/jwt.decorator';
 import { ArrayItemsService } from './array-items.service';
 import { CreateArrayItemDto } from './dto/create-array-item.dto';
 import { UpdateArrayItemDto } from './dto/update-array-item.dto';
-import { ItemsArray } from './interfaces/ItemsArray.interface';
+import { ItemsArray } from 'src/interface/itemsArray.interface';
 
 @Controller('array-items')
 export class ArrayItemsController {
@@ -20,7 +20,9 @@ export class ArrayItemsController {
 
   @Public()
   @Post()
-  create(@Body() createArrayItemDdto: CreateArrayItemDto): Promise<ItemsArray> {
+  create(
+    @Body() createArrayItemDdto: CreateArrayItemDto[],
+  ): Promise<ItemsArray[]> {
     return this.arrayItemsService.create(createArrayItemDdto);
   }
   @Public()

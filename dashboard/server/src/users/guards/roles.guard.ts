@@ -1,4 +1,4 @@
-import { Role } from '../interfaces/role.enum';
+import { Role } from '../dto/role.enum';
 import { CanActivate, ExecutionContext, mixin, Type } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 

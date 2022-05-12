@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
-import { User } from './interfaces/user.interface';
-import { Role } from './interfaces/role.enum';
+import { User } from '../interface/user.interface';
+import { Role } from './dto/role.enum';
 import RoleGuard from './guards/roles.guard';
 import { Public } from 'src/auth/decorator/jwt.decorator';
 
