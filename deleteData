@@ -8,57 +8,34 @@
         "env": []
     },
     {
-        "id": "74930509a7a56120",
-        "type": "mongodb-node",
+        "id": "3109dbfbb8eb0e04",
+        "type": "mongodb out",
         "z": "ae7e25a3cf75a51c",
-        "mongodb": "f10da0de8417fe0a",
-        "name": "",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "Temperature",
         "collection": "Temperature",
-        "operation": "delete",
+        "payonly": false,
         "upsert": false,
         "multi": false,
-        "x": 540,
-        "y": 120,
-        "wires": [
-            [
-                "ad746e9bac568cf9"
-            ]
-        ]
-    },
-    {
-        "id": "ad746e9bac568cf9",
-        "type": "debug",
-        "z": "ae7e25a3cf75a51c",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 850,
+        "operation": "delete",
+        "x": 1310,
         "y": 160,
         "wires": []
     },
     {
-        "id": "97be7a9945caaed9",
-        "type": "mongodb-node",
+        "id": "9680ffdd53fee597",
+        "type": "mongodb out",
         "z": "ae7e25a3cf75a51c",
-        "mongodb": "f10da0de8417fe0a",
-        "name": "",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "Humidity",
         "collection": "Humidity",
-        "operation": "delete",
+        "payonly": false,
         "upsert": false,
         "multi": false,
-        "x": 530,
-        "y": 200,
-        "wires": [
-            [
-                "ad746e9bac568cf9"
-            ]
-        ]
+        "operation": "delete",
+        "x": 1300,
+        "y": 240,
+        "wires": []
     },
     {
         "id": "258211246372aac3",
@@ -77,19 +54,155 @@
         "topic": "",
         "payload": "{\"dataSent\":true}",
         "payloadType": "json",
-        "x": 160,
+        "x": 140,
         "y": 160,
         "wires": [
             [
-                "74930509a7a56120",
-                "97be7a9945caaed9"
+                "c88011b1a39cdda8",
+                "aac986b2579fb6f0"
             ]
         ]
     },
     {
-        "id": "f10da0de8417fe0a",
-        "type": "mongodb-config",
+        "id": "c88011b1a39cdda8",
+        "type": "mongodb in",
+        "z": "ae7e25a3cf75a51c",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Temperature",
+        "operation": "find",
+        "x": 480,
+        "y": 160,
+        "wires": [
+            [
+                "cc90dbe77b4bd0c0"
+            ]
+        ]
+    },
+    {
+        "id": "aac986b2579fb6f0",
+        "type": "mongodb in",
+        "z": "ae7e25a3cf75a51c",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "Humidity",
+        "operation": "find",
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "bb2da299bb248b55"
+            ]
+        ]
+    },
+    {
+        "id": "cc90dbe77b4bd0c0",
+        "type": "change",
+        "z": "ae7e25a3cf75a51c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "temperature",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 160,
+        "wires": [
+            [
+                "9ab896f272178c87"
+            ]
+        ]
+    },
+    {
+        "id": "bb2da299bb248b55",
+        "type": "change",
+        "z": "ae7e25a3cf75a51c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "humidity",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 240,
+        "wires": [
+            [
+                "439d4c8f2bc9c1a3"
+            ]
+        ]
+    },
+    {
+        "id": "9ab896f272178c87",
+        "type": "function",
+        "z": "ae7e25a3cf75a51c",
+        "name": "",
+        "func": "let dataToDelete = [];\n\nfor(let i = 0; i < msg.temperature.length; i++){\n  let timestamp = msg.temperature[i].payload.timestamp;\n  let dateDataSaved = new Date(timestamp);\n  let dateNow = new Date();\n  \n  let deltaInTime = dateNow.getTime() - dateDataSaved.getTime();\n  let deltaInDays = deltaInTime / (1000 * 3600 * 24);\n  \n  if(deltaInDays > 14){\n      dataToDelete.push(msg.temperature[i]._msgid);\n  }\n}\n\nmsg.payload = { _msgid: { $in: dataToDelete } };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 160,
+        "wires": [
+            [
+                "3109dbfbb8eb0e04"
+            ]
+        ]
+    },
+    {
+        "id": "439d4c8f2bc9c1a3",
+        "type": "function",
+        "z": "ae7e25a3cf75a51c",
+        "name": "",
+        "func": "let dataToDelete = [];\n\nfor(let i = 0; i < msg.humidity.length; i++){\n  let timestamp = msg.humidity[i].payload.timestamp;\n  let dateDataSaved = new Date(timestamp);\n  let dateNow = new Date();\n  \n  let deltaInTime = dateNow.getTime() - dateDataSaved.getTime();\n  let deltaInDays = deltaInTime / (1000 * 3600 * 24);\n  \n  if(deltaInDays > 14){\n      dataToDelete.push(msg.humidity[i]._msgid);\n  }\n}\n\nmsg.payload = { _msgid: { $in: dataToDelete } };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 240,
+        "wires": [
+            [
+                "9680ffdd53fee597"
+            ]
+        ]
+    },
+    {
+        "id": "ecb43e63847ff54b",
+        "type": "mongodb",
         "hostname": "127.0.0.1",
+        "topology": "direct",
+        "connectOptions": "",
         "port": "27017",
         "db": "meteodata",
         "name": ""
