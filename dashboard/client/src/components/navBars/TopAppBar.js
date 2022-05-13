@@ -7,8 +7,6 @@ import UserLogedIn from "../login/UserLogedIn";
 export default function MenuAppBar() {
     const [{ user }] = useAuth();
 
-    console.log(user);
-
     return (
         <div>
             <div className="ui secondary pointing menu">

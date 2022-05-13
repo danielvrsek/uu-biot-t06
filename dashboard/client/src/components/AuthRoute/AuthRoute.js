@@ -13,8 +13,6 @@ const AuthRoute = (props) => {
         }
     }, [auth]);
 
-    console.log(`AuthRoute: ${auth.user}`);
-
     if (!auth.user) {
         return <></>;
     }

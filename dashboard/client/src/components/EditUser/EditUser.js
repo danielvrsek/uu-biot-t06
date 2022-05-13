@@ -15,10 +15,10 @@ const EditUser = () => {
     });
 
     useEffect(() => {
-        ApiClient.getUser().then((res) => {
+        ApiClient.getUser(id).then((res) => {
             setUserEdit(res.data);
         });
-    }, []);
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value, email, surname, role } = e.target;
