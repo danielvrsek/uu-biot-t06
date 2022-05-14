@@ -21,7 +21,7 @@ Must HAVE!
   
   Daniel Vršek
   
-  - autorizace přes cookies 
+  - autorizace, authentikace
   
   Vít Havlík
   
