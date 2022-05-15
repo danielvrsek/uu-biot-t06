@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { WeatherDataController } from 'controllers/weatherData.controller';
-import { WorkspaceSchema } from 'dataLayer/schemas/workspace.schema';
-import { WeatherDataService } from 'services/weatherData.service';
+import { WorkspaceController } from 'controllers/workspace.controller';
+import { SchemaConstants } from 'dataLayer/common/schemaConstants';
+import { WorkspaceSchema } from 'dataLayer/entities/workspace.entity';
+import { WorkspaceMembershipSchema } from 'dataLayer/entities/workspaceMembership.entity';
+import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
+import { WorkspaceService } from 'services/workspace.service';
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: 'Workspace', schema: WorkspaceSchema }])],
-    controllers: [WeatherDataController],
-    providers: [WeatherDataService],
-    exports: [WeatherDataService],
+    imports: [
+        MongooseModule.forFeature([{ name: SchemaConstants.Workspace, schema: WorkspaceSchema }]),
+        MongooseModule.forFeature([{ name: SchemaConstants.WorkspaceMembership, schema: WorkspaceMembershipSchema }]),
+    ],
+    controllers: [WorkspaceController],
+    providers: [WorkspaceService, WorkspaceRepository],
+    exports: [WorkspaceService],
 })
-export class WeatherDataModule {}
+export class WorkspaceModule {}

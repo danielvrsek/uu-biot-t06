@@ -1,8 +1,14 @@
-import IEntity from './entity';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-export default interface User extends IEntity {
-    firstName: string;
-    lastname: string;
-    email: string;
-    passwordHash: string;
+@Schema({ timestamps: true })
+export class User {
+    _id: string;
+
+    @Prop() firstName: string;
+    @Prop() lastname: string;
+    @Prop() email: string;
+    @Prop() username: string;
+    @Prop() passwordHash: string;
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);

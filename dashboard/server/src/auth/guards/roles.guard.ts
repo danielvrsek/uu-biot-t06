@@ -1,5 +1,5 @@
 import { CanActivate, ExecutionContext, mixin, Type } from '@nestjs/common';
-import { Role } from 'dataLayer/schemas/enums/role.enum';
+import { Role } from 'dataLayer/entities/enums/role.enum';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 const RoleGuard = (role: Role): Type<CanActivate> => {

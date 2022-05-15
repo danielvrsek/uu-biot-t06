@@ -1,5 +1,10 @@
-import IEntity from './entity';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-export default interface Workspace extends IEntity {
-    name: string;
+@Schema({ timestamps: true })
+export class Workspace {
+    _id: string;
+
+    @Prop() name: string;
 }
+
+export const WorkspaceSchema = SchemaFactory.createForClass(Workspace);

@@ -1,8 +1,12 @@
-import IEntity from './entity';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-export default interface WeatherData extends IEntity {
-    gatewayId: string;
-    humidity: number;
-    temperature: number;
-    timestamp: Date;
+@Schema({ timestamps: true })
+export class WeatherData {
+    _id: string;
+
+    @Prop() gatewayId: string;
+    @Prop() humidity: number;
+    @Prop() temperature: number;
 }
+
+export const WeatherDataSchema = SchemaFactory.createForClass(WeatherData);

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { Public } from 'auth/decorator/jwt.decorator';
-import WeatherData from 'dataLayer/entities/weatherData.entity';
+import { WeatherData } from 'dataLayer/entities/weatherData.entity';
 import { WeatherDataRepository } from 'dataLayer/repositories/weatherData.repository';
 import { CreateWeatherDataDto } from 'services/dto/weatherData.dto';
 import { WeatherDataService } from 'services/weatherData.service';
@@ -14,18 +14,18 @@ export class WeatherDataController {
 
     @Public()
     @Get()
-    findAll(): Promise<WeatherData[]> {
-        return this.weatherDataRepository.findAll();
+    findAllAsync(): Promise<WeatherData[]> {
+        return this.weatherDataRepository.findAllAsync();
     }
 
     @Public()
     @Get(':id')
-    findOne(@Param('id') id): Promise<WeatherData> {
-        return this.weatherDataRepository.findOne(id);
+    findByIdAsync(@Param('id') id): Promise<WeatherData> {
+        return this.weatherDataRepository.findByIdAsync(id);
     }
     @Public()
     @Post()
-    create(@Body() createDto: CreateWeatherDataDto): Promise<WeatherData> {
-        return this.weatherDataService.create(createDto);
+    createAsync(@Body() createDto: CreateWeatherDataDto): Promise<WeatherData> {
+        return this.weatherDataService.createAsync(createDto);
     }
 }

@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
-import { Public } from 'auth/decorator/jwt.decorator';
-import Workspace from 'dataLayer/entities/workspace.entity';
+import { Controller, Get, Post, Body, Param, UseGuards, Put, Req, UnauthorizedException, Res } from '@nestjs/common';
+import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { Cookies } from 'common/cookies';
+import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
-import { CreateWorkspaceDto } from 'services/dto/workspace.dto';
+import { CreateWorkspaceDto, CurrentWorkspaceViewModel, SetCurrentWorkspaceDto } from 'services/dto/workspace.dto';
 import { WorkspaceService } from 'services/workspace.service';
 
+@UseGuards(JwtAuthGuard)
 @Controller('workspace')
 export class WorkspaceController {
     constructor(
@@ -12,20 +14,45 @@ export class WorkspaceController {
         private readonly workspaceService: WorkspaceService
     ) {}
 
-    @Public()
     @Get()
-    findAll(): Promise<Workspace[]> {
-        return this.workspaceRepository.findAll();
+    findAllAsync(): Promise<Workspace[]> {
+        return this.workspaceRepository.findAllAsync();
     }
 
-    @Public()
-    @Get(':id')
-    findOne(@Param('id') id): Promise<Workspace> {
-        return this.workspaceRepository.findOne(id);
+    @Get('user')
+    findAllForCurrentUser(@Req() request) {
+        return this.workspaceRepository.findAllForUserAsync(request.user.id);
     }
-    @Public()
+
+    @Get('user/current')
+    async getCurrentAsync(@Req() request): Promise<CurrentWorkspaceViewModel> {
+        const workspaceId = request.cookies[Cookies.CurrentWorkspace];
+        if (!workspaceId) {
+            return { id: null };
+        }
+
+        return await this.workspaceRepository.findByIdAsync(workspaceId);
+    }
+
+    @Put('user/current')
+    async setCurrentAsync(@Body() body: SetCurrentWorkspaceDto, @Req() request, @Res() response): Promise<void> {
+        const availableWorkspaces = await this.workspaceRepository.findAllForUserAsync(request.user.id);
+        if (!availableWorkspaces.some((x) => x._id == body.workspaceId)) {
+            throw new UnauthorizedException();
+        }
+
+        response.cookie(Cookies.CurrentWorkspace, body.workspaceId);
+        response.status(200);
+        response.end();
+    }
+
+    @Get(':id')
+    findByIdAsync(@Param('id') id): Promise<Workspace> {
+        return this.workspaceRepository.findByIdAsync(id);
+    }
+
     @Post()
-    create(@Body() createDto: CreateWorkspaceDto): Promise<Workspace> {
-        return this.workspaceService.create(createDto);
+    createAsync(@Body() createDto: CreateWorkspaceDto): Promise<Workspace> {
+        return this.workspaceService.createAsync(createDto);
     }
 }

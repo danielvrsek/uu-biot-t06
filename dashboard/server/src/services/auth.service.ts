@@ -1,32 +1,35 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import User from 'dataLayer/entities/user.entity';
+import { User } from 'dataLayer/entities/user.entity';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { comparePasswords } from 'utils/bcrypt';
+import { UserInfo } from './dto/user.dto';
 
 @Injectable()
 export class AuthService {
     constructor(private userRepository: UserRepository, private jwtService: JwtService) {}
 
-    async validateUser(email: string, password: string): Promise<boolean> {
-        const user = await this.userRepository.findOne(email);
-        if (user) {
-            const matched = comparePasswords(password, user.passwordHash);
-            if (matched) {
-                return true;
-            }
-            throw new HttpException('Passwords do not Match.', HttpStatus.FORBIDDEN);
+    async validateUserAsync(username: string, password: string): Promise<UserInfo> {
+        const user = await this.userRepository.findByUsernameAsync(username);
+        if (!user) {
+            return null;
         }
 
-        return false;
+        const matched = comparePasswords(password, user.passwordHash);
+        if (!matched) {
+            throw new HttpException('Login failed.', HttpStatus.FORBIDDEN);
+        }
+
+        return {
+            id: user._id,
+            firstName: user.firstName,
+            lastname: user.lastname,
+            username: user.username,
+            email: user.email,
+        };
     }
 
-    login(user: User) {
-        return this.jwtService.sign({
-            id: user.id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastname,
-        });
+    generateToken(user: UserInfo) {
+        return this.jwtService.sign(user);
     }
 }

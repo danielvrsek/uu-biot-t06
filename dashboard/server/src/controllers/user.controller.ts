@@ -5,14 +5,13 @@ import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import RoleGuard from 'auth/guards/roles.guard';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { CreateUserDto, UpdateUserDto } from 'services/dto/user.dto';
-import User from 'dataLayer/entities/user.entity';
-import { Role } from 'dataLayer/schemas/enums/role.enum';
+import { User } from 'dataLayer/entities/user.entity';
+import { Role } from 'dataLayer/entities/enums/role.enum';
 
 @Controller('users')
 export class UserController {
     constructor(private readonly userRepository: UserRepository, private readonly userService: UserService) {}
 
-    @UseGuards(JwtAuthGuard)
     @Get('profile')
     getProfile(@Req() request) {
         return request.user;
@@ -21,27 +20,26 @@ export class UserController {
     @Get()
     @UseGuards(RoleGuard(Role.Admin))
     findAll(): Promise<User[]> {
-        return this.userRepository.findAll();
+        return this.userRepository.findAllAsync();
     }
 
-    @Public()
     @Get(':id')
-    findId(@Param('id') id): Promise<User> {
-        return this.userRepository.findId(id);
+    findByIdAsync(@Param('id') id): Promise<User> {
+        return this.userRepository.findByIdAsync(id);
     }
 
     @Post()
-    create(@Body() createUserDto: CreateUserDto): Promise<User> {
-        return this.userService.create(createUserDto);
+    createAsync(@Body() createUserDto: CreateUserDto): Promise<User> {
+        return this.userService.createAsync(createUserDto);
     }
 
     @Delete(':id')
     delete(@Param('id') id): Promise<User> {
-        return this.userService.delete(id);
+        return this.userService.deleteAsync(id);
     }
 
     @Put(':id')
-    update(@Body() updateUserDto: UpdateUserDto, @Param('id') id): Promise<User> {
-        return this.userService.update(id, updateUserDto);
+    updateAsync(@Body() updateUserDto: UpdateUserDto, @Param('id') id): Promise<User> {
+        return this.userService.updateAsync(id, updateUserDto);
     }
 }
