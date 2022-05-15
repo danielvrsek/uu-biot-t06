@@ -2,7 +2,6 @@ import { BadRequestException, HttpException, HttpStatus, Injectable, Unauthorize
 import { JwtService } from '@nestjs/jwt';
 import { TokenType } from 'auth/common/tokenType';
 import { GatewayState } from 'dataLayer/entities/enums/gatewayState.enum';
-import { User } from 'dataLayer/entities/user.entity';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { comparePasswords } from 'utils/bcrypt';

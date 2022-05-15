@@ -1,4 +1,4 @@
-import { Controller, Req, Post, UseGuards, Res, Get, BadRequestException, HttpCode } from '@nestjs/common';
+import { Controller, Req, Post, UseGuards, Res, Get, HttpCode } from '@nestjs/common';
 import { TokenType } from 'auth/common/tokenType';
 import { Public } from 'auth/decorator/jwt.decorator';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
