@@ -1,12 +1,16 @@
 import { Controller, Get, Post, Body, Param, UseGuards, Put, Req, UnauthorizedException, Res } from '@nestjs/common';
-import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { TokenType } from 'auth/common/tokenType';
+import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
+import { JwtAuthGuard } from 'auth/guards/jwt.guard';
+import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { Cookies } from 'common/cookies';
 import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { CreateWorkspaceDto, CurrentWorkspaceViewModel, SetCurrentWorkspaceDto } from 'services/dto/workspace.dto';
 import { WorkspaceService } from 'services/workspace.service';
 
-@UseGuards(JwtAuthGuard)
+@EnforceTokenType(TokenType.User)
+@UseGuards(JwtAuthGuard, TokenTypeGuard)
 @Controller('workspace')
 export class WorkspaceController {
     constructor(

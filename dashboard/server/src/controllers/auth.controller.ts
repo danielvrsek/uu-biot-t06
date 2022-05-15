@@ -1,10 +1,13 @@
-import { Controller, Req, Post, UseGuards, Res, Get } from '@nestjs/common';
-import { AuthConstants } from 'auth/common/authConstants';
+import { Controller, Req, Post, UseGuards, Res, Get, BadRequestException, HttpCode } from '@nestjs/common';
+import { TokenType } from 'auth/common/tokenType';
 import { Public } from 'auth/decorator/jwt.decorator';
-import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { LocalAuthGuard } from 'auth/guards/local-auth.guard';
+import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
+import { JwtAuthGuard } from 'auth/guards/jwt.guard';
+import { LocalGatewayAuthGuard } from 'auth/guards/local-gateway.guard';
+import { LocalUserAuthGuard } from 'auth/guards/local-user.guard';
+import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { Cookies } from 'common/cookies';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { AuthService } from 'services/auth.service';
 
 @Controller('auth')
@@ -13,17 +16,26 @@ export class AuthController {
 
     @Public()
     @Post('login')
-    @UseGuards(LocalAuthGuard)
-    async loginAsync(@Req() request, @Res({ passthrough: true }) response: Response) {
-        const token = await this.authService.generateToken(request.user);
+    @UseGuards(LocalUserAuthGuard)
+    login(@Req() request, @Res({ passthrough: true }) response: Response): void {
+        const token = this.authService.generateToken(request.user);
         response.cookie(Cookies.AuthCookie, token);
         response.status(200);
         response.json(request.user);
         response.end();
     }
 
+    @Public()
+    @HttpCode(200)
+    @Post('gateway/authorize')
+    @UseGuards(LocalGatewayAuthGuard)
+    authorizeGateway(@Req() request): { token: string } {
+        return { token: this.authService.generateToken(request.user) };
+    }
+
     @Post('logout')
-    @UseGuards(JwtAuthGuard)
+    @EnforceTokenType(TokenType.User)
+    @UseGuards(JwtAuthGuard, TokenTypeGuard)
     logout(@Res() response: Response): void {
         response.clearCookie(Cookies.AuthCookie);
         response.clearCookie(Cookies.CurrentWorkspace);
@@ -32,7 +44,8 @@ export class AuthController {
     }
 
     @Get('user-info')
-    @UseGuards(JwtAuthGuard)
+    @EnforceTokenType(TokenType.User)
+    @UseGuards(JwtAuthGuard, TokenTypeGuard)
     async getUserInfoAsync(@Req() request) {
         return request.user;
     }

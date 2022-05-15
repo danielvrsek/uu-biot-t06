@@ -1,16 +1,16 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
-import { Public } from 'auth/decorator/jwt.decorator';
+import { Controller, Get, NotFoundException, Param, UseGuards } from '@nestjs/common';
+import { TokenType } from 'auth/common/tokenType';
+import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
+import { JwtAuthGuard } from 'auth/guards/jwt.guard';
+import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { Gateway } from 'dataLayer/entities/Gateway.entity';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
-import { AuthenticateGatewayDto } from 'services/dto/gateway.dto';
-import { GatewayService } from 'services/gateway.service';
 
+@EnforceTokenType(TokenType.User)
+@UseGuards(JwtAuthGuard, TokenTypeGuard)
 @Controller('workspace/:workspaceId/gateway')
 export class GatewayController {
-    constructor(
-        private readonly gatewayRepository: GatewayRepository,
-        private readonly gatewayService: GatewayService
-    ) {}
+    constructor(private readonly gatewayRepository: GatewayRepository) {}
 
     @Get()
     findAllByWorkspaceAsync(@Param('workspaceId') workspaceId): Promise<Gateway[]> {
@@ -18,12 +18,12 @@ export class GatewayController {
     }
 
     @Get(':id')
-    findByIdAsync(@Param('workspaceId') workspaceId, @Param('id') id): Promise<Gateway> {
-        return this.gatewayRepository.findByIdAsync(workspaceId, id);
-    }
+    async findByIdAsync(@Param('workspaceId') workspaceId: string, @Param('id') id: string): Promise<Gateway> {
+        const gateway = await this.gatewayRepository.findByIdAsync(workspaceId, id);
+        if (!gateway) {
+            throw new NotFoundException();
+        }
 
-    @Post('authenticate')
-    authenticateAsync(@Body() authenticateDto: AuthenticateGatewayDto): Promise<Gateway> {
-        return this.gatewayService.authenticateAsync(authenticateDto);
+        return gateway;
     }
 }

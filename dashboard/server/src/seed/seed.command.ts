@@ -49,7 +49,7 @@ export class SeedCommand {
         ]);
         console.log(workspaceMembership2);
 
-        const gateway1 = await this.gatewayService.createAsync({
+        const gateway1 = await this.gatewayService.createAsync(workspace1._id, 'gateway', {
             name: 'Default gateway',
         });
         console.log(gateway1);

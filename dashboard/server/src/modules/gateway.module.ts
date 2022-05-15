@@ -10,6 +10,6 @@ import { GatewayService } from 'services/gateway.service';
     imports: [MongooseModule.forFeature([{ name: SchemaConstants.Gateway, schema: GatewaySchema }])],
     controllers: [GatewayController],
     providers: [GatewayService, GatewayRepository],
-    exports: [GatewayService],
+    exports: [GatewayService, GatewayRepository],
 })
 export class GatewayModule {}

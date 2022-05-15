@@ -1,3 +1,5 @@
+import { TokenInfo } from './token';
+
 export interface CreateUserDto {
     firstName: string;
     lastname: string;
@@ -12,7 +14,7 @@ export interface UpdateUserDto {
     email: string;
 }
 
-export interface UserInfo {
+export interface UserInfo extends TokenInfo {
     id: string;
     username: string;
     firstName: string;

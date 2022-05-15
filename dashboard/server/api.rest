@@ -13,8 +13,13 @@ POST http://localhost:4000/auth/logout
 ### Get user info
 GET http://localhost:4000/auth/user-info
 
+### Get weather data
+GET http://localhost:4000/weather-data
+
+
 ### Get all available workspaces
 GET http://localhost:4000/workspace/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODE3NmE3MmFlZWFiNDUzNmMzZGE1OCIsIndvcmtzcGFjZUlkIjoiNjI4MTc2YTcyYWVlYWI0NTM2YzNkYTUyIiwidG9rZW5UeXBlIjoxLCJpYXQiOjE2NTI2NTQwMzUsImV4cCI6MTY1MjY1NDI3NX0.l8v_E4VYCS8kEW3jWWO3F0201rkoZtZvEgmeb5dxudc
 
 ### Set current workspace
 PUT http://localhost:4000/workspace/user/current
@@ -26,3 +31,12 @@ Content-Type: application/json
 
 ### Get current workspace
 GET http://localhost:4000/workspace/user/current
+
+### Authorize gateway
+POST http://localhost:4000/auth/gateway/authorize
+Content-Type: application/json
+
+{
+    "workspaceId": "628176a72aeeab4536c3da52",
+    "secret": "gateway"
+}

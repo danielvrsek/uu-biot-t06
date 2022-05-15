@@ -1,9 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
-import { WeatherData } from 'dataLayer/entities/weatherData.entity';
 import { Gateway } from 'dataLayer/entities/gateway.entity';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class GatewayRepository {
@@ -20,10 +20,10 @@ export class GatewayRepository {
         return await this.model.findOne({ _id: id, workspaceId });
     }
 
-    async findBySecretAsync(secret: string, workspaceId: string): Promise<Gateway> {
-        const gateway = await this.model.findOne({ secret, workspaceId });
+    async findBySecretAsync(workspaceId: string, secret: string): Promise<Gateway> {
+        const gateway = await this.model.findOne({ workspaceId: new Types.ObjectId(workspaceId), secret });
         if (!gateway) {
-            throw new HttpException('User with this mail does not exist', HttpStatus.NOT_FOUND);
+            return null;
         }
 
         return gateway;

@@ -1,13 +1,21 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { TokenType } from 'auth/common/tokenType';
+import { GatewayState } from 'dataLayer/entities/enums/gatewayState.enum';
 import { User } from 'dataLayer/entities/user.entity';
+import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { comparePasswords } from 'utils/bcrypt';
+import { GatewayInfo } from './dto/gateway.dto';
 import { UserInfo } from './dto/user.dto';
 
 @Injectable()
 export class AuthService {
-    constructor(private userRepository: UserRepository, private jwtService: JwtService) {}
+    constructor(
+        private readonly userRepository: UserRepository,
+        private readonly gatewayRepository: GatewayRepository,
+        private readonly jwtService: JwtService
+    ) {}
 
     async validateUserAsync(username: string, password: string): Promise<UserInfo> {
         const user = await this.userRepository.findByUsernameAsync(username);
@@ -26,10 +34,30 @@ export class AuthService {
             lastname: user.lastname,
             username: user.username,
             email: user.email,
+            tokenType: TokenType.User,
         };
     }
 
-    generateToken(user: UserInfo) {
-        return this.jwtService.sign(user);
+    async validateGatewayAsync(workspaceId: string, secret: string): Promise<GatewayInfo> {
+        const gateway = await this.gatewayRepository.findBySecretAsync(workspaceId, secret);
+        if (!gateway) {
+            throw new UnauthorizedException();
+        }
+
+        if (gateway.state != GatewayState.Created) {
+            throw new BadRequestException();
+        }
+
+        gateway.state = GatewayState.Registered;
+
+        return {
+            id: gateway._id,
+            workspaceId: workspaceId,
+            tokenType: TokenType.Gateway,
+        };
+    }
+
+    generateToken(data: UserInfo | GatewayInfo) {
+        return this.jwtService.sign(data);
     }
 }
