@@ -8,10 +8,12 @@ import { WeatherDataModule } from './modules/weatherData.module';
 import { WorkspaceModule } from './modules/workspace.module';
 import { CommandModule } from 'nestjs-command';
 import { SeedCommand } from 'seed/seed.command';
+import { SharedModule } from 'modules/shared.module';
 
 @Module({
     imports: [
         MongooseModule.forRoot(MongooseConfig.mongoURI),
+        SharedModule,
         AuthModule,
         UserModule,
         WeatherDataModule,

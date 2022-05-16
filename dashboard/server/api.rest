@@ -15,18 +15,30 @@ GET http://localhost:4000/auth/user-info
 
 ### Get weather data
 GET http://localhost:4000/weather-data
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODE3NmE3MmFlZWFiNDUzNmMzZGE1OCIsIndvcmtzcGFjZUlkIjoiNjI4MTc2YTcyYWVlYWI0NTM2YzNkYTUyIiwidG9rZW5UeXBlIjoxLCJpYXQiOjE2NTI2NTQ2NDQsImV4cCI6MTY1MjY1NDg4NH0.VwnSwuUdM0DjeMaoX2oGeoFtH1B23GtrxQ68GXit4HY
 
+### Insert weather data
+POST http://localhost:4000/weather-data
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODIyNzkyMWI3ZGFkZjA5ZmJiYTI5YyIsIndvcmtzcGFjZUlkIjoiNjI4MTc2YTcyYWVlYWI0NTM2YzNkYTUyIiwidG9rZW5UeXBlIjoxLCJpYXQiOjE2NTI2OTc3NTksImV4cCI6MTY1MjY5Nzk5OX0.KV2dHyXbcjJiPfwJPpPHKsbrdw1xjHxbtz62FCjiXLk
+
+{
+    "data": [{
+        "temperature": 20,
+        "humidity": 50,
+        "timestamp": "Wed, 21 Oct 2015 18:27:50 GMT"
+    }]
+}
 
 ### Get all available workspaces
 GET http://localhost:4000/workspace/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODE3NmE3MmFlZWFiNDUzNmMzZGE1OCIsIndvcmtzcGFjZUlkIjoiNjI4MTc2YTcyYWVlYWI0NTM2YzNkYTUyIiwidG9rZW5UeXBlIjoxLCJpYXQiOjE2NTI2NTQwMzUsImV4cCI6MTY1MjY1NDI3NX0.l8v_E4VYCS8kEW3jWWO3F0201rkoZtZvEgmeb5dxudc
 
 ### Set current workspace
 PUT http://localhost:4000/workspace/user/current
 Content-Type: application/json
 
 {
-    "workspaceId": "62814cf87372d5a98ab158e2"
+    "workspaceId": "628176a72aeeab4536c3da52"
 }
 
 ### Get current workspace
@@ -39,4 +51,12 @@ Content-Type: application/json
 {
     "workspaceId": "628176a72aeeab4536c3da52",
     "secret": "gateway"
+}
+
+### Create gateway
+POST http://localhost:4000/gateway
+Content-Type: application/json
+
+{
+    "name": "Test gateway"
 }

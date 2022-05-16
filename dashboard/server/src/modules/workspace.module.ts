@@ -6,11 +6,13 @@ import { WorkspaceSchema } from 'dataLayer/entities/workspace.entity';
 import { WorkspaceMembershipSchema } from 'dataLayer/entities/workspaceMembership.entity';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { WorkspaceService } from 'services/workspace.service';
+import { SharedModule } from './shared.module';
 
 @Module({
     imports: [
         MongooseModule.forFeature([{ name: SchemaConstants.Workspace, schema: WorkspaceSchema }]),
         MongooseModule.forFeature([{ name: SchemaConstants.WorkspaceMembership, schema: WorkspaceMembershipSchema }]),
+        SharedModule,
     ],
     controllers: [WorkspaceController],
     providers: [WorkspaceService, WorkspaceRepository],

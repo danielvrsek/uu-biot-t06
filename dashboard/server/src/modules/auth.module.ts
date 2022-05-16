@@ -10,6 +10,7 @@ import { AuthService } from 'services/auth.service';
 import { AuthController } from 'controllers/auth.controller';
 import { GatewayModule } from './gateway.module';
 import { LocalGatewayStrategy } from 'auth/strategies/localGateway.strategy';
+import { SharedModule } from './shared.module';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { LocalGatewayStrategy } from 'auth/strategies/localGateway.strategy';
             secret: AuthConstants.JwtSecret,
             signOptions: { expiresIn: '240s' },
         }),
+        SharedModule,
     ],
     controllers: [AuthController],
     providers: [AuthService, LocalUserStrategy, LocalGatewayStrategy, JwtStrategy],

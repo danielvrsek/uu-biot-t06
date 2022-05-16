@@ -1,8 +1,10 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { TokenType } from 'auth/common/tokenType';
+import { Cookies } from 'common/cookies';
 import { GatewayState } from 'dataLayer/entities/enums/gatewayState.enum';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
+import { GatewayAuthorizationRepository } from 'dataLayer/repositories/gatewayAuthorization.repository';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { comparePasswords } from 'utils/bcrypt';
 import { GatewayInfo } from './dto/gateway.dto';
@@ -13,6 +15,7 @@ export class AuthService {
     constructor(
         private readonly userRepository: UserRepository,
         private readonly gatewayRepository: GatewayRepository,
+        private readonly gatewayAuthorizationRepository: GatewayAuthorizationRepository,
         private readonly jwtService: JwtService
     ) {}
 
@@ -38,11 +41,12 @@ export class AuthService {
     }
 
     async validateGatewayAsync(workspaceId: string, secret: string): Promise<GatewayInfo> {
-        const gateway = await this.gatewayRepository.findBySecretAsync(workspaceId, secret);
-        if (!gateway) {
+        const authorization = await this.gatewayAuthorizationRepository.findBySecretAsync(workspaceId, secret);
+        if (!authorization) {
             throw new UnauthorizedException();
         }
 
+        const gateway = await this.gatewayRepository.findByIdAsync(authorization.gatewayId);
         if (gateway.state != GatewayState.Created) {
             throw new BadRequestException();
         }
@@ -54,6 +58,10 @@ export class AuthService {
             workspaceId: workspaceId,
             tokenType: TokenType.Gateway,
         };
+    }
+
+    getCurrentUserWorkspace(request) {
+        return request.cookies[Cookies.CurrentWorkspace];
     }
 
     generateToken(data: UserInfo | GatewayInfo) {

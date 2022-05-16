@@ -1,7 +1,9 @@
-import { WeatherData } from 'dataLayer/entities/weatherData.entity';
+export interface InsertWeatherDataDto {
+    data: WeatherDataDto[];
+}
 
-export interface CreateWeatherDataDto {
-    data: WeatherData[];
+export interface WeatherDataDto {
     temperature: number;
     humidity: number;
+    timestamp: Date;
 }

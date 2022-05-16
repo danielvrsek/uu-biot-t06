@@ -7,25 +7,15 @@ import { Types } from 'mongoose';
 
 @Injectable()
 export class GatewayRepository {
-    constructor(
-        @InjectModel(SchemaConstants.Gateway)
-        private readonly model: Model<Gateway>
-    ) {}
+    constructor(@InjectModel(SchemaConstants.Gateway) private readonly model: Model<Gateway>) {}
 
-    async findAllByWorkspaceAsync(workspaceId: string): Promise<Gateway[]> {
-        return await this.model.find({ workspaceId });
+    async findAllByIdAsync(ids: string[]) {
+        return await this.model.find({
+            _id: { $in: ids },
+        });
     }
 
-    async findByIdAsync(workspaceId: string, id: string): Promise<Gateway> {
-        return await this.model.findOne({ _id: id, workspaceId });
-    }
-
-    async findBySecretAsync(workspaceId: string, secret: string): Promise<Gateway> {
-        const gateway = await this.model.findOne({ workspaceId: new Types.ObjectId(workspaceId), secret });
-        if (!gateway) {
-            return null;
-        }
-
-        return gateway;
+    async findByIdAsync(id: string): Promise<Gateway> {
+        return await this.model.findOne({ _id: id });
     }
 }

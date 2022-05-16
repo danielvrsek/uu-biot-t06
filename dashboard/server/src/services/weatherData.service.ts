@@ -2,17 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { WeatherData } from 'dataLayer/entities/weatherData.entity';
-import { CreateWeatherDataDto } from './dto/weatherData.dto';
+import { InsertWeatherDataDto } from './dto/weatherData.dto';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
 
 @Injectable()
 export class WeatherDataService {
     constructor(@InjectModel(SchemaConstants.WeatherData) private readonly model: Model<WeatherData>) {}
 
-    async createAsync(item: CreateWeatherDataDto): Promise<WeatherData> {
-        // TODO: authenticate gateway and add timestamp
-        const newItem = new this.model(item);
-        return await newItem.save();
+    async insertAsync(gatewayId: string, dto: InsertWeatherDataDto): Promise<number> {
+        const length = dto.data.length;
+        await this.model.insertMany(dto.data.map((data) => new this.model({ gatewayId, ...data })));
+
+        return length;
     }
 
     async deleteAsync(id: string): Promise<WeatherData> {

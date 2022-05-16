@@ -15,7 +15,7 @@ export class WeatherDataRepository {
         return await this.model.find();
     }
 
-    async findByIdAsync(id: string): Promise<WeatherData> {
-        return await this.model.findOne({ _id: id });
+    async findAllByGatewayIdAsync(gatewayId: string): Promise<WeatherData[]> {
+        return await this.model.find({ gatewayId });
     }
 }

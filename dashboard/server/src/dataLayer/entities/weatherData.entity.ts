@@ -7,6 +7,7 @@ export class WeatherData {
     @Prop() gatewayId: string;
     @Prop() humidity: number;
     @Prop() temperature: number;
+    @Prop() timestamp: Date;
 }
 
 export const WeatherDataSchema = SchemaFactory.createForClass(WeatherData);

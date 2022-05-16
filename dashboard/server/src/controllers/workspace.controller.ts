@@ -3,6 +3,7 @@ import { TokenType } from 'auth/common/tokenType';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
+import { CookieHelper } from 'common/cookieHelper';
 import { Cookies } from 'common/cookies';
 import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
@@ -15,7 +16,8 @@ import { WorkspaceService } from 'services/workspace.service';
 export class WorkspaceController {
     constructor(
         private readonly workspaceRepository: WorkspaceRepository,
-        private readonly workspaceService: WorkspaceService
+        private readonly workspaceService: WorkspaceService,
+        private readonly cookieHelper: CookieHelper
     ) {}
 
     @Get()
@@ -30,7 +32,7 @@ export class WorkspaceController {
 
     @Get('user/current')
     async getCurrentAsync(@Req() request): Promise<CurrentWorkspaceViewModel> {
-        const workspaceId = request.cookies[Cookies.CurrentWorkspace];
+        const workspaceId = this.cookieHelper.getCurrentUserWorkspaceId(request);
         if (!workspaceId) {
             return { id: null };
         }
