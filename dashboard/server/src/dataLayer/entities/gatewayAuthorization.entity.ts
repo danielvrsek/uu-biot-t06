@@ -9,10 +9,10 @@ export class GatewayAuthorization {
     @Prop() secret: string;
 
     @Prop({ type: Types.ObjectId, ref: SchemaConstants.Gateway })
-    gatewayId: string;
+    gatewayId: Types.ObjectId;
 
     @Prop({ type: Types.ObjectId, ref: SchemaConstants.Workspace })
-    workspaceId: string;
+    workspaceId: Types.ObjectId;
 }
 
 export const GatewayAuthorizationSchema = SchemaFactory.createForClass(GatewayAuthorization);

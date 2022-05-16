@@ -1,4 +1,4 @@
-import { Cookies } from './cookies';
+import { Cookies } from '../common/cookies';
 
 export class CookieHelper {
     getCurrentUserWorkspaceId(request) {

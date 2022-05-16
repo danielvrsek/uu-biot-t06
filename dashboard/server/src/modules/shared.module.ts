@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { CookieHelper } from 'common/cookieHelper';
+import { CookieHelper } from 'utils/cookieHelper';
+import { CryptoHelper } from 'utils/cryptoHelper';
 
 @Module({
-    providers: [CookieHelper],
-    exports: [CookieHelper],
+    providers: [CookieHelper, CryptoHelper],
+    exports: [CookieHelper, CryptoHelper],
 })
 export class SharedModule {}

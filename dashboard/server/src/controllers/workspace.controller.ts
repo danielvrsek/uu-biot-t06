@@ -3,7 +3,7 @@ import { TokenType } from 'auth/common/tokenType';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
-import { CookieHelper } from 'common/cookieHelper';
+import { CookieHelper } from 'utils/cookieHelper';
 import { Cookies } from 'common/cookies';
 import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';

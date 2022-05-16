@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { WeatherData } from 'dataLayer/entities/weatherData.entity';
 import { InsertWeatherDataDto } from './dto/weatherData.dto';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
+import { foreignKey } from 'utils/schemaHelper';
 
 @Injectable()
 export class WeatherDataService {
@@ -11,7 +12,9 @@ export class WeatherDataService {
 
     async insertAsync(gatewayId: string, dto: InsertWeatherDataDto): Promise<number> {
         const length = dto.data.length;
-        await this.model.insertMany(dto.data.map((data) => new this.model({ gatewayId, ...data })));
+        await this.model.insertMany(
+            dto.data.map((data) => new this.model({ gatewayId: foreignKey(gatewayId), ...data }))
+        );
 
         return length;
     }

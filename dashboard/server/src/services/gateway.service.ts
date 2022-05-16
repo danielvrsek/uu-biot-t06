@@ -7,13 +7,20 @@ import { CreateGatewayDto, CreateGatewayResult } from './dto/gateway.dto';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
 import { GatewayState } from 'dataLayer/entities/enums/gatewayState.enum';
 import { GatewayAuthorization } from 'dataLayer/entities/gatewayAuthorization.entity';
+import { CryptoHelper } from 'utils/cryptoHelper';
+import { GatewayAuthorizationRepository } from 'dataLayer/repositories/gatewayAuthorization.repository';
+import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
+import { foreignKey } from 'utils/schemaHelper';
 
 @Injectable()
 export class GatewayService {
     constructor(
         @InjectModel(SchemaConstants.Gateway) private readonly model: Model<Gateway>,
         @InjectModel(SchemaConstants.GatewayAuthorization)
-        private readonly authorizationModel: Model<GatewayAuthorization>
+        private readonly authorizationModel: Model<GatewayAuthorization>,
+        private readonly gatewayAuthorizationRepository: GatewayAuthorizationRepository,
+        private readonly gatewayRepository: GatewayRepository,
+        private readonly cryptoHelper: CryptoHelper
     ) {}
 
     async createAsync(workspaceId: string, createDto: CreateGatewayDto): Promise<CreateGatewayResult> {
@@ -22,7 +29,7 @@ export class GatewayService {
             state: GatewayState.Created,
         }).save();
 
-        const secret = 'gateway';
+        const secret = this.cryptoHelper.generatePassword(12);
         await new this.authorizationModel({
             secret,
             gatewayId: gateway._id,
@@ -30,6 +37,13 @@ export class GatewayService {
         }).save();
 
         return { gateway, secret };
+    }
+
+    async getAllGatewaysForWorkspace(workspaceId: string) {
+        const authorizations = await this.gatewayAuthorizationRepository.findAllByWorkspaceAsync(
+            foreignKey(workspaceId)
+        );
+        return await this.gatewayRepository.findAllByIdAsync(authorizations.map((x) => x.gatewayId));
     }
 
     async deleteAsync(id: string): Promise<WeatherData> {
