@@ -59,8 +59,8 @@
         "upsert": false,
         "multi": false,
         "operation": "delete",
-        "x": 200,
-        "y": 300,
+        "x": 140,
+        "y": 340,
         "wires": []
     },
     {
@@ -74,8 +74,8 @@
         "upsert": false,
         "multi": false,
         "operation": "delete",
-        "x": 210,
-        "y": 360,
+        "x": 150,
+        "y": 400,
         "wires": []
     },
     {
@@ -86,18 +86,17 @@
         "method": "POST",
         "ret": "txt",
         "paytoqs": "ignore",
-        "url": "https://iotbe.herokuapp.com/items",
-        "tls": "",
+        "url": "https://iotbe.herokuapp.com/array-items",
+        "tls": "6507b3b62947470a",
         "persist": false,
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 530,
+        "x": 710,
         "y": 160,
         "wires": [
             [
-                "764674a70ef04d5a",
-                "5d1afc9019dad198"
+                "764674a70ef04d5a"
             ]
         ]
     },
@@ -208,15 +207,15 @@
         "type": "debug",
         "z": "bc7cdf4bb4dff9c6",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 730,
+        "x": 870,
         "y": 160,
         "wires": []
     },
@@ -232,9 +231,8 @@
         "y": 160,
         "wires": [
             [
-                "433e27fdc2ff2343",
-                "764674a70ef04d5a",
-                "91cd7abf785a9a25"
+                "91cd7abf785a9a25",
+                "5412a8e0152075a3"
             ]
         ]
     },
@@ -249,8 +247,8 @@
         "upsert": false,
         "multi": true,
         "operation": "update",
-        "x": 960,
-        "y": 320,
+        "x": 1000,
+        "y": 520,
         "wires": []
     },
     {
@@ -264,8 +262,8 @@
         "upsert": false,
         "multi": true,
         "operation": "update",
-        "x": 950,
-        "y": 380,
+        "x": 990,
+        "y": 560,
         "wires": []
     },
     {
@@ -273,7 +271,7 @@
         "type": "debug",
         "z": "bc7cdf4bb4dff9c6",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -296,8 +294,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
-        "y": 240,
+        "x": 880,
+        "y": 420,
         "wires": [
             [
                 "403cedd92d3169b0",
@@ -310,7 +308,7 @@
         "type": "debug",
         "z": "bc7cdf4bb4dff9c6",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -323,6 +321,122 @@
         "wires": []
     },
     {
+        "id": "5412a8e0152075a3",
+        "type": "change",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.content-type",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 160,
+        "wires": [
+            [
+                "433e27fdc2ff2343"
+            ]
+        ]
+    },
+    {
+        "id": "7830c0729774f1fa",
+        "type": "switch",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "checkStatus",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "400",
+                "vt": "num",
+                "v2": "499",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "500",
+                "vt": "num",
+                "v2": "599",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "200",
+                "vt": "num",
+                "v2": "299",
+                "v2t": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 370,
+        "y": 420,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "526ce9fce6338779",
+        "type": "file",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "filename": "noServerResponse.txt",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 680,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d3fe1cd04bfc6385",
+        "type": "catch",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 720,
+        "y": 320,
+        "wires": [
+            [
+                "618f8178951a60f1"
+            ]
+        ]
+    },
+    {
+        "id": "618f8178951a60f1",
+        "type": "debug",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 320,
+        "wires": []
+    },
+    {
         "id": "ecb43e63847ff54b",
         "type": "mongodb",
         "hostname": "127.0.0.1",
@@ -331,5 +445,19 @@
         "port": "27017",
         "db": "meteodata",
         "name": ""
+    },
+    {
+        "id": "6507b3b62947470a",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
     }
 ]
