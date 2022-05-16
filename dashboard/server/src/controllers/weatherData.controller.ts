@@ -13,8 +13,8 @@ import {
 } from 'services/dto/weatherData.dto';
 import { WeatherDataService } from 'services/weatherData.service';
 import { GatewayService } from 'services/gateway.service';
+import { foreignKey } from 'utils/schemaHelper';
 
-@UseGuards(JwtAuthGuard)
 @Controller('weather-data')
 export class WeatherDataController {
     constructor(
@@ -24,8 +24,8 @@ export class WeatherDataController {
         private readonly cookieHelper: CookieHelper
     ) {}
 
-    @UseGuards(TokenTypeGuard)
     @EnforceTokenType(TokenType.User)
+    @UseGuards(JwtAuthGuard, TokenTypeGuard)
     @Get()
     async findAllForCurrentWorkspaceAsync(@Req() request): Promise<GetWeatherDataForWorkspaceResponse[]> {
         const workspaceId = this.cookieHelper.getCurrentUserWorkspaceId(request);
@@ -34,7 +34,6 @@ export class WeatherDataController {
         }
 
         const availableGateways = await this.gatewayService.getAllGatewaysForWorkspace(workspaceId);
-        console.log(availableGateways);
         const result: GetWeatherDataForWorkspaceResponse[] = [];
         for (const gateway of availableGateways) {
             result.push({
@@ -51,18 +50,18 @@ export class WeatherDataController {
         return result;
     }
 
-    @UseGuards(TokenTypeGuard)
     @EnforceTokenType(TokenType.User)
+    @UseGuards(JwtAuthGuard, TokenTypeGuard)
     @Get('gateway/:gatewayId')
     findByGatewayIdAsync(@Param('gatewayId') gatewayId): Promise<WeatherData[]> {
         return this.weatherDataRepository.findAllByGatewayIdAsync(gatewayId);
     }
 
-    @UseGuards(TokenTypeGuard)
     @EnforceTokenType(TokenType.Gateway)
+    @UseGuards(JwtAuthGuard, TokenTypeGuard)
     @Post()
     async insertAsync(@Req() request, @Body() insertDto: InsertWeatherDataDto): Promise<InsertWeatherDataResponse> {
-        const count = await this.weatherDataService.insertAsync(request.user.gatewayId, insertDto);
+        const count = await this.weatherDataService.insertAsync(foreignKey(request.user.gatewayId), insertDto);
         return {
             count,
         };

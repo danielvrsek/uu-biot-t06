@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateWorkspaceDto } from './dto/workspace.dto';
 import { Workspace } from 'dataLayer/entities/workspace.entity';
@@ -19,17 +19,17 @@ export class WorkspaceService {
         return await newItem.save();
     }
 
-    async deleteAsync(id: string): Promise<Workspace> {
+    async deleteAsync(id: Types.ObjectId): Promise<Workspace> {
         return await this.model.findByIdAndRemove(id);
     }
 
-    async updateAsync(id: string, item: Workspace): Promise<Workspace> {
+    async updateAsync(id: Types.ObjectId, item: Workspace): Promise<Workspace> {
         return await this.model.findByIdAndUpdate(id, item, {
             new: true,
         });
     }
 
-    async addUserToWorkspace(workspaceId: string, userId: string, roles: Role[]) {
+    async addUserToWorkspace(workspaceId: Types.ObjectId, userId: string, roles: Role[]) {
         const newItem = new this.membershipModel({
             workspaceId: workspaceId,
             userId: userId,

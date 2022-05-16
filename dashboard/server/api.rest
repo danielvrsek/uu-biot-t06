@@ -19,7 +19,7 @@ GET http://localhost:4000/weather-data
 ### Insert weather data
 POST http://localhost:4000/weather-data
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODI2MmMwNjUwYzViZjQyZTA4N2NlZSIsIndvcmtzcGFjZUlkIjoiNjI4MjYyYzA2NTBjNWJmNDJlMDg3Y2U4IiwidG9rZW5UeXBlIjoxLCJpYXQiOjE2NTI3MTM1OTEsImV4cCI6MTY1MjcxMzgzMX0.5LvHBcvzqG822Ll23LCCyj5kuolyvjp_iZly1TE7Onw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnYXRld2F5SWQiOiI2MjgyN2JjMjA3ZmFiNTlmYjYwMWZhMWEiLCJ3b3Jrc3BhY2VJZCI6IjYyODI3YjBlYWMzZWY4ZmY1NmJmOTY1YiIsInRva2VuVHlwZSI6MSwiaWF0IjoxNjUyNzE4NTQwLCJleHAiOjE2NTI3MTg3ODB9.Zka3YQ9ohrjChjnDxNIOk4eQRVzdcNg5yWapsVhqxww
 
 {
     "data": [{
@@ -37,7 +37,7 @@ PUT http://localhost:4000/workspace/user/current
 Content-Type: application/json
 
 {
-    "workspaceId": "628262c0650c5bf42e087ce8"
+    "workspaceId": "62827b0eac3ef8ff56bf965b"
 }
 
 ### Get current workspace
@@ -48,8 +48,8 @@ POST http://localhost:4000/auth/gateway/authorize
 Content-Type: application/json
 
 {
-    "workspaceId": "628262c0650c5bf42e087ce8",
-    "secret": "3ef9e461bf65"
+    "workspaceId": "62827b0eac3ef8ff56bf965b",
+    "secret": "420bfb1ab922"
 }
 
 ### Create gateway

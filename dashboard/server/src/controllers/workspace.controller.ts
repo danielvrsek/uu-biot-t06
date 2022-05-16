@@ -43,7 +43,7 @@ export class WorkspaceController {
     @Put('user/current')
     async setCurrentAsync(@Body() body: SetCurrentWorkspaceDto, @Req() request, @Res() response): Promise<void> {
         const availableWorkspaces = await this.workspaceRepository.findAllForUserAsync(request.user.id);
-        if (!availableWorkspaces.some((x) => x._id == body.workspaceId)) {
+        if (!availableWorkspaces.some((x) => x._id.toString() == body.workspaceId)) {
             throw new UnauthorizedException();
         }
 

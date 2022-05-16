@@ -28,11 +28,12 @@ export class AuthService {
 
         const matched = comparePasswords(password, user.passwordHash);
         if (!matched) {
+            // TODO: move to controller
             throw new HttpException('Login failed.', HttpStatus.FORBIDDEN);
         }
 
         return {
-            id: user._id,
+            userId: user._id,
             firstName: user.firstName,
             lastname: user.lastname,
             username: user.username,
@@ -58,7 +59,7 @@ export class AuthService {
         gateway.state = GatewayState.Registered;
 
         return {
-            id: gateway._id,
+            gatewayId: gateway._id,
             workspaceId: workspaceId,
             tokenType: TokenType.Gateway,
         };

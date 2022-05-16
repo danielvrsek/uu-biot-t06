@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { WeatherData } from 'dataLayer/entities/weatherData.entity';
 import { Gateway } from 'dataLayer/entities/gateway.entity';
@@ -23,7 +23,7 @@ export class GatewayService {
         private readonly cryptoHelper: CryptoHelper
     ) {}
 
-    async createAsync(workspaceId: string, createDto: CreateGatewayDto): Promise<CreateGatewayResult> {
+    async createAsync(workspaceId: Types.ObjectId, createDto: CreateGatewayDto): Promise<CreateGatewayResult> {
         const gateway = await new this.model({
             name: createDto.name,
             state: GatewayState.Created,
@@ -43,6 +43,7 @@ export class GatewayService {
         const authorizations = await this.gatewayAuthorizationRepository.findAllByWorkspaceAsync(
             foreignKey(workspaceId)
         );
+        console.log(authorizations);
         return await this.gatewayRepository.findAllByIdAsync(authorizations.map((x) => x.gatewayId));
     }
 

@@ -58,6 +58,6 @@ export class GatewayController {
         }
         // TODO: check user authorization for the workspace
 
-        return this.gatewayService.createAsync(workspaceId, createDto);
+        return this.gatewayService.createAsync(foreignKey(workspaceId), createDto);
     }
 }

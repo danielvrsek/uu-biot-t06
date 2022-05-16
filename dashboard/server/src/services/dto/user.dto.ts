@@ -15,7 +15,7 @@ export interface UpdateUserDto {
 }
 
 export interface UserInfo extends TokenInfo {
-    id: string;
+    userId: string;
     username: string;
     firstName: string;
     lastname: string;

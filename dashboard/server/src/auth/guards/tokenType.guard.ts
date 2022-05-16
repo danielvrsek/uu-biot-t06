@@ -18,6 +18,10 @@ export class TokenTypeGuard implements CanActivate {
         }
 
         const { user } = context.switchToHttp().getRequest();
+        if (!user) {
+            return false;
+        }
+
         return user.tokenType === tokenType;
     }
 }

@@ -15,6 +15,6 @@ export interface CreateGatewayResult {
 }
 
 export interface GatewayInfo extends TokenInfo {
-    id: string;
+    gatewayId: string;
     workspaceId: string;
 }
