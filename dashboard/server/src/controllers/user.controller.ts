@@ -10,9 +10,9 @@ import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { TokenType } from 'auth/common/tokenType';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 
+@Controller('users')
 @EnforceTokenType(TokenType.User)
 @UseGuards(JwtAuthGuard, TokenTypeGuard)
-@Controller('users')
 export class UserController {
     constructor(private readonly userRepository: UserRepository, private readonly userService: UserService) {}
 

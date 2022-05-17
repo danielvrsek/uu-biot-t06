@@ -1,14 +1,4 @@
-import {
-    BadRequestException,
-    Body,
-    Controller,
-    Get,
-    NotFoundException,
-    Param,
-    Post,
-    Req,
-    UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { TokenType } from 'auth/common/tokenType';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
@@ -22,9 +12,9 @@ import { objectId } from 'utils/schemaHelper';
 import { ControllerBase } from './controllerBase';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 
+@Controller('gateway')
 @EnforceTokenType(TokenType.User)
 @UseGuards(JwtAuthGuard, TokenTypeGuard)
-@Controller('gateway')
 export class GatewayController extends ControllerBase {
     constructor(
         private readonly gatewayRepository: GatewayRepository,

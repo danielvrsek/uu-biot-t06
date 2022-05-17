@@ -13,9 +13,9 @@ import { Role } from 'dataLayer/entities/enums/role.enum';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { ControllerBase } from './controllerBase';
 
+@Controller('workspace')
 @EnforceTokenType(TokenType.User)
 @UseGuards(JwtAuthGuard, TokenTypeGuard)
-@Controller('workspace')
 export class WorkspaceController extends ControllerBase {
     constructor(
         private readonly workspaceRepository: WorkspaceRepository,

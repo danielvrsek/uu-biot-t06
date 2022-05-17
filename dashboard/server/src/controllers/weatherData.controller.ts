@@ -19,6 +19,7 @@ import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 
 @Controller('weather-data')
+@UseGuards(JwtAuthGuard, TokenTypeGuard)
 export class WeatherDataController extends ControllerBase {
     constructor(
         private readonly weatherDataRepository: WeatherDataRepository,
@@ -31,9 +32,8 @@ export class WeatherDataController extends ControllerBase {
         super(cookieHelper, workspaceRepository);
     }
 
-    @EnforceTokenType(TokenType.User)
-    @UseGuards(JwtAuthGuard, TokenTypeGuard)
     @Get()
+    @EnforceTokenType(TokenType.User)
     async findAllForCurrentWorkspaceAsync(@Req() request): Promise<GetWeatherDataForWorkspaceResponse[]> {
         const workspace = await this.getCurrentWorkspaceAsync(request);
 
@@ -54,16 +54,14 @@ export class WeatherDataController extends ControllerBase {
         return result;
     }
 
-    @EnforceTokenType(TokenType.User)
-    @UseGuards(JwtAuthGuard, TokenTypeGuard)
     @Get('gateway/:gatewayId')
+    @EnforceTokenType(TokenType.User)
     findByGatewayIdAsync(@Param('gatewayId') gatewayId): Promise<WeatherData[]> {
         return this.weatherDataRepository.findAllByGatewayIdAsync(gatewayId);
     }
 
-    @EnforceTokenType(TokenType.Gateway)
-    @UseGuards(JwtAuthGuard, TokenTypeGuard)
     @Post()
+    @EnforceTokenType(TokenType.Gateway)
     async insertAsync(@Req() request, @Body() insertDto: InsertWeatherDataDto): Promise<InsertWeatherDataResponse> {
         const gateway = await this.gatewayRepository.findByIdAsync(objectId(request.user.gatewayId));
         if (!gateway) {

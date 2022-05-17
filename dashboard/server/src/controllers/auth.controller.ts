@@ -14,7 +14,6 @@ import { AuthService } from 'services/auth.service';
 export class AuthController {
     constructor(private authService: AuthService) {}
 
-    @Public()
     @Post('login')
     @UseGuards(LocalUserAuthGuard)
     login(@Req() request, @Res({ passthrough: true }) response: Response): void {
@@ -25,7 +24,6 @@ export class AuthController {
         response.end();
     }
 
-    @Public()
     @HttpCode(200)
     @Post('gateway/authorize')
     @UseGuards(LocalGatewayAuthGuard)
