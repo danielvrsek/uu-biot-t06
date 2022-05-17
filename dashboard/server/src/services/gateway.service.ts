@@ -41,7 +41,6 @@ export class GatewayService {
 
     async getAllGatewaysForWorkspace(workspaceId: Types.ObjectId) {
         const authorizations = await this.gatewayAuthorizationRepository.findAllByWorkspaceAsync(objectId(workspaceId));
-        console.log(authorizations);
         return await this.gatewayRepository.findAllByIdAsync(authorizations.map((x) => x.gatewayId));
     }
 
