@@ -9,16 +9,22 @@ import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { CreateWorkspaceDto, CurrentWorkspaceViewModel, SetCurrentWorkspaceDto } from 'services/dto/workspace.dto';
 import { WorkspaceService } from 'services/workspace.service';
+import { Role } from 'dataLayer/entities/enums/role.enum';
+import { UserRepository } from 'dataLayer/repositories/user.repository';
+import { ControllerBase } from './controllerBase';
 
 @EnforceTokenType(TokenType.User)
 @UseGuards(JwtAuthGuard, TokenTypeGuard)
 @Controller('workspace')
-export class WorkspaceController {
+export class WorkspaceController extends ControllerBase {
     constructor(
         private readonly workspaceRepository: WorkspaceRepository,
         private readonly workspaceService: WorkspaceService,
-        private readonly cookieHelper: CookieHelper
-    ) {}
+        private readonly userRepository: UserRepository,
+        cookieHelper: CookieHelper
+    ) {
+        super(cookieHelper, workspaceRepository, userRepository);
+    }
 
     @Get()
     findAllAsync(): Promise<Workspace[]> {
@@ -32,12 +38,8 @@ export class WorkspaceController {
 
     @Get('user/current')
     async getCurrentAsync(@Req() request): Promise<CurrentWorkspaceViewModel> {
-        const workspaceId = this.cookieHelper.getCurrentUserWorkspaceId(request);
-        if (!workspaceId) {
-            return { id: null };
-        }
-
-        return await this.workspaceRepository.findByIdAsync(workspaceId);
+        const workspace = await this.getCurrentWorkspaceAsync(request);
+        return await this.workspaceRepository.findByIdAsync(workspace._id);
     }
 
     @Put('user/current')
@@ -58,7 +60,11 @@ export class WorkspaceController {
     }
 
     @Post()
-    createAsync(@Body() createDto: CreateWorkspaceDto): Promise<Workspace> {
-        return this.workspaceService.createAsync(createDto);
+    async createAsync(@Req() request, @Body() createDto: CreateWorkspaceDto): Promise<Workspace> {
+        const user = await this.getCurrentUserAsync(request);
+        const workspace = await this.workspaceService.createAsync(createDto);
+        await this.workspaceService.addUserToWorkspace(workspace._id, user._id, [Role.Admin]);
+
+        return workspace;
     }
 }

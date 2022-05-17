@@ -24,7 +24,7 @@ export class UserRepository {
     async findByUsernameAsync(username: string): Promise<User> {
         const user = await this.model.findOne({ username });
         if (!user) {
-            throw new HttpException('User with this username does not exist', HttpStatus.NOT_FOUND);
+            return null;
         }
 
         return user;

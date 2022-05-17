@@ -6,34 +6,38 @@ import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { CookieHelper } from 'utils/cookieHelper';
 import { WeatherData } from 'dataLayer/entities/weatherData.entity';
 import { WeatherDataRepository } from 'dataLayer/repositories/weatherData.repository';
-import {
-    GetWeatherDataForWorkspaceResponse,
-    InsertWeatherDataDto as InsertWeatherDataDto,
-    InsertWeatherDataResponse,
-} from 'services/dto/weatherData.dto';
 import { WeatherDataService } from 'services/weatherData.service';
 import { GatewayService } from 'services/gateway.service';
-import { foreignKey } from 'utils/schemaHelper';
+import { objectId } from 'utils/schemaHelper';
+import { ControllerBase } from './controllerBase';
+import {
+    GetWeatherDataForWorkspaceResponse,
+    InsertWeatherDataDto,
+    InsertWeatherDataResponse,
+} from 'services/dto/weatherData.dto';
+import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
+import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 
 @Controller('weather-data')
-export class WeatherDataController {
+export class WeatherDataController extends ControllerBase {
     constructor(
         private readonly weatherDataRepository: WeatherDataRepository,
         private readonly weatherDataService: WeatherDataService,
+        private readonly gatewayRepository: GatewayRepository,
         private readonly gatewayService: GatewayService,
-        private readonly cookieHelper: CookieHelper
-    ) {}
+        workspaceRepository: WorkspaceRepository,
+        cookieHelper: CookieHelper
+    ) {
+        super(cookieHelper, workspaceRepository);
+    }
 
     @EnforceTokenType(TokenType.User)
     @UseGuards(JwtAuthGuard, TokenTypeGuard)
     @Get()
     async findAllForCurrentWorkspaceAsync(@Req() request): Promise<GetWeatherDataForWorkspaceResponse[]> {
-        const workspaceId = this.cookieHelper.getCurrentUserWorkspaceId(request);
-        if (!workspaceId) {
-            throw new BadRequestException('No workspace selected.');
-        }
+        const workspace = await this.getCurrentWorkspaceAsync(request);
 
-        const availableGateways = await this.gatewayService.getAllGatewaysForWorkspace(workspaceId);
+        const availableGateways = await this.gatewayService.getAllGatewaysForWorkspace(workspace._id);
         const result: GetWeatherDataForWorkspaceResponse[] = [];
         for (const gateway of availableGateways) {
             result.push({
@@ -61,7 +65,12 @@ export class WeatherDataController {
     @UseGuards(JwtAuthGuard, TokenTypeGuard)
     @Post()
     async insertAsync(@Req() request, @Body() insertDto: InsertWeatherDataDto): Promise<InsertWeatherDataResponse> {
-        const count = await this.weatherDataService.insertAsync(foreignKey(request.user.gatewayId), insertDto);
+        const gateway = await this.gatewayRepository.findByIdAsync(objectId(request.user.gatewayId));
+        if (!gateway) {
+            throw new BadRequestException('Invalid gateway');
+        }
+
+        const count = await this.weatherDataService.insertAsync(gateway._id, insertDto);
         return {
             count,
         };

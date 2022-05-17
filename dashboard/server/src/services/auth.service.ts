@@ -7,7 +7,7 @@ import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 import { GatewayAuthorizationRepository } from 'dataLayer/repositories/gatewayAuthorization.repository';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { comparePasswords } from 'utils/bcrypt';
-import { foreignKey } from 'utils/schemaHelper';
+import { objectId } from 'utils/schemaHelper';
 import { GatewayInfo } from './dto/gateway.dto';
 import { UserInfo } from './dto/user.dto';
 
@@ -33,7 +33,7 @@ export class AuthService {
         }
 
         return {
-            userId: user._id,
+            userId: user._id.toString(),
             firstName: user.firstName,
             lastname: user.lastname,
             username: user.username,
@@ -44,7 +44,7 @@ export class AuthService {
 
     async validateGatewayAsync(workspaceId: string, secret: string): Promise<GatewayInfo> {
         const authorization = await this.gatewayAuthorizationRepository.findBySecretAsync(
-            foreignKey(workspaceId),
+            objectId(workspaceId),
             secret
         );
         if (!authorization) {
@@ -59,7 +59,7 @@ export class AuthService {
         gateway.state = GatewayState.Registered;
 
         return {
-            gatewayId: gateway._id,
+            gatewayId: gateway._id.toString(),
             workspaceId: workspaceId,
             tokenType: TokenType.Gateway,
         };

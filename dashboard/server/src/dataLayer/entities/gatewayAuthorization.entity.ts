@@ -4,7 +4,7 @@ import { SchemaConstants } from 'dataLayer/common/schemaConstants';
 
 @Schema({ timestamps: true })
 export class GatewayAuthorization {
-    _id: string;
+    _id: Types.ObjectId;
 
     @Prop() secret: string;
 

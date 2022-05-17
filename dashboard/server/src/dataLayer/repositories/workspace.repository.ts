@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Workspace } from 'dataLayer/entities/Workspace.entity';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
@@ -15,11 +15,12 @@ export class WorkspaceRepository {
         return await this.model.find();
     }
 
-    async findAllForUserAsync(userId: string): Promise<Workspace[]> {
+    async findAllForUserAsync(userId: Types.ObjectId): Promise<Workspace[]> {
         return await this.model.find({ userId });
     }
 
-    async findByIdAsync(id: string): Promise<Workspace> {
-        return await this.model.findOne({ _id: id });
+    async findByIdAsync(id: Types.ObjectId): Promise<Workspace> {
+        const workspace = await this.model.findOne({ _id: id });
+        return workspace ? workspace : null;
     }
 }

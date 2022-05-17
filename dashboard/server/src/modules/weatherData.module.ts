@@ -7,10 +7,12 @@ import { WeatherDataRepository } from 'dataLayer/repositories/weatherData.reposi
 import { WeatherDataService } from 'services/weatherData.service';
 import { GatewayModule } from './gateway.module';
 import { SharedModule } from './shared.module';
+import { WorkspaceModule } from './workspace.module';
 
 @Module({
     imports: [
         MongooseModule.forFeature([{ name: SchemaConstants.WeatherData, schema: WeatherDataSchema }]),
+        WorkspaceModule,
         GatewayModule,
         SharedModule,
     ],

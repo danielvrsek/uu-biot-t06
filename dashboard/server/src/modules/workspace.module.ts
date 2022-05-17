@@ -7,15 +7,17 @@ import { WorkspaceMembershipSchema } from 'dataLayer/entities/workspaceMembershi
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { WorkspaceService } from 'services/workspace.service';
 import { SharedModule } from './shared.module';
+import { UserModule } from './user.module';
 
 @Module({
     imports: [
         MongooseModule.forFeature([{ name: SchemaConstants.Workspace, schema: WorkspaceSchema }]),
         MongooseModule.forFeature([{ name: SchemaConstants.WorkspaceMembership, schema: WorkspaceMembershipSchema }]),
+        UserModule,
         SharedModule,
     ],
     controllers: [WorkspaceController],
     providers: [WorkspaceService, WorkspaceRepository],
-    exports: [WorkspaceService],
+    exports: [WorkspaceService, WorkspaceRepository],
 })
 export class WorkspaceModule {}

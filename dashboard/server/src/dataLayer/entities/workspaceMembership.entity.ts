@@ -5,7 +5,7 @@ import { Role } from 'dataLayer/entities/enums/role.enum';
 
 @Schema({ timestamps: true })
 export default class WorkspaceMembership {
-    _id: string;
+    _id: Types.ObjectId;
 
     @Prop() roles: Role[];
 

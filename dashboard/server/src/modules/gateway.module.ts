@@ -8,11 +8,13 @@ import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 import { GatewayAuthorizationRepository } from 'dataLayer/repositories/gatewayAuthorization.repository';
 import { GatewayService } from 'services/gateway.service';
 import { SharedModule } from './shared.module';
+import { WorkspaceModule } from './workspace.module';
 
 @Module({
     imports: [
         MongooseModule.forFeature([{ name: SchemaConstants.Gateway, schema: GatewaySchema }]),
         MongooseModule.forFeature([{ name: SchemaConstants.GatewayAuthorization, schema: GatewayAuthorizationSchema }]),
+        WorkspaceModule,
         SharedModule,
     ],
     controllers: [GatewayController],

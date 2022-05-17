@@ -29,7 +29,7 @@ export class WorkspaceService {
         });
     }
 
-    async addUserToWorkspace(workspaceId: Types.ObjectId, userId: string, roles: Role[]) {
+    async addUserToWorkspace(workspaceId: Types.ObjectId, userId: Types.ObjectId, roles: Role[]) {
         const newItem = new this.membershipModel({
             workspaceId: workspaceId,
             userId: userId,

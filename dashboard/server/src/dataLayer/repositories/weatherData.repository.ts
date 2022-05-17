@@ -3,7 +3,7 @@ import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { WeatherData } from 'dataLayer/entities/weatherData.entity';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
-import { foreignKey } from 'utils/schemaHelper';
+import { objectId } from 'utils/schemaHelper';
 
 @Injectable()
 export class WeatherDataRepository {
@@ -17,6 +17,6 @@ export class WeatherDataRepository {
     }
 
     async findAllByGatewayIdAsync(gatewayId: Types.ObjectId): Promise<WeatherData[]> {
-        return await this.model.find({ gatewayId: foreignKey(gatewayId) });
+        return await this.model.find({ gatewayId: objectId(gatewayId) });
     }
 }

@@ -1,3 +1,3 @@
 import { Types } from 'mongoose';
 
-export const foreignKey = (prop) => new Types.ObjectId(prop);
+export const objectId = (prop) => new Types.ObjectId(prop);
