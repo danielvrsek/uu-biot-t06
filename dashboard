@@ -166,7 +166,7 @@
         "label": "",
         "chartType": "line",
         "legend": "false",
-        "xformat": "HH:mm:ss",
+        "xformat": "auto",
         "interpolate": "linear",
         "nodata": "No data!",
         "dot": false,
@@ -210,7 +210,7 @@
         "label": "",
         "chartType": "line",
         "legend": "false",
-        "xformat": "HH:mm:ss",
+        "xformat": "auto",
         "interpolate": "linear",
         "nodata": "No data!",
         "dot": false,
@@ -271,31 +271,6 @@
         "wires": [
             [
                 "3cf2490ab8cdfaed"
-            ]
-        ]
-    },
-    {
-        "id": "5c75a2e92356815f",
-        "type": "inject",
-        "z": "b0ee181e03decd03",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "[]",
-        "payloadType": "jsonata",
-        "x": 110,
-        "y": 920,
-        "wires": [
-            [
-                "f7f4c590a77af1d2"
             ]
         ]
     },
@@ -491,69 +466,6 @@
             [
                 "d8703535ceb4a887",
                 "ed4736e0008c4e74"
-            ]
-        ]
-    },
-    {
-        "id": "cfb93f9e062142ce",
-        "type": "conf ping",
-        "z": "b0ee181e03decd03",
-        "name": "Internet",
-        "host": "www.google.com",
-        "timeout": "5",
-        "requests": "1",
-        "x": 320,
-        "y": 600,
-        "wires": [
-            [
-                "3cc4cc69bb585508"
-            ]
-        ]
-    },
-    {
-        "id": "fcc158100a9e8bd6",
-        "type": "conf ping",
-        "z": "b0ee181e03decd03",
-        "name": "Cloud",
-        "host": "https://iotbe.herokuapp.com/items",
-        "timeout": "5",
-        "requests": "1",
-        "x": 310,
-        "y": 720,
-        "wires": [
-            [
-                "52c04ea8ab4af3ed"
-            ]
-        ]
-    },
-    {
-        "id": "5ae5989e559e19d0",
-        "type": "inject",
-        "z": "b0ee181e03decd03",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "time",
-                "v": "",
-                "vt": "date"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "false",
-        "payloadType": "bool",
-        "x": 110,
-        "y": 660,
-        "wires": [
-            [
-                "cfb93f9e062142ce",
-                "fcc158100a9e8bd6"
             ]
         ]
     },
@@ -994,6 +906,106 @@
             ],
             [
                 "d72acc3ae4502b7d"
+            ]
+        ]
+    },
+    {
+        "id": "5ae5989e559e19d0",
+        "type": "inject",
+        "z": "b0ee181e03decd03",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "time",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 110,
+        "y": 660,
+        "wires": [
+            [
+                "e63c7cfb2acd276e",
+                "125c9e9bb2bf3e74"
+            ]
+        ]
+    },
+    {
+        "id": "5c75a2e92356815f",
+        "type": "inject",
+        "z": "b0ee181e03decd03",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "jsonata",
+        "x": 110,
+        "y": 920,
+        "wires": [
+            [
+                "f7f4c590a77af1d2"
+            ]
+        ]
+    },
+    {
+        "id": "e63c7cfb2acd276e",
+        "type": "http request",
+        "z": "b0ee181e03decd03",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.google.com/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 330,
+        "y": 600,
+        "wires": [
+            [
+                "3cc4cc69bb585508"
+            ]
+        ]
+    },
+    {
+        "id": "125c9e9bb2bf3e74",
+        "type": "http request",
+        "z": "b0ee181e03decd03",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://iotbe.herokuapp.com/items",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 330,
+        "y": 720,
+        "wires": [
+            [
+                "52c04ea8ab4af3ed"
             ]
         ]
     },
