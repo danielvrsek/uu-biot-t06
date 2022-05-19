@@ -1,6 +1,6 @@
 [
     {
-        "id": "ae7e25a3cf75a51c",
+        "id": "9b32b4be2bf6f0f5",
         "type": "tab",
         "label": "Delete data",
         "disabled": false,
@@ -8,9 +8,9 @@
         "env": []
     },
     {
-        "id": "3109dbfbb8eb0e04",
+        "id": "4cd613a99286c957",
         "type": "mongodb out",
-        "z": "ae7e25a3cf75a51c",
+        "z": "9b32b4be2bf6f0f5",
         "mongodb": "ecb43e63847ff54b",
         "name": "Temperature",
         "collection": "Temperature",
@@ -18,14 +18,14 @@
         "upsert": false,
         "multi": false,
         "operation": "delete",
-        "x": 1310,
-        "y": 160,
+        "x": 730,
+        "y": 80,
         "wires": []
     },
     {
-        "id": "9680ffdd53fee597",
+        "id": "aa0723d0b8bd65e4",
         "type": "mongodb out",
-        "z": "ae7e25a3cf75a51c",
+        "z": "9b32b4be2bf6f0f5",
         "mongodb": "ecb43e63847ff54b",
         "name": "Humidity",
         "collection": "Humidity",
@@ -33,169 +33,69 @@
         "upsert": false,
         "multi": false,
         "operation": "delete",
-        "x": 1300,
-        "y": 240,
+        "x": 880,
+        "y": 300,
         "wires": []
     },
     {
-        "id": "258211246372aac3",
+        "id": "4d03f907b7540537",
         "type": "inject",
-        "z": "ae7e25a3cf75a51c",
+        "z": "9b32b4be2bf6f0f5",
         "name": "deleteDataFromDatabase",
         "props": [
             {
                 "p": "payload"
             }
         ],
-        "repeat": "",
-        "crontab": "00 03 * * *",
+        "repeat": "86400",
+        "crontab": "",
         "once": false,
         "onceDelay": "",
         "topic": "",
-        "payload": "{\"dataSent\":true}",
-        "payloadType": "json",
-        "x": 140,
-        "y": 160,
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 260,
         "wires": [
             [
-                "c88011b1a39cdda8",
-                "aac986b2579fb6f0"
+                "3cf54b8619ac67d5"
             ]
         ]
     },
     {
-        "id": "c88011b1a39cdda8",
-        "type": "mongodb in",
-        "z": "ae7e25a3cf75a51c",
+        "id": "3cf54b8619ac67d5",
+        "type": "function",
+        "z": "9b32b4be2bf6f0f5",
+        "name": "queryDeleteAfter14Days",
+        "func": "msg.payload = {\n    \"sent\": true,\n    \"payload.timestamp\":{$lt: new Date().getTime() - (14*24*60*60*1000)}\n    \n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [
+                "dcdce8f5a31c988a",
+                "aa0723d0b8bd65e4"
+            ]
+        ]
+    },
+    {
+        "id": "dcdce8f5a31c988a",
+        "type": "mongodb out",
+        "z": "9b32b4be2bf6f0f5",
         "mongodb": "ecb43e63847ff54b",
-        "name": "",
+        "name": "Temperature",
         "collection": "Temperature",
-        "operation": "find",
-        "x": 480,
-        "y": 160,
-        "wires": [
-            [
-                "cc90dbe77b4bd0c0"
-            ]
-        ]
-    },
-    {
-        "id": "aac986b2579fb6f0",
-        "type": "mongodb in",
-        "z": "ae7e25a3cf75a51c",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "",
-        "collection": "Humidity",
-        "operation": "find",
-        "x": 470,
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 890,
         "y": 240,
-        "wires": [
-            [
-                "bb2da299bb248b55"
-            ]
-        ]
-    },
-    {
-        "id": "cc90dbe77b4bd0c0",
-        "type": "change",
-        "z": "ae7e25a3cf75a51c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "temperature",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "payload",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 760,
-        "y": 160,
-        "wires": [
-            [
-                "9ab896f272178c87"
-            ]
-        ]
-    },
-    {
-        "id": "bb2da299bb248b55",
-        "type": "change",
-        "z": "ae7e25a3cf75a51c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "humidity",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "payload",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 760,
-        "y": 240,
-        "wires": [
-            [
-                "439d4c8f2bc9c1a3"
-            ]
-        ]
-    },
-    {
-        "id": "9ab896f272178c87",
-        "type": "function",
-        "z": "ae7e25a3cf75a51c",
-        "name": "",
-        "func": "let dataToDelete = [];\n\nfor(let i = 0; i < msg.temperature.length; i++){\n  let timestamp = msg.temperature[i].payload.timestamp;\n  let dateDataSaved = new Date(timestamp);\n  let dateNow = new Date();\n  \n  let deltaInTime = dateNow.getTime() - dateDataSaved.getTime();\n  let deltaInDays = deltaInTime / (1000 * 3600 * 24);\n  \n  if(deltaInDays > 14){\n      dataToDelete.push(msg.temperature[i]._msgid);\n  }\n}\n\nmsg.payload = { _msgid: { $in: dataToDelete } };\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1000,
-        "y": 160,
-        "wires": [
-            [
-                "3109dbfbb8eb0e04"
-            ]
-        ]
-    },
-    {
-        "id": "439d4c8f2bc9c1a3",
-        "type": "function",
-        "z": "ae7e25a3cf75a51c",
-        "name": "",
-        "func": "let dataToDelete = [];\n\nfor(let i = 0; i < msg.humidity.length; i++){\n  let timestamp = msg.humidity[i].payload.timestamp;\n  let dateDataSaved = new Date(timestamp);\n  let dateNow = new Date();\n  \n  let deltaInTime = dateNow.getTime() - dateDataSaved.getTime();\n  let deltaInDays = deltaInTime / (1000 * 3600 * 24);\n  \n  if(deltaInDays > 14){\n      dataToDelete.push(msg.humidity[i]._msgid);\n  }\n}\n\nmsg.payload = { _msgid: { $in: dataToDelete } };\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1000,
-        "y": 240,
-        "wires": [
-            [
-                "9680ffdd53fee597"
-            ]
-        ]
+        "wires": []
     },
     {
         "id": "ecb43e63847ff54b",
