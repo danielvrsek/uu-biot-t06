@@ -1,6 +1,6 @@
 [
     {
-        "id": "bc7cdf4bb4dff9c6",
+        "id": "ef6140f8cf31fa28",
         "type": "tab",
         "label": "Send to cloud",
         "disabled": false,
@@ -8,419 +8,24 @@
         "env": []
     },
     {
-        "id": "2879fe723d976fab",
-        "type": "mongodb in",
-        "z": "bc7cdf4bb4dff9c6",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "",
-        "collection": "Temperature",
-        "operation": "find",
-        "x": 340,
-        "y": 80,
-        "wires": [
-            [
-                "2eb80cb3e0a9e05f"
-            ]
-        ]
-    },
-    {
-        "id": "2f7f8b49de3ba0d9",
-        "type": "inject",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "300",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"sent\": false}",
-        "payloadType": "json",
-        "x": 100,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "863939886756ec78",
-        "type": "mongodb out",
-        "z": "bc7cdf4bb4dff9c6",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "",
-        "collection": "Temperature",
-        "payonly": false,
-        "upsert": false,
-        "multi": false,
-        "operation": "delete",
-        "x": 1180,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "0c691eddf1f6f0c3",
-        "type": "mongodb out",
-        "z": "bc7cdf4bb4dff9c6",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "",
-        "collection": "Humidity",
-        "payonly": false,
-        "upsert": false,
-        "multi": false,
-        "operation": "delete",
-        "x": 1170,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "433e27fdc2ff2343",
-        "type": "http request",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "https://iotbe.herokuapp.com/array-items",
-        "tls": "6507b3b62947470a",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 710,
-        "y": 160,
-        "wires": [
-            [
-                "764674a70ef04d5a"
-            ]
-        ]
-    },
-    {
-        "id": "2eb80cb3e0a9e05f",
-        "type": "change",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "temperature",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"sent\": false}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 600,
-        "y": 80,
-        "wires": [
-            [
-                "6ffcd7abf4e5e787"
-            ]
-        ]
-    },
-    {
-        "id": "6ffcd7abf4e5e787",
-        "type": "mongodb in",
-        "z": "bc7cdf4bb4dff9c6",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "",
-        "collection": "Humidity",
-        "operation": "find",
-        "x": 830,
-        "y": 80,
-        "wires": [
-            [
-                "d2cfa72ff6285f3d"
-            ]
-        ]
-    },
-    {
-        "id": "d2cfa72ff6285f3d",
-        "type": "change",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "humidity",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "delete",
-                "p": "payload",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1060,
-        "y": 80,
-        "wires": [
-            [
-                "e07acb26496a6d7e",
-                "aa8210cddc719b57"
-            ]
-        ]
-    },
-    {
-        "id": "aa8210cddc719b57",
-        "type": "function",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "func": "let dataToCloud = []\n\nfor(let i = 0; i < msg.temperature.length || i< msg.humidity.length; i++){\n  let temperature =  msg.temperature[i].payload.value\n  let humidity = msg.humidity[i].payload.value\n  let timestamp = msg.temperature[i].payload.timestamp\n  let measuring = {temperature, humidity, timestamp}\n  dataToCloud.push(measuring)\n}\n    \nmsg.payload = dataToCloud    \n    \n    \nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 120,
-        "y": 160,
-        "wires": [
-            [
-                "42b6c8431ee00e9e"
-            ]
-        ]
-    },
-    {
-        "id": "764674a70ef04d5a",
-        "type": "debug",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 870,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "42b6c8431ee00e9e",
-        "type": "json",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 270,
-        "y": 160,
-        "wires": [
-            [
-                "91cd7abf785a9a25",
-                "5412a8e0152075a3"
-            ]
-        ]
-    },
-    {
-        "id": "403cedd92d3169b0",
-        "type": "mongodb out",
-        "z": "bc7cdf4bb4dff9c6",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "",
-        "collection": "Temperature",
-        "payonly": false,
-        "upsert": false,
-        "multi": true,
-        "operation": "update",
-        "x": 780,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "3395ce42b3c4dc2a",
-        "type": "mongodb out",
-        "z": "bc7cdf4bb4dff9c6",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "",
-        "collection": "Humidity",
-        "payonly": false,
-        "upsert": false,
-        "multi": true,
-        "operation": "update",
-        "x": 770,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "e07acb26496a6d7e",
-        "type": "debug",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1290,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "5d1afc9019dad198",
-        "type": "function",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "func": "\nmsg.query = {\"sent\": false};\nmsg.payload = {\"$set\": {\"sent\": true}};\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 660,
-        "y": 240,
-        "wires": [
-            [
-                "403cedd92d3169b0",
-                "3395ce42b3c4dc2a"
-            ]
-        ]
-    },
-    {
-        "id": "91cd7abf785a9a25",
-        "type": "debug",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 410,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "5412a8e0152075a3",
-        "type": "change",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "headers.content-type",
-                "pt": "msg",
-                "to": "application/json",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 490,
-        "y": 160,
-        "wires": [
-            [
-                "433e27fdc2ff2343"
-            ]
-        ]
-    },
-    {
-        "id": "7830c0729774f1fa",
-        "type": "switch",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "checkStatus",
-        "property": "statusCode",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "btwn",
-                "v": "400",
-                "vt": "num",
-                "v2": "499",
-                "v2t": "num"
-            },
-            {
-                "t": "btwn",
-                "v": "500",
-                "vt": "num",
-                "v2": "599",
-                "v2t": "num"
-            },
-            {
-                "t": "btwn",
-                "v": "200",
-                "vt": "num",
-                "v2": "299",
-                "v2t": "num"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 3,
-        "x": 890,
-        "y": 220,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "526ce9fce6338779",
-        "type": "file",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "filename": "noServerResponse.txt",
-        "appendNewline": true,
-        "createDir": true,
-        "overwriteFile": "false",
-        "encoding": "utf8",
-        "x": 880,
-        "y": 280,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "d3fe1cd04bfc6385",
+        "id": "d28137a93d159b90",
         "type": "catch",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 1040,
-        "y": 400,
+        "x": 140,
+        "y": 540,
         "wires": [
             [
-                "618f8178951a60f1"
+                "b2fe9bcea0387b04"
             ]
         ]
     },
     {
-        "id": "618f8178951a60f1",
+        "id": "b2fe9bcea0387b04",
         "type": "debug",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -430,89 +35,60 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1230,
-        "y": 400,
+        "x": 330,
+        "y": 540,
         "wires": []
     },
     {
-        "id": "807def02cba1c5f4",
+        "id": "5064970467f89778",
         "type": "inject",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "name": "",
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "projection",
+                "v": "{\"temperature\":1,\"humidity\":1,\"timestamp\":1,\"_id\":0}",
+                "vt": "json"
             }
         ],
-        "repeat": "300",
+        "repeat": "301",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"sent\": false}",
+        "payload": "{\"sent\":false}",
         "payloadType": "json",
-        "x": 100,
-        "y": 540,
+        "x": 200,
+        "y": 220,
         "wires": [
             [
-                "d54b748bc199fbca"
+                "3077bedb7ea861e0"
             ]
         ]
     },
     {
-        "id": "d54b748bc199fbca",
+        "id": "3077bedb7ea861e0",
         "type": "mongodb in",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "mongodb": "ecb43e63847ff54b",
         "name": "",
         "collection": "WeatherData",
         "operation": "find",
-        "x": 350,
-        "y": 540,
+        "x": 470,
+        "y": 220,
         "wires": [
             [
-                "0d0c1c6a50ce4c2e",
-                "88aba3a49de8dcaf"
+                "e76f173739eab29b"
             ]
         ]
     },
     {
-        "id": "0d0c1c6a50ce4c2e",
+        "id": "62921504dcca70a7",
         "type": "debug",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 610,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "88aba3a49de8dcaf",
-        "type": "json",
-        "z": "bc7cdf4bb4dff9c6",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 610,
-        "y": 540,
-        "wires": [
-            [
-                "885a55c0838033b1",
-                "d6e01f61da080fc3"
-            ]
-        ]
-    },
-    {
-        "id": "885a55c0838033b1",
-        "type": "debug",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -522,41 +98,48 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 670,
-        "y": 580,
+        "x": 850,
+        "y": 160,
         "wires": []
     },
     {
-        "id": "d6e01f61da080fc3",
-        "type": "change",
-        "z": "bc7cdf4bb4dff9c6",
+        "id": "a1afeb34c8fad9f2",
+        "type": "json",
+        "z": "ef6140f8cf31fa28",
         "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "headers.content-type",
-                "pt": "msg",
-                "to": "application/json",
-                "tot": "str"
-            }
-        ],
+        "property": "payload",
         "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 830,
-        "y": 540,
+        "pretty": false,
+        "x": 910,
+        "y": 220,
         "wires": [
             [
-                "25e13e600a525ad6"
+                "bdea5adf607bd20d",
+                "8956317983e3d7d5"
             ]
         ]
     },
     {
-        "id": "25e13e600a525ad6",
+        "id": "bdea5adf607bd20d",
+        "type": "debug",
+        "z": "ef6140f8cf31fa28",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "8956317983e3d7d5",
         "type": "http request",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "name": "",
         "method": "POST",
         "ret": "txt",
@@ -565,20 +148,20 @@
         "tls": "",
         "persist": false,
         "proxy": "",
-        "authType": "bearer",
+        "authType": "",
         "senderr": false,
-        "x": 1090,
-        "y": 540,
+        "x": 1110,
+        "y": 220,
         "wires": [
             [
-                "aec74bb1f8e8d55c"
+                "2fb8eba0176a6a31"
             ]
         ]
     },
     {
-        "id": "02114973aa5f2e98",
+        "id": "0b67c818509c1aa6",
         "type": "function",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "name": "",
         "func": "\nmsg.query = {\"sent\": false};\nmsg.payload = {\"$set\": {\"sent\": true}};\nreturn msg;",
         "outputs": 1,
@@ -586,16 +169,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
-        "y": 820,
+        "x": 420,
+        "y": 440,
         "wires": [
-            []
+            [
+                "a83c83258bbad90d"
+            ]
         ]
     },
     {
-        "id": "aec74bb1f8e8d55c",
+        "id": "2fb8eba0176a6a31",
         "type": "switch",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "name": "checkStatus",
         "property": "statusCode",
         "propertyType": "msg",
@@ -625,24 +210,25 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 130,
-        "y": 760,
+        "x": 230,
+        "y": 380,
         "wires": [
             [
-                "caac895c203b946d"
+                "d97618b3b2d75fb2"
             ],
             [
-                "dae30ff145605b63"
+                "d97618b3b2d75fb2"
             ],
             [
-                "02114973aa5f2e98"
+                "d97618b3b2d75fb2",
+                "0b67c818509c1aa6"
             ]
         ]
     },
     {
-        "id": "c7058f18a105ae27",
+        "id": "a83c83258bbad90d",
         "type": "mongodb out",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "mongodb": "ecb43e63847ff54b",
         "name": "",
         "collection": "WeatherData",
@@ -650,14 +236,14 @@
         "upsert": false,
         "multi": true,
         "operation": "update",
-        "x": 550,
-        "y": 820,
+        "x": 710,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "dae30ff145605b63",
+        "id": "d97618b3b2d75fb2",
         "type": "debug",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -667,102 +253,85 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1250,
-        "y": 780,
+        "x": 410,
+        "y": 380,
         "wires": []
     },
     {
-        "id": "35afe022fb71f58c",
+        "id": "a80c07ef6e112c3c",
         "type": "file",
-        "z": "bc7cdf4bb4dff9c6",
+        "z": "ef6140f8cf31fa28",
         "name": "",
         "filename": "SendingDataError.txt",
         "appendNewline": true,
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "utf8",
-        "x": 940,
-        "y": 960,
+        "x": 600,
+        "y": 540,
         "wires": [
             []
         ]
     },
     {
-        "id": "fce3fe76d1ad85ac",
-        "type": "http request",
-        "z": "bc7cdf4bb4dff9c6",
+        "id": "e76f173739eab29b",
+        "type": "function",
+        "z": "ef6140f8cf31fa28",
         "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "http://localhost:4000/auth/gateway/authorize",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 810,
-        "y": 720,
+        "func": "const token = global.get(\"token\")\nmsg.headers = {\n    Authorization: \"Bearer \"+ token,\n    [\"content-type\"]: \"application/json\"\n}\nmsg.payload = {\n    data: msg.payload\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 220,
         "wires": [
-            []
+            [
+                "62921504dcca70a7",
+                "a1afeb34c8fad9f2"
+            ]
         ]
     },
     {
-        "id": "caac895c203b946d",
-        "type": "change",
-        "z": "bc7cdf4bb4dff9c6",
+        "id": "cfbbcb295a8b83bf",
+        "type": "inject",
+        "z": "ef6140f8cf31fa28",
         "name": "",
-        "rules": [
+        "props": [
             {
-                "t": "set",
-                "p": "headers.content-type",
-                "pt": "msg",
-                "to": "application/json",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.secret",
-                "pt": "msg",
-                "to": "bc982d286906",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.workspaceId",
-                "pt": "msg",
-                "to": "62828f83a7d216494a413951",
-                "tot": "str"
+                "p": "payload"
             }
         ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 480,
-        "y": 720,
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "jsonata",
+        "x": 130,
+        "y": 600,
         "wires": [
             [
-                "f19746b2098a55c9"
+                "396749a0c04e5382"
             ]
         ]
     },
     {
-        "id": "f19746b2098a55c9",
-        "type": "json",
-        "z": "bc7cdf4bb4dff9c6",
+        "id": "396749a0c04e5382",
+        "type": "mongodb out",
+        "z": "ef6140f8cf31fa28",
+        "mongodb": "ecb43e63847ff54b",
         "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 650,
-        "y": 720,
-        "wires": [
-            [
-                "fce3fe76d1ad85ac"
-            ]
-        ]
+        "collection": "WeatherData",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 410,
+        "y": 600,
+        "wires": []
     },
     {
         "id": "ecb43e63847ff54b",
@@ -773,19 +342,5 @@
         "port": "27017",
         "db": "meteodata",
         "name": ""
-    },
-    {
-        "id": "6507b3b62947470a",
-        "type": "tls-config",
-        "name": "",
-        "cert": "",
-        "key": "",
-        "ca": "",
-        "certname": "",
-        "keyname": "",
-        "caname": "",
-        "servername": "",
-        "verifyservercert": true,
-        "alpnprotocol": ""
     }
 ]
