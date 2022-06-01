@@ -43,9 +43,7 @@
         "x": 100,
         "y": 80,
         "wires": [
-            [
-                "2879fe723d976fab"
-            ]
+            []
         ]
     },
     {
@@ -59,8 +57,8 @@
         "upsert": false,
         "multi": false,
         "operation": "delete",
-        "x": 140,
-        "y": 340,
+        "x": 1180,
+        "y": 300,
         "wires": []
     },
     {
@@ -74,8 +72,8 @@
         "upsert": false,
         "multi": false,
         "operation": "delete",
-        "x": 150,
-        "y": 400,
+        "x": 1170,
+        "y": 340,
         "wires": []
     },
     {
@@ -207,7 +205,7 @@
         "type": "debug",
         "z": "bc7cdf4bb4dff9c6",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -247,8 +245,8 @@
         "upsert": false,
         "multi": true,
         "operation": "update",
-        "x": 1000,
-        "y": 520,
+        "x": 780,
+        "y": 340,
         "wires": []
     },
     {
@@ -262,8 +260,8 @@
         "upsert": false,
         "multi": true,
         "operation": "update",
-        "x": 990,
-        "y": 560,
+        "x": 770,
+        "y": 380,
         "wires": []
     },
     {
@@ -294,8 +292,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 880,
-        "y": 420,
+        "x": 660,
+        "y": 240,
         "wires": [
             [
                 "403cedd92d3169b0",
@@ -380,8 +378,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 370,
-        "y": 420,
+        "x": 890,
+        "y": 220,
         "wires": [
             [],
             [],
@@ -398,8 +396,8 @@
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "utf8",
-        "x": 680,
-        "y": 420,
+        "x": 880,
+        "y": 280,
         "wires": [
             []
         ]
@@ -411,8 +409,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 720,
-        "y": 320,
+        "x": 1040,
+        "y": 400,
         "wires": [
             [
                 "618f8178951a60f1"
@@ -432,9 +430,339 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 870,
-        "y": 320,
+        "x": 1230,
+        "y": 400,
         "wires": []
+    },
+    {
+        "id": "807def02cba1c5f4",
+        "type": "inject",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"sent\": false}",
+        "payloadType": "json",
+        "x": 100,
+        "y": 540,
+        "wires": [
+            [
+                "d54b748bc199fbca"
+            ]
+        ]
+    },
+    {
+        "id": "d54b748bc199fbca",
+        "type": "mongodb in",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "WeatherData",
+        "operation": "find",
+        "x": 350,
+        "y": 540,
+        "wires": [
+            [
+                "0d0c1c6a50ce4c2e",
+                "88aba3a49de8dcaf"
+            ]
+        ]
+    },
+    {
+        "id": "0d0c1c6a50ce4c2e",
+        "type": "debug",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "88aba3a49de8dcaf",
+        "type": "json",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 610,
+        "y": 540,
+        "wires": [
+            [
+                "885a55c0838033b1",
+                "d6e01f61da080fc3"
+            ]
+        ]
+    },
+    {
+        "id": "885a55c0838033b1",
+        "type": "debug",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "d6e01f61da080fc3",
+        "type": "change",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.content-type",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 540,
+        "wires": [
+            [
+                "25e13e600a525ad6"
+            ]
+        ]
+    },
+    {
+        "id": "25e13e600a525ad6",
+        "type": "http request",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:4000/weather-data",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "senderr": false,
+        "x": 1090,
+        "y": 540,
+        "wires": [
+            [
+                "aec74bb1f8e8d55c"
+            ]
+        ]
+    },
+    {
+        "id": "02114973aa5f2e98",
+        "type": "function",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "func": "\nmsg.query = {\"sent\": false};\nmsg.payload = {\"$set\": {\"sent\": true}};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aec74bb1f8e8d55c",
+        "type": "switch",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "checkStatus",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "400",
+                "vt": "num",
+                "v2": "499",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "500",
+                "vt": "num",
+                "v2": "599",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "200",
+                "vt": "num",
+                "v2": "299",
+                "v2t": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 130,
+        "y": 760,
+        "wires": [
+            [
+                "caac895c203b946d"
+            ],
+            [
+                "dae30ff145605b63"
+            ],
+            [
+                "02114973aa5f2e98"
+            ]
+        ]
+    },
+    {
+        "id": "c7058f18a105ae27",
+        "type": "mongodb out",
+        "z": "bc7cdf4bb4dff9c6",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "WeatherData",
+        "payonly": false,
+        "upsert": false,
+        "multi": true,
+        "operation": "update",
+        "x": 550,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "dae30ff145605b63",
+        "type": "debug",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "35afe022fb71f58c",
+        "type": "file",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "filename": "SendingDataError.txt",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 940,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fce3fe76d1ad85ac",
+        "type": "http request",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:4000/auth/gateway/authorize",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 810,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "caac895c203b946d",
+        "type": "change",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.content-type",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.secret",
+                "pt": "msg",
+                "to": "bc982d286906",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.workspaceId",
+                "pt": "msg",
+                "to": "62828f83a7d216494a413951",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 720,
+        "wires": [
+            [
+                "f19746b2098a55c9"
+            ]
+        ]
+    },
+    {
+        "id": "f19746b2098a55c9",
+        "type": "json",
+        "z": "bc7cdf4bb4dff9c6",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 650,
+        "y": 720,
+        "wires": [
+            [
+                "fce3fe76d1ad85ac"
+            ]
+        ]
     },
     {
         "id": "ecb43e63847ff54b",
