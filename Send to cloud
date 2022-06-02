@@ -7,7 +7,7 @@
         "category": "",
         "in": [
             {
-                "x": 200,
+                "x": 140,
                 "y": 40,
                 "wires": [
                     {
@@ -25,7 +25,7 @@
         "id": "0e23f55a502915ef",
         "type": "http request",
         "z": "c6099cb141cc560e",
-        "name": "",
+        "name": "authGateway",
         "method": "POST",
         "ret": "txt",
         "paytoqs": "ignore",
@@ -35,7 +35,7 @@
         "proxy": "",
         "authType": "",
         "senderr": true,
-        "x": 710,
+        "x": 750,
         "y": 80,
         "wires": [
             [
@@ -47,14 +47,14 @@
         "id": "b226ff8c1814552f",
         "type": "inject",
         "z": "c6099cb141cc560e",
-        "name": "",
+        "name": "injectOnStart",
         "props": [],
         "repeat": "",
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 170,
+        "x": 90,
         "y": 140,
         "wires": [
             [
@@ -75,7 +75,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1010,
+        "x": 1170,
         "y": 80,
         "wires": []
     },
@@ -83,14 +83,24 @@
         "id": "82116b4c9f5f3a36",
         "type": "change",
         "z": "c6099cb141cc560e",
-        "name": "",
+        "name": "setRequestHeadersAndBody",
         "rules": [
+            {
+                "t": "delete",
+                "p": "headers",
+                "pt": "msg"
+            },
             {
                 "t": "set",
                 "p": "headers.content-type",
                 "pt": "msg",
                 "to": "application/json",
                 "tot": "str"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
             },
             {
                 "t": "set",
@@ -112,11 +122,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 380,
+        "x": 340,
         "y": 80,
         "wires": [
             [
-                "a56a433d841409f0"
+                "a56a433d841409f0",
+                "9b5386618a655387"
             ]
         ]
     },
@@ -124,11 +135,11 @@
         "id": "a56a433d841409f0",
         "type": "json",
         "z": "c6099cb141cc560e",
-        "name": "",
+        "name": "parseToJson",
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 550,
+        "x": 570,
         "y": 80,
         "wires": [
             [
@@ -140,11 +151,11 @@
         "id": "c1ac311303bda025",
         "type": "json",
         "z": "c6099cb141cc560e",
-        "name": "",
+        "name": "parseFromJson",
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 870,
+        "x": 960,
         "y": 80,
         "wires": [
             [
@@ -154,25 +165,10 @@
         ]
     },
     {
-        "id": "a2c5c3917289c3c4",
-        "type": "catch",
-        "z": "c6099cb141cc560e",
-        "name": "",
-        "scope": null,
-        "uncaught": false,
-        "x": 200,
-        "y": 320,
-        "wires": [
-            [
-                "76a911823f0f919d"
-            ]
-        ]
-    },
-    {
         "id": "b63964cced4fc426",
         "type": "change",
         "z": "c6099cb141cc560e",
-        "name": "",
+        "name": "setAuthToken",
         "rules": [
             {
                 "t": "set",
@@ -194,7 +190,7 @@
         ]
     },
     {
-        "id": "0500431d028b95ae",
+        "id": "9b5386618a655387",
         "type": "debug",
         "z": "c6099cb141cc560e",
         "name": "",
@@ -206,27 +202,9 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 610,
-        "y": 320,
+        "x": 570,
+        "y": 40,
         "wires": []
-    },
-    {
-        "id": "76a911823f0f919d",
-        "type": "file",
-        "z": "c6099cb141cc560e",
-        "name": "",
-        "filename": "AuthGatewayErrors.txt",
-        "appendNewline": true,
-        "createDir": true,
-        "overwriteFile": "false",
-        "encoding": "utf8",
-        "x": 400,
-        "y": 320,
-        "wires": [
-            [
-                "0500431d028b95ae"
-            ]
-        ]
     },
     {
         "id": "ef6140f8cf31fa28",
@@ -247,7 +225,8 @@
         "y": 480,
         "wires": [
             [
-                "b2fe9bcea0387b04"
+                "b2fe9bcea0387b04",
+                "0ed1d5c6fefe555b"
             ]
         ]
     },
@@ -264,15 +243,15 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 230,
-        "y": 420,
+        "x": 310,
+        "y": 480,
         "wires": []
     },
     {
         "id": "5064970467f89778",
         "type": "inject",
         "z": "ef6140f8cf31fa28",
-        "name": "",
+        "name": "loadFromCollection",
         "props": [
             {
                 "p": "payload"
@@ -290,7 +269,7 @@
         "topic": "",
         "payload": "{\"sent\":false}",
         "payloadType": "json",
-        "x": 140,
+        "x": 120,
         "y": 120,
         "wires": [
             [
@@ -335,15 +314,14 @@
         "id": "a1afeb34c8fad9f2",
         "type": "json",
         "z": "ef6140f8cf31fa28",
-        "name": "",
+        "name": "parseToJson",
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 950,
+        "x": 970,
         "y": 120,
         "wires": [
             [
-                "bdea5adf607bd20d",
                 "8956317983e3d7d5"
             ]
         ]
@@ -361,7 +339,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1210,
+        "x": 1310,
         "y": 60,
         "wires": []
     },
@@ -369,7 +347,7 @@
         "id": "8956317983e3d7d5",
         "type": "http request",
         "z": "ef6140f8cf31fa28",
-        "name": "",
+        "name": "postDataToCloud",
         "method": "POST",
         "ret": "txt",
         "paytoqs": "ignore",
@@ -379,11 +357,12 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 1210,
+        "x": 1170,
         "y": 120,
         "wires": [
             [
-                "2fb8eba0176a6a31"
+                "2fb8eba0176a6a31",
+                "bdea5adf607bd20d"
             ]
         ]
     },
@@ -391,7 +370,7 @@
         "id": "0b67c818509c1aa6",
         "type": "function",
         "z": "ef6140f8cf31fa28",
-        "name": "",
+        "name": "sentTrue",
         "func": "\nmsg.query = {\"sent\": false};\nmsg.payload = {\"$set\": {\"sent\": true}};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
@@ -410,7 +389,7 @@
         "id": "2fb8eba0176a6a31",
         "type": "switch",
         "z": "ef6140f8cf31fa28",
-        "name": "checkStatusCode",
+        "name": "validateStatusCode",
         "property": "statusCode",
         "propertyType": "msg",
         "rules": [
@@ -460,14 +439,14 @@
         "id": "a80c07ef6e112c3c",
         "type": "file",
         "z": "ef6140f8cf31fa28",
-        "name": "",
-        "filename": "SendToCloudErrors.txt",
+        "name": "sendToCloudErrorLog.txt",
+        "filename": "C:\\Users\\Vita\\Unicorn\\weatherstation\\SendToCloudErrorLog.txt",
         "appendNewline": true,
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "utf8",
-        "x": 340,
-        "y": 480,
+        "x": 490,
+        "y": 560,
         "wires": [
             []
         ]
@@ -493,114 +472,47 @@
         ]
     },
     {
-        "id": "cfbbcb295a8b83bf",
-        "type": "inject",
-        "z": "ef6140f8cf31fa28",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{}",
-        "payloadType": "jsonata",
-        "x": 130,
-        "y": 600,
-        "wires": [
-            [
-                "396749a0c04e5382"
-            ]
-        ]
-    },
-    {
-        "id": "396749a0c04e5382",
-        "type": "mongodb out",
-        "z": "ef6140f8cf31fa28",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "",
-        "collection": "WeatherData",
-        "payonly": false,
-        "upsert": false,
-        "multi": false,
-        "operation": "delete",
-        "x": 410,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "2a770f2e51b3bcf9",
-        "type": "inject",
-        "z": "ef6140f8cf31fa28",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 100,
-        "y": 660,
-        "wires": [
-            [
-                "d8d437a3ba9cfe7e"
-            ]
-        ]
-    },
-    {
-        "id": "d8d437a3ba9cfe7e",
-        "type": "mongodb in",
-        "z": "ef6140f8cf31fa28",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "",
-        "collection": "WeatherData",
-        "operation": "find",
-        "x": 350,
-        "y": 660,
-        "wires": [
-            [
-                "465d0ab37a43b095"
-            ]
-        ]
-    },
-    {
-        "id": "465d0ab37a43b095",
-        "type": "debug",
-        "z": "ef6140f8cf31fa28",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 590,
-        "y": 660,
-        "wires": []
-    },
-    {
         "id": "40c682d24e7caa93",
         "type": "subflow:c6099cb141cc560e",
         "z": "ef6140f8cf31fa28",
         "name": "",
-        "x": 370,
+        "x": 430,
         "y": 260,
         "wires": []
+    },
+    {
+        "id": "0ed1d5c6fefe555b",
+        "type": "change",
+        "z": "ef6140f8cf31fa28",
+        "name": "setErrorLog",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "error",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 560,
+        "wires": [
+            [
+                "a80c07ef6e112c3c"
+            ]
+        ]
     },
     {
         "id": "ecb43e63847ff54b",
