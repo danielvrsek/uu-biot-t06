@@ -27,7 +27,7 @@
         "type": "debug",
         "z": "121db3a117c67412",
         "name": "NoSensorData",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -35,7 +35,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 760,
+        "x": 800,
         "y": 180,
         "wires": []
     },
@@ -60,11 +60,11 @@
         "id": "1250c56104a1d92d",
         "type": "json",
         "z": "121db3a117c67412",
-        "name": "parseJson",
+        "name": "parseFromJson",
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 230,
+        "x": 240,
         "y": 80,
         "wires": [
             [
@@ -91,11 +91,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
+        "x": 420,
         "y": 80,
         "wires": [
             [
-                "726b2cd6c410a7a0"
+                "726b2cd6c410a7a0",
+                "979897e08b6e6ea5"
             ]
         ]
     },
@@ -103,14 +104,14 @@
         "id": "726b2cd6c410a7a0",
         "type": "function",
         "z": "121db3a117c67412",
-        "name": "checkValues",
-        "func": "if(!msg.payload.temperature || !msg.payload.humidity){\n    let failMsg = {}\n    if(!msg.payload.temperature){\n    failMsg.payload.temperature = \"No temperature value\"\n}\n    if(!msg.payload.humidity){\n    failMsg.payload.humidity = \"No humidity value\"\n}\n    failMsg.payload.timestamp = msg.payload.timestamp\n    return [failMsg,null];\n    \n}\nreturn [null, msg]\n\n",
+        "name": "validateDataInput",
+        "func": "if(!msg.payload.temperature || !msg.payload.humidity){\n    return [msg,null];\n    \n}\n   \n\n \n    \n    \n\nreturn [null, msg]\n\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 150,
+        "x": 130,
         "y": 220,
         "wires": [
             [
@@ -125,13 +126,13 @@
         "id": "9df195cdc2791ad6",
         "type": "file",
         "z": "121db3a117c67412",
-        "name": "logNoData",
-        "filename": "noSensorDataLog.txt",
+        "name": "noDataLog.txt",
+        "filename": "C:\\Users\\Vita\\Unicorn\\weatherstation\\noSensorDataLog.txt",
         "appendNewline": true,
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "utf8",
-        "x": 530,
+        "x": 580,
         "y": 180,
         "wires": [
             [
@@ -143,11 +144,11 @@
         "id": "162ec68bacd83941",
         "type": "json",
         "z": "121db3a117c67412",
-        "name": "",
+        "name": "parseToJson",
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 370,
+        "x": 410,
         "y": 180,
         "wires": [
             [
@@ -225,7 +226,7 @@
         "y": 400,
         "wires": [
             [
-                "e71e66cc6cfe712b"
+                "1d72efa8fd4c8a07"
             ]
         ]
     },
@@ -240,7 +241,7 @@
         "upsert": false,
         "multi": false,
         "operation": "store",
-        "x": 1030,
+        "x": 1190,
         "y": 400,
         "wires": []
     },
@@ -249,7 +250,7 @@
         "type": "debug",
         "z": "121db3a117c67412",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -257,7 +258,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 830,
+        "x": 930,
         "y": 300,
         "wires": []
     },
@@ -266,18 +267,18 @@
         "type": "function",
         "z": "121db3a117c67412",
         "name": "median",
-        "func": "// set up 59 as env.variable\n// check payload length\nif(msg.payload.length < 11 ){\nreturn\n}else {\n    let medianData = {}\n    const keys = Object.keys(msg.payload[0])\n    keys.forEach((key)=>{\n\nlet sorted = msg.payload.slice().sort((a,b)=> (a[key] > b[key]) ? 1 :((b[key] > a[key]  ) ? -1 : 0))\n \n let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle][key]\n   \n   \n   \n   if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1][key] + sorted[middle][key] )/ 2\n      \n    }\n\nmedianData = {\n    ...medianData,\n    [key]: median,\n}\n    })\n    \n    msg.payload = {...medianData, timestamp: msg.payload[0].timestamp}\n}\n\n\nreturn msg;",
+        "func": "\n\n    let medianData = {}\n    const keys = Object.keys(msg.payload[0])\n    keys.forEach((key)=>{\n\nlet sorted = msg.payload.slice().sort((a,b)=> (a[key] > b[key]) ? 1 :((b[key] > a[key]  ) ? -1 : 0))\n \n let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle][key]\n   \n   \n   \n   if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1][key] + sorted[middle][key] )/ 2\n      \n    }\n\nmedianData = {\n    ...medianData,\n    [key]: median,\n}\n    })\n    \n    msg.payload = {...medianData}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 580,
+        "x": 780,
         "y": 400,
         "wires": [
             [
-                "8480b9298ef09a5e",
-                "1813a8b3a05f28b2"
+                "1813a8b3a05f28b2",
+                "8480b9298ef09a5e"
             ]
         ]
     },
@@ -285,7 +286,7 @@
         "id": "1813a8b3a05f28b2",
         "type": "change",
         "z": "121db3a117c67412",
-        "name": "",
+        "name": "setSentToFalse",
         "rules": [
             {
                 "t": "set",
@@ -300,13 +301,48 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 800,
+        "x": 960,
         "y": 400,
         "wires": [
             [
                 "5c8afa1c37497706"
             ]
         ]
+    },
+    {
+        "id": "1d72efa8fd4c8a07",
+        "type": "function",
+        "z": "121db3a117c67412",
+        "name": "checkPayloadLength",
+        "func": "if(msg.payload.length < 60) return\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 400,
+        "wires": [
+            [
+                "e71e66cc6cfe712b"
+            ]
+        ]
+    },
+    {
+        "id": "979897e08b6e6ea5",
+        "type": "debug",
+        "z": "121db3a117c67412",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 80,
+        "wires": []
     },
     {
         "id": "0f1594c6977ee81e",
