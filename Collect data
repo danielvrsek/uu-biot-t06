@@ -1,6 +1,6 @@
 [
     {
-        "id": "d43633168e4459a9",
+        "id": "121db3a117c67412",
         "type": "tab",
         "label": "Collect data",
         "disabled": false,
@@ -8,24 +8,24 @@
         "env": []
     },
     {
-        "id": "dca4a3c9d4ba1b9e",
+        "id": "42f21e940c06118a",
         "type": "serial in",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "serialIn",
-        "serial": "0ec898aff92b268b",
+        "serial": "0f1594c6977ee81e",
         "x": 70,
         "y": 80,
         "wires": [
             [
-                "def27718eb1f3216"
+                "1250c56104a1d92d"
             ]
         ],
         "info": "reads data from arduino in json\n{\"temperature\":25.6,\"humidity\":40}"
     },
     {
-        "id": "e9f552d65d34be59",
+        "id": "7cd7876e186d3da8",
         "type": "debug",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "NoSensorData",
         "active": false,
         "tosidebar": true,
@@ -40,154 +40,9 @@
         "wires": []
     },
     {
-        "id": "1d779556f33ca78d",
-        "type": "function",
-        "z": "d43633168e4459a9",
-        "name": "setBuffer",
-        "func": "\nlet temperatureFlow = flow.get(\"temperatureFlow\") || [];\nlet humidityFlow = flow.get(\"humidityFlow\") || [];\n\n\ntemperatureFlow.push({value: msg.payload.temperature, timestamp: msg.timestamp })\nhumidityFlow.push({value: msg.payload.humidity, timestamp: msg.timestamp})    \n    \n   flow.set(\"temperatureFlow\", temperatureFlow)\n   flow.set(\"humidityFlow\", humidityFlow)\n\n    msg.payload ={temperature: [...temperatureFlow], humidity:[...humidityFlow]  }\n   return msg; \n\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1100,
-        "y": 40,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "3f75c4fc0db947a1",
-        "type": "inject",
-        "z": "d43633168e4459a9",
-        "name": "loadTemperatureBuffer",
-        "props": [
-            {
-                "p": "sent",
-                "v": "false",
-                "vt": "bool"
-            },
-            {
-                "p": "payload"
-            },
-            {
-                "p": "collection",
-                "v": "Temperature",
-                "vt": "str"
-            }
-        ],
-        "repeat": "300",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "temperatureFlow",
-        "payloadType": "flow",
-        "x": 170,
-        "y": 580,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "8203eb5204fb87fe",
-        "type": "function",
-        "z": "d43633168e4459a9",
-        "name": "median",
-        "func": "// set up 59 as env.variable\n\nif(msg.payload.length < 11 ){\nreturn\n}else {\n    let sorted = msg.payload.slice().sort((a,b)=> (a.value > b.value) ? 1 :((b.value > a.value  ) ? -1 : 0))\n  \n   let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle].value\n   let timestamp = sorted[middle].timestamp\n \n\n    \n    if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1].value + sorted[middle].value )/ 2\n        // brát polovinu timestampu? Tím pádem dochází ke zkreslení času\n        timestamp = (sorted[middle - 1].timestamp + sorted[middle].timestamp )/ 2\n    }\n   \n    msg.payload = {\n       value: median, \n       timestamp,\n       \n      \n    }\n}\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 720,
-        "y": 600,
-        "wires": [
-            [
-                "ebdfe70a292d15dd",
-                "3c422cf9d53556ed"
-            ]
-        ]
-    },
-    {
-        "id": "f235a8e142269a2f",
-        "type": "inject",
-        "z": "d43633168e4459a9",
-        "name": "loadTemperatureBuffer",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "sent",
-                "v": "false",
-                "vt": "bool"
-            },
-            {
-                "p": "collection",
-                "v": "Humidity",
-                "vt": "str"
-            }
-        ],
-        "repeat": "300",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "humidityFlow",
-        "payloadType": "flow",
-        "x": 170,
-        "y": 640,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "3c422cf9d53556ed",
+        "id": "adad474adb483b44",
         "type": "debug",
-        "z": "d43633168e4459a9",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 930,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "6885812c842adc44",
-        "type": "change",
-        "z": "d43633168e4459a9",
-        "name": "deletePreviousTemperatureBuffer",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "temperatureFlow",
-                "pt": "flow"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 460,
-        "y": 580,
-        "wires": [
-            [
-                "8203eb5204fb87fe"
-            ]
-        ]
-    },
-    {
-        "id": "05d22435e2e0b377",
-        "type": "debug",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -202,65 +57,25 @@
         "wires": []
     },
     {
-        "id": "57c84dfbcff3b8a9",
-        "type": "change",
-        "z": "d43633168e4459a9",
-        "name": "deletePreviousHumidityBuffer",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "humidityFlow",
-                "pt": "flow"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 450,
-        "y": 640,
-        "wires": [
-            [
-                "8203eb5204fb87fe"
-            ]
-        ]
-    },
-    {
-        "id": "ebdfe70a292d15dd",
-        "type": "mongodb out",
-        "z": "d43633168e4459a9",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "saveMedianToCollection",
-        "collection": "",
-        "payonly": false,
-        "upsert": false,
-        "multi": false,
-        "operation": "store",
-        "x": 970,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "def27718eb1f3216",
+        "id": "1250c56104a1d92d",
         "type": "json",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "parseJson",
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 270,
+        "x": 230,
         "y": 80,
         "wires": [
             [
-                "47af435c563b8d99"
+                "6dc058e3e0789ca0"
             ]
         ]
     },
     {
-        "id": "47af435c563b8d99",
+        "id": "6dc058e3e0789ca0",
         "type": "change",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "setTimestamp",
         "rules": [
             {
@@ -269,13 +84,6 @@
                 "pt": "msg",
                 "to": "",
                 "tot": "date"
-            },
-            {
-                "t": "set",
-                "p": "sent",
-                "pt": "msg",
-                "to": "false",
-                "tot": "bool"
             }
         ],
         "action": "",
@@ -283,18 +91,18 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 460,
+        "x": 400,
         "y": 80,
         "wires": [
             [
-                "630c4c50ea8010d0"
+                "726b2cd6c410a7a0"
             ]
         ]
     },
     {
-        "id": "630c4c50ea8010d0",
+        "id": "726b2cd6c410a7a0",
         "type": "function",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "checkValues",
         "func": "if(!msg.payload.temperature || !msg.payload.humidity){\n    let failMsg = {}\n    if(!msg.payload.temperature){\n    failMsg.payload.temperature = \"No temperature value\"\n}\n    if(!msg.payload.humidity){\n    failMsg.payload.humidity = \"No humidity value\"\n}\n    failMsg.payload.timestamp = msg.payload.timestamp\n    return [failMsg,null];\n    \n}\nreturn [null, msg]\n\n",
         "outputs": 2,
@@ -306,17 +114,17 @@
         "y": 220,
         "wires": [
             [
-                "2fbdf4aec5707fb5"
+                "162ec68bacd83941"
             ],
             [
-                "3e687be4f24b3a62"
+                "2ca1eaedc6356c14"
             ]
         ]
     },
     {
-        "id": "c1a1f660ec80045f",
+        "id": "9df195cdc2791ad6",
         "type": "file",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "logNoData",
         "filename": "noSensorDataLog.txt",
         "appendNewline": true,
@@ -327,14 +135,14 @@
         "y": 180,
         "wires": [
             [
-                "e9f552d65d34be59"
+                "7cd7876e186d3da8"
             ]
         ]
     },
     {
-        "id": "2fbdf4aec5707fb5",
+        "id": "162ec68bacd83941",
         "type": "json",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "",
         "property": "payload",
         "action": "",
@@ -343,14 +151,14 @@
         "y": 180,
         "wires": [
             [
-                "c1a1f660ec80045f"
+                "9df195cdc2791ad6"
             ]
         ]
     },
     {
-        "id": "3e687be4f24b3a62",
+        "id": "2ca1eaedc6356c14",
         "type": "function",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "setBuffer",
         "func": "let weatherDataFlow = flow.get(\"weatherDataFlow\") || [];\n\n\n\nweatherDataFlow.push(msg.payload)\n\n flow.set(\"weatherDataFlow\", weatherDataFlow)\n\n    msg.payload = weatherDataFlow\n   return msg; \n\n",
         "outputs": 1,
@@ -362,14 +170,14 @@
         "y": 260,
         "wires": [
             [
-                "05d22435e2e0b377"
+                "adad474adb483b44"
             ]
         ]
     },
     {
-        "id": "891850a452a3bc52",
+        "id": "51897050afccc0b1",
         "type": "inject",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "loadWeatherDataBuffer",
         "props": [
             {
@@ -392,31 +200,14 @@
         "y": 400,
         "wires": [
             [
-                "ff5c9e975dd79f02"
+                "293a5156eeadc366"
             ]
         ]
     },
     {
-        "id": "ff17ebef24084d97",
-        "type": "debug",
-        "z": "d43633168e4459a9",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 910,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "ff5c9e975dd79f02",
+        "id": "293a5156eeadc366",
         "type": "change",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "deletePreviousBuffer",
         "rules": [
             {
@@ -434,14 +225,14 @@
         "y": 400,
         "wires": [
             [
-                "0ae1c66621cdc61c"
+                "e71e66cc6cfe712b"
             ]
         ]
     },
     {
-        "id": "801c9c6263a03e2f",
+        "id": "5c8afa1c37497706",
         "type": "mongodb out",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "mongodb": "ecb43e63847ff54b",
         "name": "saveMedianToCollection",
         "collection": "",
@@ -449,16 +240,16 @@
         "upsert": false,
         "multi": false,
         "operation": "store",
-        "x": 930,
+        "x": 1030,
         "y": 400,
         "wires": []
     },
     {
-        "id": "d750531cf68b61a0",
+        "id": "8480b9298ef09a5e",
         "type": "debug",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -466,16 +257,16 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 770,
-        "y": 320,
+        "x": 830,
+        "y": 300,
         "wires": []
     },
     {
-        "id": "0ae1c66621cdc61c",
+        "id": "e71e66cc6cfe712b",
         "type": "function",
-        "z": "d43633168e4459a9",
+        "z": "121db3a117c67412",
         "name": "median",
-        "func": "// set up 59 as env.variable\n// check payload length\nif(msg.payload.length < 11 ){\nreturn\n}else {\n    let medianData = {}\n    const keys = Object.keys(msg.payload[0])\n    keys.forEach((key)=>{\n   if(key === \"timestamp\") return\nlet sorted = msg.payload.slice().sort((a,b)=> (a[key] > b[key]) ? 1 :((b[key] > a[key]  ) ? -1 : 0))\n \n let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle][key]\n   let timestamp = sorted[middle].timestamp\n   \n   \n   if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1][key] + sorted[middle][key] )/ 2\n        timestamp = (sorted[middle - 1].timestamp + sorted[middle].timestamp )/ 2\n    }\n    \n\n\nmedianData[key] = {\n    value: median,\n    timestamp\n}\n   \n    })\n    \n    msg.payload = medianData\n}\n\n\nreturn msg;",
+        "func": "// set up 59 as env.variable\n// check payload length\nif(msg.payload.length < 11 ){\nreturn\n}else {\n    let medianData = {}\n    const keys = Object.keys(msg.payload[0])\n    keys.forEach((key)=>{\n\nlet sorted = msg.payload.slice().sort((a,b)=> (a[key] > b[key]) ? 1 :((b[key] > a[key]  ) ? -1 : 0))\n \n let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle][key]\n   \n   \n   \n   if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1][key] + sorted[middle][key] )/ 2\n      \n    }\n\nmedianData = {\n    ...medianData,\n    [key]: median,\n}\n    })\n    \n    msg.payload = {...medianData, timestamp: msg.payload[0].timestamp}\n}\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -485,31 +276,42 @@
         "y": 400,
         "wires": [
             [
-                "d750531cf68b61a0"
+                "8480b9298ef09a5e",
+                "1813a8b3a05f28b2"
             ]
         ]
     },
     {
-        "id": "45f24c470cbeef0b",
-        "type": "function",
-        "z": "d43633168e4459a9",
-        "name": "median",
-        "func": "// set up 59 as env.variable\n\nif(msg.payload.length < 11 ){\nreturn\n}else {\n    const keys = Object.keys(msg.payload[0])\n    keys.forEach((key)=>{\n    let sorted = msg.payload.slice().sort((a,b)=> (a[key] > b[key]) ? 1 :((b[key] > a[key]  ) ? -1 : 0))\n\n   let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle].value\n   let timestamp = sorted[middle].timestamp\n \n\n    \n    if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1][key] + sorted[middle][key] )/ 2\n        timestamp = (sorted[middle - 1].timestamp + sorted[middle].timestamp )/ 2\n    }\n   \n  })\n  \n  msg.keys = keys\n}\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1260,
-        "y": 360,
+        "id": "1813a8b3a05f28b2",
+        "type": "change",
+        "z": "121db3a117c67412",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.sent",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 400,
         "wires": [
-            []
+            [
+                "5c8afa1c37497706"
+            ]
         ]
     },
     {
-        "id": "0ec898aff92b268b",
+        "id": "0f1594c6977ee81e",
         "type": "serial-port",
-        "serialport": "/dev/ttyUSB0",
+        "serialport": "COM3",
         "serialbaud": "9600",
         "databits": "8",
         "parity": "none",
