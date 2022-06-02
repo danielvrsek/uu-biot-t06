@@ -1,5 +1,234 @@
 [
     {
+        "id": "c6099cb141cc560e",
+        "type": "subflow",
+        "name": "authGateway",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 200,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "82116b4c9f5f3a36"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "0e23f55a502915ef",
+        "type": "http request",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:4000/auth/gateway/authorize",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": true,
+        "x": 710,
+        "y": 80,
+        "wires": [
+            [
+                "c1ac311303bda025"
+            ]
+        ]
+    },
+    {
+        "id": "b226ff8c1814552f",
+        "type": "inject",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "82116b4c9f5f3a36"
+            ]
+        ]
+    },
+    {
+        "id": "142ba9e7dec06fb7",
+        "type": "debug",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "82116b4c9f5f3a36",
+        "type": "change",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.content-type",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.secret",
+                "pt": "msg",
+                "to": "bc982d286906",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.workspaceId",
+                "pt": "msg",
+                "to": "62828f83a7d216494a413951",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 80,
+        "wires": [
+            [
+                "a56a433d841409f0"
+            ]
+        ]
+    },
+    {
+        "id": "a56a433d841409f0",
+        "type": "json",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 550,
+        "y": 80,
+        "wires": [
+            [
+                "0e23f55a502915ef"
+            ]
+        ]
+    },
+    {
+        "id": "c1ac311303bda025",
+        "type": "json",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 870,
+        "y": 80,
+        "wires": [
+            [
+                "142ba9e7dec06fb7",
+                "b63964cced4fc426"
+            ]
+        ]
+    },
+    {
+        "id": "a2c5c3917289c3c4",
+        "type": "catch",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 200,
+        "y": 320,
+        "wires": [
+            [
+                "76a911823f0f919d"
+            ]
+        ]
+    },
+    {
+        "id": "b63964cced4fc426",
+        "type": "change",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "global",
+                "to": "payload.token",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0500431d028b95ae",
+        "type": "debug",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "76a911823f0f919d",
+        "type": "file",
+        "z": "c6099cb141cc560e",
+        "name": "",
+        "filename": "AuthGatewayErrors.txt",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 400,
+        "y": 320,
+        "wires": [
+            [
+                "0500431d028b95ae"
+            ]
+        ]
+    },
+    {
         "id": "ef6140f8cf31fa28",
         "type": "tab",
         "label": "Send to cloud",
@@ -14,8 +243,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 140,
-        "y": 540,
+        "x": 80,
+        "y": 480,
         "wires": [
             [
                 "b2fe9bcea0387b04"
@@ -35,8 +264,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 330,
-        "y": 540,
+        "x": 230,
+        "y": 420,
         "wires": []
     },
     {
@@ -61,8 +290,8 @@
         "topic": "",
         "payload": "{\"sent\":false}",
         "payloadType": "json",
-        "x": 200,
-        "y": 220,
+        "x": 140,
+        "y": 120,
         "wires": [
             [
                 "3077bedb7ea861e0"
@@ -77,8 +306,8 @@
         "name": "",
         "collection": "WeatherData",
         "operation": "find",
-        "x": 470,
-        "y": 220,
+        "x": 410,
+        "y": 120,
         "wires": [
             [
                 "e76f173739eab29b"
@@ -98,8 +327,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 850,
-        "y": 160,
+        "x": 950,
+        "y": 60,
         "wires": []
     },
     {
@@ -110,8 +339,8 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 910,
-        "y": 220,
+        "x": 950,
+        "y": 120,
         "wires": [
             [
                 "bdea5adf607bd20d",
@@ -132,8 +361,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1110,
-        "y": 160,
+        "x": 1210,
+        "y": 60,
         "wires": []
     },
     {
@@ -150,8 +379,8 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 1110,
-        "y": 220,
+        "x": 1210,
+        "y": 120,
         "wires": [
             [
                 "2fb8eba0176a6a31"
@@ -169,8 +398,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 420,
-        "y": 440,
+        "x": 380,
+        "y": 360,
         "wires": [
             [
                 "a83c83258bbad90d"
@@ -181,23 +410,14 @@
         "id": "2fb8eba0176a6a31",
         "type": "switch",
         "z": "ef6140f8cf31fa28",
-        "name": "checkStatus",
+        "name": "checkStatusCode",
         "property": "statusCode",
         "propertyType": "msg",
         "rules": [
             {
-                "t": "btwn",
-                "v": "400",
-                "vt": "num",
-                "v2": "499",
-                "v2t": "num"
-            },
-            {
-                "t": "btwn",
-                "v": "500",
-                "vt": "num",
-                "v2": "599",
-                "v2t": "num"
+                "t": "eq",
+                "v": "401",
+                "vt": "num"
             },
             {
                 "t": "btwn",
@@ -209,18 +429,14 @@
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 3,
-        "x": 230,
-        "y": 380,
+        "outputs": 2,
+        "x": 170,
+        "y": 280,
         "wires": [
             [
-                "d97618b3b2d75fb2"
+                "40c682d24e7caa93"
             ],
             [
-                "d97618b3b2d75fb2"
-            ],
-            [
-                "d97618b3b2d75fb2",
                 "0b67c818509c1aa6"
             ]
         ]
@@ -237,24 +453,7 @@
         "multi": true,
         "operation": "update",
         "x": 710,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "d97618b3b2d75fb2",
-        "type": "debug",
-        "z": "ef6140f8cf31fa28",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 410,
-        "y": 380,
+        "y": 360,
         "wires": []
     },
     {
@@ -262,13 +461,13 @@
         "type": "file",
         "z": "ef6140f8cf31fa28",
         "name": "",
-        "filename": "SendingDataError.txt",
+        "filename": "SendToCloudErrors.txt",
         "appendNewline": true,
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "utf8",
-        "x": 600,
-        "y": 540,
+        "x": 340,
+        "y": 480,
         "wires": [
             []
         ]
@@ -277,7 +476,7 @@
         "id": "e76f173739eab29b",
         "type": "function",
         "z": "ef6140f8cf31fa28",
-        "name": "",
+        "name": "setRequestHeadersAndBody",
         "func": "const token = global.get(\"token\")\nmsg.headers = {\n    Authorization: \"Bearer \"+ token,\n    [\"content-type\"]: \"application/json\"\n}\nmsg.payload = {\n    data: msg.payload\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
@@ -285,7 +484,7 @@
         "finalize": "",
         "libs": [],
         "x": 720,
-        "y": 220,
+        "y": 120,
         "wires": [
             [
                 "62921504dcca70a7",
@@ -331,6 +530,76 @@
         "operation": "delete",
         "x": 410,
         "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2a770f2e51b3bcf9",
+        "type": "inject",
+        "z": "ef6140f8cf31fa28",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 660,
+        "wires": [
+            [
+                "d8d437a3ba9cfe7e"
+            ]
+        ]
+    },
+    {
+        "id": "d8d437a3ba9cfe7e",
+        "type": "mongodb in",
+        "z": "ef6140f8cf31fa28",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "WeatherData",
+        "operation": "find",
+        "x": 350,
+        "y": 660,
+        "wires": [
+            [
+                "465d0ab37a43b095"
+            ]
+        ]
+    },
+    {
+        "id": "465d0ab37a43b095",
+        "type": "debug",
+        "z": "ef6140f8cf31fa28",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "40c682d24e7caa93",
+        "type": "subflow:c6099cb141cc560e",
+        "z": "ef6140f8cf31fa28",
+        "name": "",
+        "x": 370,
+        "y": 260,
         "wires": []
     },
     {
