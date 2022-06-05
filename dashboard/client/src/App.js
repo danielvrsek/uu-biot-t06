@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthContext } from "./components/context/AuthContext";
 import FooterNavBar from "./components/navBars/FooterNavBar";
 
-import AuthRoute from "./components/AuthRoute/AuthRoute";
+import AuthRoute from "./components/authRoute/AuthRoute";
 import TopAppBar from "./components/navBars/TopAppBar";
 
 import routes from "./components/routes/Routes";

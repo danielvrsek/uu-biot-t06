@@ -4,7 +4,7 @@ import User from "../../pages/UserDashboard";
 import Login from "../../pages/Login";
 import CustomerInfo from "../../pages/CustomerInfo";
 import InDevelopment from "../inDevelopment/InDevelopment";
-import EditUser from "../EditUser/EditUser";
+import EditUser from "../editUser/EditUser";
 import DeleteUser from "../deleteUser/DeleteUser";
 
 const routes = [

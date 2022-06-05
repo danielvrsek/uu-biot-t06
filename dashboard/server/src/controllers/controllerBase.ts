@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { User } from 'dataLayer/entities/user.entity';
-import { Workspace } from 'dataLayer/entities/Workspace.entity';
+import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { CookieHelper } from 'utils/cookieHelper';

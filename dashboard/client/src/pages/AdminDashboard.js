@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import CreateUser from '../components/adminDashboard/CreateUser';
 import ActiveUsers from '../components/adminDashboard/ActiveUsers';
-import Profile from '../components/Profile/Profile';
+import Profile from '../components/profile/Profile';
 import Logout from '../components/logOut/Logout';
 
 import RightMenu from '../components/navBars/RightMenu';
 import MidContentDisplay from '../components/contentDisplay/MidContentDisplay';
-import EditUser from '../components/EditUser/EditUser';
+import EditUser from '../components/editUser/EditUser';
 
 const AdminDashboard = () => {
   const [activeComponent, setActiveComponent] = useState(0);
