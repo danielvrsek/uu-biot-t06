@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class WeatherData {
-    _id: string;
+    _id: Types.ObjectId;
 
     @Prop() humidity: number;
     @Prop() temperature: number;

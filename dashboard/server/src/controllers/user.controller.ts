@@ -16,15 +16,14 @@ import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 export class UserController {
     constructor(private readonly userRepository: UserRepository, private readonly userService: UserService) {}
 
+    @Get()
+    findAll(): Promise<User[]> {
+        return this.userRepository.findAllAsync();
+    }
+
     @Get('profile')
     getProfile(@Req() request) {
         return request.user;
-    }
-
-    @Get()
-    @UseGuards(RoleGuard(Role.Admin))
-    findAll(): Promise<User[]> {
-        return this.userRepository.findAllAsync();
     }
 
     @Get(':id')

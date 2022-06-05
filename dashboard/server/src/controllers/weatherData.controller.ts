@@ -36,8 +36,8 @@ export class WeatherDataController extends ControllerBase {
     @EnforceTokenType(TokenType.User)
     async findAllForCurrentWorkspaceAsync(@Req() request): Promise<GetWeatherDataForWorkspaceResponse[]> {
         const workspace = await this.getCurrentWorkspaceAsync(request);
-
         const availableGateways = await this.gatewayService.getAllGatewaysForWorkspace(workspace._id);
+        
         const result: GetWeatherDataForWorkspaceResponse[] = [];
         for (const gateway of availableGateways) {
             result.push({
@@ -50,6 +50,8 @@ export class WeatherDataController extends ControllerBase {
                 })),
             });
         }
+
+        
 
         return result;
     }
