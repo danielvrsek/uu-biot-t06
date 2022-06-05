@@ -1,70 +1,70 @@
-import Admin from "../../pages/AdminDashboard";
-import Home from "../../pages/Home";
-import User from "../../pages/UserDashboard";
-import Login from "../../pages/Login";
-import CustomerInfo from "../../pages/CustomerInfo";
-import InDevelopment from "../inDevelopment/InDevelopment";
-import EditUser from "../editUser/EditUser";
-import DeleteUser from "../deleteUser/DeleteUser";
+import Admin from '../../pages/AdminDashboard';
+import Home from '../../pages/Home';
+import User from '../../pages/UserDashboard';
+import Login from '../../pages/Login';
+import CustomerInfo from '../../pages/CustomerInfo';
+import InDevelopment from '../inDevelopment/InDevelopment';
+import EditUser from '../user/EditUser';
+import DeleteUser from '../user/DeleteUser';
 
 const routes = [
     {
-        path: "/",
+        path: '/',
         exact: true,
         component: Home,
-        name: "Home Page",
+        name: 'Home Page',
         protected: false,
     },
     {
-        path: "/admin",
+        path: '/admin',
         exact: true,
         component: Admin,
-        name: "Admin Dashboard",
+        name: 'Admin Dashboard',
         protected: true,
         role: [Admin],
     },
     {
-        path: "/user",
+        path: '/user',
         exact: true,
         component: User,
-        name: "User Dashboard",
+        name: 'User Dashboard',
         protected: true,
         role: [Admin, User],
     },
     {
-        path: "/login",
+        path: '/login',
         exact: true,
         component: Login,
-        name: "Login",
+        name: 'Login',
         protected: false,
     },
     {
-        path: "/customer-info",
+        path: '/customer-info',
         exact: true,
         component: CustomerInfo,
-        name: "Customer Information page",
+        name: 'Customer Information page',
         protected: false,
     },
     {
-        path: "/in-development",
+        path: '/in-development',
         exact: true,
         component: InDevelopment,
-        name: "Page is in development mode",
+        name: 'Page is in development mode',
         protected: false,
     },
     {
-        path: "/edit/:id",
+        path: '/edit/:id',
         exact: true,
         component: EditUser,
-        name: "Edit user",
+        name: 'Edit user',
         protected: true,
         role: [Admin, User],
     },
     {
-        path: "/delete/:id",
+        path: '/delete/:id',
         exact: true,
         component: DeleteUser,
-        name: "Delete user",
+        name: 'Delete user',
         protected: true,
         role: [Admin, User],
     },

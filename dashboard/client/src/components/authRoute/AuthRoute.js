@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const AuthRoute = (props) => {
     const [auth] = useAuth();
@@ -9,9 +9,9 @@ const AuthRoute = (props) => {
 
     useEffect(() => {
         if (auth.user == null) {
-            navigate("/login");
+            navigate('/login');
         }
-    }, [auth]);
+    }, [auth, navigate]);
 
     if (!auth.user) {
         return <></>;
