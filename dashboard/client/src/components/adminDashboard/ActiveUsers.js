@@ -9,7 +9,7 @@ const ActiveUsers = () => {
         ApiClient.getUsers().then((res) => {
             setUsers(res.data);
         });
-    });
+    }, []);
 
     return (
         <div className="ui cards" style={{ marginTop: '50px' }}>
