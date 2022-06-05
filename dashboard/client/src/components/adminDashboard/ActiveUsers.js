@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import ApiClient from "../../api/ApiClient";
+import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import ApiClient from '../../api/ApiClient';
 
 const ActiveUsers = () => {
-    const [auth] = useAuth();
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        ApiClient.getUsers(auth).then((res) => {
+        ApiClient.getUsers().then((res) => {
             setUsers(res.data);
         });
-    }, [auth]);
+    });
 
     return (
-        <div className="ui cards" style={{ marginTop: "50px" }}>
+        <div className="ui cards" style={{ marginTop: '50px' }}>
             {users.length === 0 ? (
                 <div> Relace vypršela prosím přihlašte se znovu</div>
             ) : (

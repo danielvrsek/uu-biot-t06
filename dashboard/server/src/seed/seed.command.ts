@@ -3,7 +3,7 @@ import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
 import { UserService } from 'services/user.service';
 import { WorkspaceService } from 'services/workspace.service';
-import { Role } from 'dataLayer/entities/enums/role.enum';
+import { UserRole } from 'dataLayer/entities/enums/role.enum';
 import { GatewayService } from 'services/gateway.service';
 
 @Injectable()
@@ -40,12 +40,12 @@ export class SeedCommand {
         console.log(workspace1);
 
         const workspaceMembership1 = await this.workspaceService.addUserToWorkspace(workspace1._id, user1._id, [
-            Role.User,
+            UserRole.User,
         ]);
         console.log(workspaceMembership1);
 
         const workspaceMembership2 = await this.workspaceService.addUserToWorkspace(workspace1._id, user2._id, [
-            Role.Admin,
+            UserRole.Admin,
         ]);
         console.log(workspaceMembership2);
 

@@ -5,6 +5,7 @@ import { SchemaConstants } from 'dataLayer/common/schemaConstants';
 import { WorkspaceSchema } from 'dataLayer/entities/workspace.entity';
 import { WorkspaceMembershipSchema } from 'dataLayer/entities/workspaceMembership.entity';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
+import { WorkspaceMembershipRepository } from 'dataLayer/repositories/workspaceMembership.repository';
 import { WorkspaceService } from 'services/workspace.service';
 import { SharedModule } from './shared.module';
 import { UserModule } from './user.module';
@@ -17,7 +18,7 @@ import { UserModule } from './user.module';
         SharedModule,
     ],
     controllers: [WorkspaceController],
-    providers: [WorkspaceService, WorkspaceRepository],
-    exports: [WorkspaceService, WorkspaceRepository],
+    providers: [WorkspaceService, WorkspaceRepository, WorkspaceMembershipRepository],
+    exports: [WorkspaceService, WorkspaceRepository, WorkspaceMembershipRepository],
 })
 export class WorkspaceModule {}

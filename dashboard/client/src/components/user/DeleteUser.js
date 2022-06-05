@@ -1,18 +1,16 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import ApiClient from "../../api/ApiClient";
-import { useAuth } from "../context/AuthContext";
+import ApiClient from '../../api/ApiClient';
 
 const DeleteUser = () => {
     const { id } = useParams();
-    const [auth] = useAuth();
 
-    const deleteUser = async () => ApiClient.deleteUser(id, auth);
+    const deleteUser = async () => ApiClient.deleteUser(id);
 
     return (
-        <div className="ui middle aligned container" style={{ marginTop: "50px", width: "400px" }}>
+        <div className="ui middle aligned container" style={{ marginTop: '50px', width: '400px' }}>
             <div className="ui negative message">
                 <div className="header">Opravdu chcete smazat tento účet?</div>
                 <p>Budou vymazána všechna data.</p>

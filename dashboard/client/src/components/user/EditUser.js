@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import ApiClient from "../../api/ApiClient";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import ApiClient from '../../api/ApiClient';
 
 const EditUser = () => {
     const navigate = useNavigate();
-    const [auth] = useAuth();
     const { id } = useParams();
     const [userEdit, setUserEdit] = useState({
-        name: "",
-        surname: "",
-        role: "",
-        email: "",
+        name: '',
+        surname: '',
+        role: '',
+        email: '',
     });
 
     useEffect(() => {
@@ -34,24 +32,20 @@ const EditUser = () => {
     const submit = (e) => {
         e.preventDefault();
 
-        ApiClient.editUser(
-            id,
-            {
-                email: userEdit.email,
-                name: userEdit.name,
-                role: userEdit.role,
-                surname: userEdit.surname,
-            },
-            auth
-        ).then(() => navigate("/"));
+        ApiClient.editUser(id, {
+            email: userEdit.email,
+            name: userEdit.name,
+            role: userEdit.role,
+            surname: userEdit.surname,
+        }).then(() => navigate('/'));
     };
 
     return (
-        <div className="ui middle aligned container" style={{ width: "600px" }}>
+        <div className="ui middle aligned container" style={{ width: '600px' }}>
             {userEdit === undefined ? (
                 <div> Nenašeli jsme uživatele, kterého hledáte.</div>
             ) : (
-                <form className="ui form" style={{ marginTop: "50px" }}>
+                <form className="ui form" style={{ marginTop: '50px' }}>
                     <h4 className="ui dividing header">Editovat uživatele</h4>
                     <div className="field">
                         <label>Jméno</label>

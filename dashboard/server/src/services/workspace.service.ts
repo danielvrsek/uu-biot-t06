@@ -4,8 +4,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateWorkspaceDto } from './dto/workspace.dto';
 import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
-import WorkspaceMembership from 'dataLayer/entities/workspaceMembership.entity';
-import { Role } from 'dataLayer/entities/enums/role.enum';
+import { WorkspaceMembership } from 'dataLayer/entities/workspaceMembership.entity';
+import { UserRole } from 'dataLayer/entities/enums/role.enum';
 
 @Injectable()
 export class WorkspaceService {
@@ -29,7 +29,7 @@ export class WorkspaceService {
         });
     }
 
-    async addUserToWorkspace(workspaceId: Types.ObjectId, userId: Types.ObjectId, roles: Role[]) {
+    async addUserToWorkspace(workspaceId: Types.ObjectId, userId: Types.ObjectId, roles: UserRole[]) {
         const newItem = new this.membershipModel({
             workspaceId: workspaceId,
             userId: userId,

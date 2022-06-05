@@ -24,7 +24,7 @@ const Login = () => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const [auth, setAuth] = useAuth();
+    const [, setAuth] = useAuth();
     const navigate = useNavigate();
 
     // Functionality
@@ -43,20 +43,26 @@ const Login = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-        const loginResponse = await ApiClient.login({
+        const { status } = await ApiClient.login({
             username,
             password,
         });
-        if (loginResponse.status !== 200) {
+        if (status !== 200) {
             throw new Error('TODO: Handle bad login');
         }
 
+        const workspacesResult = await ApiClient.getUserAvailableWorkspaces();
+        if (workspacesResult.status !== 200) {
+            throw new Error('TODO: Handle');
+        }
+        const workspaceId = workspacesResult.data[0]._id;
+        await ApiClient.setUserWorkspace(workspaceId);
+
         const { data } = await ApiClient.getUserInfo();
         setAuth({ user: data });
-        if (data.payload.role === 'Admin') {
+        if (data.roles.some((x) => x === 'Admin')) {
             navigate('/admin');
-        }
-        if (data.payload.role === 'User') {
+        } else {
             navigate('/user');
         }
     };

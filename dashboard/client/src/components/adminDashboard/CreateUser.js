@@ -1,33 +1,31 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import ApiClient from "../../api/ApiClient";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ApiClient from '../../api/ApiClient';
 
 const CreateUser = () => {
     const navigate = useNavigate();
-    const [auth] = useAuth();
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [verifyPassword, setVerifyPassword] = useState("");
-    const [role, setRole] = useState("");
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [verifyPassword, setVerifyPassword] = useState('');
+    const [role, setRole] = useState('');
 
     function matchPassword() {
         if (verifyPassword !== password) {
-            return <div style={{ color: "red" }}>"Zadané hesla se neshodují"</div>;
+            return <div style={{ color: 'red' }}>"Zadané hesla se neshodují"</div>;
         }
     }
     const submit = (e) => {
         e.preventDefault();
-        ApiClient.addUser({ name, surname, email, role }, auth).then(() => {
-            navigate("/");
+        ApiClient.addUser({ name, surname, email, role }).then(() => {
+            navigate('/');
         });
     };
 
     return (
         <div>
-            <form className="ui form" style={{ marginTop: "50px" }}>
+            <form className="ui form" style={{ marginTop: '50px' }}>
                 <h4 className="ui dividing header">Přidat nového uživatele</h4>
                 <div className="field">
                     <label>Jméno</label>

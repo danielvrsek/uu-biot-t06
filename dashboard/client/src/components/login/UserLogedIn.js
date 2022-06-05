@@ -1,5 +1,5 @@
-import React from "react";
-import { useAuth } from "../context/AuthContext";
+import React from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const UserLogedIn = () => {
     const [{ user }] = useAuth();
@@ -11,12 +11,12 @@ const UserLogedIn = () => {
             ) : (
                 <div className="ui comments">
                     <div className="comment">
-                        <div className="avatar" style={{ marginTop: "5px" }}>
+                        <div className="avatar" style={{ marginTop: '5px' }}>
                             <img src="https://semantic-ui.com/images/avatar/small/joe.jpg" alt="Avatar"></img>
                         </div>
                         <div className="content">
-                            <div className="autor">{user.payload.email}</div>
-                            <div className="date" style={{ marginTop: "2px" }}>
+                            <div className="autor">{user.email}</div>
+                            <div className="date" style={{ marginTop: '2px' }}>
                                 Tady bude vypsaná místnost
                             </div>
                         </div>

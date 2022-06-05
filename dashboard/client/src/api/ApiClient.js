@@ -1,25 +1,26 @@
 import axios from 'axios';
 import { getBasePath } from '../components/utils/pathHelper';
 
-const getMethod = (path, headers) => axios.get(getBasePath() + path, { headers });
-const postMethod = (path, payload, headers) => axios.post(getBasePath() + path, payload, { headers });
-const deleteMethod = (path, headers) => axios.delete(getBasePath() + path, { headers });
-const putMethod = (path, payload, headers) => axios.put(getBasePath() + path, payload, { headers });
+const getMethod = (path, headers) => axios.get(getBasePath() + path, { headers, withCredentials: true });
+const postMethod = (path, payload, headers) =>
+    axios.post(getBasePath() + path, payload, { headers, withCredentials: true });
+const deleteMethod = (path, headers) => axios.delete(getBasePath() + path, { headers, withCredentials: true });
+const putMethod = (path, payload, headers) =>
+    axios.put(getBasePath() + path, payload, { headers, withCredentials: true });
 
-const getHeaders = (auth) =>
-    auth
-        ? {
-              'Content-type': 'application/json',
-          }
-        : null;
+const getHeaders = () => ({
+    'Content-type': 'application/json',
+});
 
 const ApiClient = {
-    getUserInfo: async (auth) => getMethod('/auth/user-info', getHeaders(auth)),
-    getUser: async (id, auth) => getMethod(`/users/${id}`, getHeaders(auth)),
-    getUsers: async (auth) => getMethod('/users', getHeaders(auth)),
-    editUser: async (id, user, auth) => putMethod(`/users/${id}`, user, getHeaders(auth)),
-    deleteUser: async (id, auth) => deleteMethod(`/users/${id}`, getHeaders(auth)),
-    addUser: async (user, auth) => postMethod('/users', user, getHeaders(auth)),
+    getUserInfo: async () => getMethod('/auth/user-info'),
+    getUserAvailableWorkspaces: async () => getMethod('/workspace/user'),
+    setUserWorkspace: async (workspaceId) => putMethod('/workspace/user/current', { workspaceId }, getHeaders()),
+    getUser: async (id) => getMethod(`/users/${id}`, getHeaders()),
+    getUsers: async () => getMethod('/users', getHeaders()),
+    editUser: async (id, user) => putMethod(`/users/${id}`, user, getHeaders()),
+    deleteUser: async (id) => deleteMethod(`/users/${id}`, getHeaders()),
+    addUser: async (user) => postMethod('/users', user, getHeaders()),
     login: async (credentials) => postMethod('/auth/login', credentials),
 };
 

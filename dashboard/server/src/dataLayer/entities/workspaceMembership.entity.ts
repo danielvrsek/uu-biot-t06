@@ -1,13 +1,13 @@
 import { Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
-import { Role } from 'dataLayer/entities/enums/role.enum';
+import { UserRole } from 'dataLayer/entities/enums/role.enum';
 
 @Schema({ timestamps: true })
-export default class WorkspaceMembership {
+export class WorkspaceMembership {
     _id: Types.ObjectId;
 
-    @Prop() roles: Role[];
+    @Prop() roles: UserRole[];
 
     @Prop({ type: Types.ObjectId, ref: SchemaConstants.Workspace })
     workspaceId: string;

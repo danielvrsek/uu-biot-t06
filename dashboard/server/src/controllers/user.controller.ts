@@ -5,7 +5,7 @@ import RoleGuard from 'auth/guards/roles.guard';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { CreateUserDto, UpdateUserDto } from 'services/dto/user.dto';
 import { User } from 'dataLayer/entities/user.entity';
-import { Role } from 'dataLayer/entities/enums/role.enum';
+import { UserRole } from 'dataLayer/entities/enums/role.enum';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { TokenType } from 'auth/common/tokenType';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';

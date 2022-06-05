@@ -1,3 +1,4 @@
+import { UserRole } from 'dataLayer/entities/enums/role.enum';
 import { TokenInfo } from './token';
 
 export interface CreateUserDto {
@@ -20,4 +21,8 @@ export interface UserInfo extends TokenInfo {
     firstName: string;
     lastname: string;
     email: string;
+}
+
+export interface WorkspaceUserInfo extends UserInfo {
+    roles: UserRole[];
 }

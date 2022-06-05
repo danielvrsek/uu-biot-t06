@@ -9,8 +9,7 @@ import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { CreateWorkspaceDto, CurrentWorkspaceViewModel, SetCurrentWorkspaceDto } from 'services/dto/workspace.dto';
 import { WorkspaceService } from 'services/workspace.service';
-import { Role } from 'dataLayer/entities/enums/role.enum';
-import { UserRepository } from 'dataLayer/repositories/user.repository';
+import { UserRole } from 'dataLayer/entities/enums/role.enum';
 import { ControllerBase } from './controllerBase';
 import { UserRequest } from 'common/request';
 import { objectId } from 'utils/schemaHelper';
@@ -23,10 +22,9 @@ export class WorkspaceController extends ControllerBase {
     constructor(
         private readonly workspaceRepository: WorkspaceRepository,
         private readonly workspaceService: WorkspaceService,
-        private readonly userRepository: UserRepository,
         cookieHelper: CookieHelper
     ) {
-        super(cookieHelper, workspaceRepository, userRepository);
+        super(cookieHelper, workspaceRepository);
     }
 
     @Get()
@@ -70,7 +68,7 @@ export class WorkspaceController extends ControllerBase {
     async createAsync(@Req() request: UserRequest<void>, @Body() createDto: CreateWorkspaceDto): Promise<Workspace> {
         const user = await this.getCurrentUserAsync(request);
         const workspace = await this.workspaceService.createAsync(createDto);
-        await this.workspaceService.addUserToWorkspace(workspace._id, user._id, [Role.Admin]);
+        await this.workspaceService.addUserToWorkspace(workspace._id, user._id, [UserRole.Admin]);
 
         return workspace;
     }
