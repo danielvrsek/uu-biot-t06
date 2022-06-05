@@ -7,6 +7,7 @@ import { LocalGatewayAuthGuard } from 'auth/guards/local-gateway.guard';
 import { LocalUserAuthGuard } from 'auth/guards/local-user.guard';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { Cookies } from 'common/cookies';
+import { UserRequest } from 'common/request';
 import { Response } from 'express';
 import { AuthService } from 'services/auth.service';
 
@@ -16,19 +17,12 @@ export class AuthController {
 
     @Post('login')
     @UseGuards(LocalUserAuthGuard)
-    login(@Req() request, @Res({ passthrough: true }) response: Response): void {
+    login(@Req() request: UserRequest<void>, @Res({ passthrough: true }) response: Response): void {
         const token = this.authService.generateToken(request.user);
         response.cookie(Cookies.AuthCookie, token);
         response.status(200);
         response.json(request.user);
         response.end();
-    }
-
-    @HttpCode(200)
-    @Post('gateway/authorize')
-    @UseGuards(LocalGatewayAuthGuard)
-    authorizeGateway(@Req() request): { token: string } {
-        return { token: this.authService.generateToken(request.user) };
     }
 
     @Post('logout')
@@ -44,7 +38,14 @@ export class AuthController {
     @Get('user-info')
     @EnforceTokenType(TokenType.User)
     @UseGuards(JwtAuthGuard, TokenTypeGuard)
-    async getUserInfoAsync(@Req() request) {
+    async getUserInfoAsync(@Req() request: UserRequest<void>) {
         return request.user;
+    }
+
+    @HttpCode(200)
+    @Post('gateway/authorize')
+    @UseGuards(LocalGatewayAuthGuard)
+    authorizeGateway(@Req() request: UserRequest<void>): { token: string } {
+        return { token: this.authService.generateToken(request.user) };
     }
 }

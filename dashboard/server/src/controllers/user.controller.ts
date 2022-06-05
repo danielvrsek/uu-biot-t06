@@ -9,6 +9,7 @@ import { Role } from 'dataLayer/entities/enums/role.enum';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { TokenType } from 'auth/common/tokenType';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
+import { UserRequest } from 'common/request';
 
 @Controller('users')
 @EnforceTokenType(TokenType.User)
@@ -22,7 +23,7 @@ export class UserController {
     }
 
     @Get('profile')
-    getProfile(@Req() request) {
+    getProfile(@Req() request: UserRequest<void>) {
         return request.user;
     }
 

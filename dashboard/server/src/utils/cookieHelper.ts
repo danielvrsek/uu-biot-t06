@@ -1,15 +1,15 @@
-import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
+import { UserRequest } from 'common/request';
 import { Cookies } from '../common/cookies';
+import { objectId } from './schemaHelper';
+import { Types } from 'mongoose';
 
 export class CookieHelper {
-    constructor(private readonly workspaceRepository: WorkspaceRepository) {}
-
-    async getCurrentUserWorkspaceIdAsync(request) {
+    async getCurrentUserWorkspaceIdAsync<TPayload>(request: UserRequest<TPayload>): Promise<Types.ObjectId> {
         const workspaceId = request.cookies[Cookies.CurrentWorkspace];
         if (!workspaceId) {
             return undefined;
         }
 
-        return workspaceId;
+        return objectId(workspaceId);
     }
 }

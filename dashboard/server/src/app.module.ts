@@ -11,7 +11,6 @@ import { SeedCommand } from 'seed/seed.command';
 import { SharedModule } from 'modules/shared.module';
 import { PagesController } from './pages/pages.controller';
 
-
 @Module({
     imports: [
         MongooseModule.forRoot(MongooseConfig.mongoURI),

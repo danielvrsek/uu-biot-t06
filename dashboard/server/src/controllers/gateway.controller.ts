@@ -11,6 +11,7 @@ import { GatewayService } from 'services/gateway.service';
 import { objectId } from 'utils/schemaHelper';
 import { ControllerBase } from './controllerBase';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
+import { UserRequest } from 'common/request';
 
 @Controller('gateway')
 @EnforceTokenType(TokenType.User)
@@ -26,7 +27,7 @@ export class GatewayController extends ControllerBase {
     }
 
     @Get()
-    async findAllByWorkspaceAsync(@Req() request): Promise<Gateway[]> {
+    async findAllByWorkspaceAsync(@Req() request: UserRequest<void>): Promise<Gateway[]> {
         const workspace = await this.getCurrentWorkspaceAsync(request);
         return this.gatewayService.getAllGatewaysForWorkspace(workspace._id);
     }
@@ -42,7 +43,10 @@ export class GatewayController extends ControllerBase {
     }
 
     @Post()
-    async createAsync(@Req() request, @Body() createDto: CreateGatewayDto): Promise<CreateGatewayResult> {
+    async createAsync(
+        @Req() request: UserRequest<void>,
+        @Body() createDto: CreateGatewayDto
+    ): Promise<CreateGatewayResult> {
         const workspace = await this.getCurrentWorkspaceAsync(request);
         // TODO: check user authorization for the workspace
         return this.gatewayService.createAsync(workspace._id, createDto);

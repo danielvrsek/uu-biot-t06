@@ -1,4 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
+import { UserRequest } from 'common/request';
 import { User } from 'dataLayer/entities/user.entity';
 import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
@@ -12,7 +13,7 @@ export class ControllerBase {
         private readonly _userRepository?: UserRepository
     ) {}
 
-    protected async getCurrentUserAsync(request): Promise<User> {
+    protected async getCurrentUserAsync<TPayload>(request: UserRequest<TPayload>): Promise<User> {
         const userId = request.user.userId;
         const user = await this._userRepository.findByIdAsync(userId);
         if (!user) {
@@ -22,7 +23,7 @@ export class ControllerBase {
         return user;
     }
 
-    protected async getCurrentWorkspaceAsync(request): Promise<Workspace> {
+    protected async getCurrentWorkspaceAsync<TPayload>(request: UserRequest<TPayload>): Promise<Workspace> {
         const workspaceId = await this._cookieHelper.getCurrentUserWorkspaceIdAsync(request);
         if (!workspaceId) {
             throw new BadRequestException('No workspace selected.');

@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Container, Grid, Paper, Avatar, TextField, Button, InputAdornment, IconButton } from "@mui/material";
+import { Container, Grid, Paper, Avatar, TextField, Button, InputAdornment, IconButton } from '@mui/material';
 
-import LoginIcon from "@mui/icons-material/Login";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import ApiClient from "../api/ApiClient";
-import { useAuth } from "../components/context/AuthContext";
+import LoginIcon from '@mui/icons-material/Login';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import ApiClient from '../api/ApiClient';
+import { useAuth } from '../components/context/AuthContext';
 
 const Login = () => {
     //Style
     const paperStyle = {
-        padding: "30px 20px",
-        maxWidth: "400px",
-        margin: "20px auto",
+        padding: '30px 20px',
+        maxWidth: '400px',
+        margin: '20px auto',
     };
 
     // UseState
     const [state, setState] = useState({
         pswdVisibility: false,
     });
-    const [username, setUserName] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUserName] = useState('');
+    const [password, setPassword] = useState('');
 
     const [auth, setAuth] = useAuth();
     const navigate = useNavigate();
@@ -43,25 +43,26 @@ const Login = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-        const authResponse = await ApiClient.login({
+        const loginResponse = await ApiClient.login({
             username,
             password,
         });
+        if (loginResponse.status !== 200) {
+            throw new Error('TODO: Handle bad login');
+        }
 
-        let authTmp = { ...auth, userToken: authResponse.data };
-        ApiClient.getProfile(authTmp).then((res) => {
-            setAuth({ ...authTmp, user: res.data });
-            if (res.data.payload.role === "Admin") {
-                navigate("/admin");
-            }
-            if (res.data.payload.role === "User") {
-                navigate("/user");
-            }
-        });
+        const { data } = await ApiClient.getUserInfo();
+        setAuth({ user: data });
+        if (data.payload.role === 'Admin') {
+            navigate('/admin');
+        }
+        if (data.payload.role === 'User') {
+            navigate('/user');
+        }
     };
 
     return (
-        <Container style={{ height: "500px", paddingTop: "50px" }}>
+        <Container style={{ height: '500px', paddingTop: '50px' }}>
             <Paper style={paperStyle}>
                 <Grid align="center">
                     <Avatar>
@@ -79,7 +80,7 @@ const Login = () => {
                     />
                     <TextField
                         fullWidth
-                        type={state.pswdVisibility ? "text" : "password"}
+                        type={state.pswdVisibility ? 'text' : 'password'}
                         label="Password"
                         margin="normal"
                         onChange={(e) => setPassword(e.target.value)}

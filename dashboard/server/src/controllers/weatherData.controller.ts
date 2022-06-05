@@ -17,6 +17,7 @@ import {
 } from 'services/dto/weatherData.dto';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
+import { GatewayRequest, UserRequest } from 'common/request';
 
 @Controller('weather-data')
 @UseGuards(JwtAuthGuard, TokenTypeGuard)
@@ -34,10 +35,12 @@ export class WeatherDataController extends ControllerBase {
 
     @Get()
     @EnforceTokenType(TokenType.User)
-    async findAllForCurrentWorkspaceAsync(@Req() request): Promise<GetWeatherDataForWorkspaceResponse[]> {
+    async findAllForCurrentWorkspaceAsync(
+        @Req() request: UserRequest<void>
+    ): Promise<GetWeatherDataForWorkspaceResponse[]> {
         const workspace = await this.getCurrentWorkspaceAsync(request);
         const availableGateways = await this.gatewayService.getAllGatewaysForWorkspace(workspace._id);
-        
+
         const result: GetWeatherDataForWorkspaceResponse[] = [];
         for (const gateway of availableGateways) {
             result.push({
@@ -51,8 +54,6 @@ export class WeatherDataController extends ControllerBase {
             });
         }
 
-        
-
         return result;
     }
 
@@ -64,7 +65,10 @@ export class WeatherDataController extends ControllerBase {
 
     @Post()
     @EnforceTokenType(TokenType.Gateway)
-    async insertAsync(@Req() request, @Body() insertDto: InsertWeatherDataDto): Promise<InsertWeatherDataResponse> {
+    async insertAsync(
+        @Req() request: GatewayRequest<void>,
+        @Body() insertDto: InsertWeatherDataDto
+    ): Promise<InsertWeatherDataResponse> {
         const gateway = await this.gatewayRepository.findByIdAsync(objectId(request.user.gatewayId));
         if (!gateway) {
             throw new BadRequestException('Invalid gateway');
