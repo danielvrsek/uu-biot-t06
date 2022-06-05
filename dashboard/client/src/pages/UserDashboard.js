@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Profile from '../components/Profile/Profile';
+import Profile from '../components/profile/Profile';
 import ChartMainPage from '../components/charts/ChartMainPage';
 import Logout from '../components/logOut/Logout';
 

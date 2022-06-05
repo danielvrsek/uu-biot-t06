@@ -4,7 +4,7 @@ import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { CookieHelper } from 'utils/cookieHelper';
-import { Gateway } from 'dataLayer/entities/Gateway.entity';
+import { Gateway } from 'dataLayer/entities/gateway.entity';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 import { CreateGatewayDto, CreateGatewayResult } from 'services/dto/gateway.dto';
 import { GatewayService } from 'services/gateway.service';
