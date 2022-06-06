@@ -34,6 +34,7 @@ export class AuthController extends ControllerBase {
         response.cookie(Cookies.AuthCookie, token, {
             httpOnly: true,
             sameSite: 'none',
+            secure: true,
         });
         response.status(200);
         //response.json(await this.getWorkspaceUserInfoAsync(request.user, workspace._id));

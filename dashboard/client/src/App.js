@@ -1,15 +1,28 @@
-import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthContext } from "./components/context/AuthContext";
-import FooterNavBar from "./components/navBars/FooterNavBar";
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthContext } from './components/context/AuthContext';
+import FooterNavBar from './components/navBars/FooterNavBar';
 
-import AuthRoute from "./components/authRoute/AuthRoute";
-import TopAppBar from "./components/navBars/TopAppBar";
+import AuthRoute from './components/authRoute/AuthRoute';
+import TopAppBar from './components/navBars/TopAppBar';
 
-import routes from "./components/routes/Routes";
+import routes from './components/routes/Routes';
+import ApiClient from './api/ApiClient';
 
 function App() {
-    const [auth, setAuth] = useState({ user: null, userToken: null });
+    const [auth, setAuth] = useState({ user: null });
+    const [isInitialized, setIsInitialized] = useState(false);
+    useEffect(() => {
+        ApiClient.getUserInfo().then((res) => {
+            console.log(res.data);
+            if (res.status !== 401) setAuth({ user: res.data });
+            setIsInitialized(true);
+        });
+    }, [setAuth]);
+
+    if (!isInitialized) {
+        return <div></div>;
+    }
 
     return (
         <AuthContext.Provider value={[auth, setAuth]}>
@@ -33,7 +46,7 @@ function App() {
                         ></Route>
                     ))}
                 </Routes>
-                <div style={{ minHeight: "100px" }}></div>
+                <div style={{ minHeight: '100px' }}></div>
                 <FooterNavBar />
             </BrowserRouter>
         </AuthContext.Provider>

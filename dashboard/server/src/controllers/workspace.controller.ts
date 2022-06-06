@@ -54,7 +54,10 @@ export class WorkspaceController extends ControllerBase {
             throw new UnauthorizedException();
         }
 
-        response.cookie(Cookies.CurrentWorkspace, body.workspaceId);
+        response.cookie(Cookies.CurrentWorkspace, body.workspaceId, {
+            sameSite: 'none',
+            secure: true,
+        });
         response.status(200);
         response.end();
     }
