@@ -6,12 +6,12 @@ import * as fs from 'fs';
 const PORT = process.env.PORT || 4000;
 
 async function bootstrap() {
-    const httpsOptions = {
+    /* const httpsOptions = {
         key: fs.readFileSync('var\\localhost.key'),
         //key: fs.readFileSync('var\\herokuapp.key'),
         cert: fs.readFileSync('var\\localhost.cert'),
         //cert: fs.readFileSync('var\\herokuapp.cert'),
-    };
+    }; */
 
     const app = await NestFactory.create(AppModule, {
         //httpsOptions,
