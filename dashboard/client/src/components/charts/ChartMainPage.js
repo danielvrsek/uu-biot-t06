@@ -1,62 +1,48 @@
 import { Container } from '@mui/material';
-
+import React, {useEffect, useState} from 'react';
+import ApiClient from '../../api/ApiClient';
 import SimpleLineChart from './SimpleLineChart';
 
-const Home = () => {
-  const data = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+const ChartMainPage = () => {
+  const [chartData, setChartData] = useState()
+
+  let DATA = [];
+
+  useEffect(() => {
+    ApiClient.getWeatherData().then((res) => {
+        setChartData(res.data);
+    });
+   }, []);
+   
+
+   if (chartData != undefined) {
+    chartData.forEach(element => {DATA = (element.data)})
+    
+   }
+   let data = []
+ 
+   if (DATA.length > 0) {
+     DATA.forEach((element) => {
+       data.push(
+        {
+          name: "potom",
+          temperature: element.temperature,
+          humidity: element.humidity,
+        }
+        )
+     })
+   }
+  
 
   const lines = [
     {
       type: 'monotone',
-      dataKey: 'pv',
+      dataKey: 'temperature',
       stroke: '#8884d8',
     },
     {
       type: 'monotone',
-      dataKey: 'uv',
+      dataKey: 'humidity',
       stroke: '#82ca9d',
     },
   ];
@@ -69,4 +55,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ChartMainPage;

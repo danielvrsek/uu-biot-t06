@@ -14,10 +14,9 @@ function App() {
     const [isInitialized, setIsInitialized] = useState(false);
     useEffect(() => {
         ApiClient.getUserInfo().then((res) => {
-            console.log(res.data);
             if (res.status !== 401) setAuth({ user: res.data });
             setIsInitialized(true);
-        });
+        }).catch(() => setIsInitialized(true));
     }, [setAuth]);
 
     if (!isInitialized) {

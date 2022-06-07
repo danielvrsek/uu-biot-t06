@@ -22,6 +22,7 @@ const ApiClient = {
     deleteUser: async (id) => deleteMethod(`/users/${id}`, getHeaders()),
     addUser: async (user) => postMethod('/users', user, getHeaders()),
     login: async (credentials) => postMethod('/auth/login', credentials),
+    getWeatherData: async () => getMethod('/weather-data')
 };
 
 export default ApiClient;
