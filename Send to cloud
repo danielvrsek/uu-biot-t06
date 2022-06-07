@@ -1,5 +1,358 @@
 [
     {
+        "id": "cffbbb50e33f7a68",
+        "type": "subflow",
+        "name": "pingCloud",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "1ede5b622f834e88"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "1ede5b622f834e88",
+        "type": "http request",
+        "z": "cffbbb50e33f7a68",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://iotbe.herokuapp.com",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": true,
+        "x": 330,
+        "y": 140,
+        "wires": [
+            [
+                "f0d2108925835eb7"
+            ]
+        ]
+    },
+    {
+        "id": "f0d2108925835eb7",
+        "type": "switch",
+        "z": "cffbbb50e33f7a68",
+        "name": "validateStatusCode",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "eq",
+                "v": "ECONNREFUSED",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 530,
+        "y": 140,
+        "wires": [
+            [
+                "fc2899f39a7e806c"
+            ],
+            [
+                "d0bac1b99cdade0f"
+            ]
+        ]
+    },
+    {
+        "id": "fc2899f39a7e806c",
+        "type": "change",
+        "z": "cffbbb50e33f7a68",
+        "name": "setOnline",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Online",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 100,
+        "wires": [
+            [
+                "eb579c13d0a190b7"
+            ]
+        ]
+    },
+    {
+        "id": "d0bac1b99cdade0f",
+        "type": "change",
+        "z": "cffbbb50e33f7a68",
+        "name": "setOffline",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Offline",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 180,
+        "wires": [
+            [
+                "eb579c13d0a190b7"
+            ]
+        ]
+    },
+    {
+        "id": "e0766e1d08fff2e4",
+        "type": "inject",
+        "z": "cffbbb50e33f7a68",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "1ede5b622f834e88"
+            ]
+        ]
+    },
+    {
+        "id": "eb579c13d0a190b7",
+        "type": "ui_text",
+        "z": "cffbbb50e33f7a68",
+        "group": "b5647dd8ac47eae9",
+        "order": 4,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "Cloud:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 910,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "95a2c526f4ef6e01",
+        "type": "subflow",
+        "name": "pingGoogle",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "40cedfcf95cd5644"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "3cc5b17ddf5f6655",
+        "type": "ui_text",
+        "z": "95a2c526f4ef6e01",
+        "group": "b5647dd8ac47eae9",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "Connection:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 950,
+        "y": 120,
+        "wires": [],
+        "info": "if(true){\n    return yes;\n}else{\n    return no;\n}"
+    },
+    {
+        "id": "40cedfcf95cd5644",
+        "type": "http request",
+        "z": "95a2c526f4ef6e01",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.google.com/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": true,
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "a834a833d50c6ede"
+            ]
+        ]
+    },
+    {
+        "id": "a834a833d50c6ede",
+        "type": "switch",
+        "z": "95a2c526f4ef6e01",
+        "name": "validateStatusCode",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "ECONNREFUSED",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 490,
+        "y": 120,
+        "wires": [
+            [
+                "b51fae7da387a559"
+            ],
+            [
+                "67b0215008bb617e"
+            ]
+        ]
+    },
+    {
+        "id": "b51fae7da387a559",
+        "type": "change",
+        "z": "95a2c526f4ef6e01",
+        "name": "setOnline",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Online",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 80,
+        "wires": [
+            [
+                "3cc5b17ddf5f6655"
+            ]
+        ]
+    },
+    {
+        "id": "67b0215008bb617e",
+        "type": "change",
+        "z": "95a2c526f4ef6e01",
+        "name": "setOffline",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Offline",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 160,
+        "wires": [
+            [
+                "3cc5b17ddf5f6655"
+            ]
+        ]
+    },
+    {
+        "id": "0b8c37cfc495c128",
+        "type": "inject",
+        "z": "95a2c526f4ef6e01",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 180,
+        "wires": [
+            [
+                "40cedfcf95cd5644"
+            ]
+        ]
+    },
+    {
+        "id": "b5647dd8ac47eae9",
+        "type": "ui_group",
+        "name": "Connection",
+        "tab": "1649194ce587d352",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1649194ce587d352",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
         "id": "c6099cb141cc560e",
         "type": "subflow",
         "name": "authGateway",
@@ -7,11 +360,11 @@
         "category": "",
         "in": [
             {
-                "x": 140,
+                "x": 120,
                 "y": 40,
                 "wires": [
                     {
-                        "id": "82116b4c9f5f3a36"
+                        "id": "bd565e260b5ba234"
                     }
                 ]
             }
@@ -29,14 +382,14 @@
         "method": "POST",
         "ret": "txt",
         "paytoqs": "ignore",
-        "url": "http://localhost:4000/auth/gateway/authorize",
+        "url": "https://iotbe.herokuapp.com/auth/gateway/authorize",
         "tls": "",
         "persist": false,
         "proxy": "",
         "authType": "",
         "senderr": true,
-        "x": 750,
-        "y": 80,
+        "x": 410,
+        "y": 300,
         "wires": [
             [
                 "c1ac311303bda025"
@@ -54,30 +407,13 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 90,
-        "y": 140,
+        "x": 110,
+        "y": 160,
         "wires": [
             [
-                "82116b4c9f5f3a36"
+                "bd565e260b5ba234"
             ]
         ]
-    },
-    {
-        "id": "142ba9e7dec06fb7",
-        "type": "debug",
-        "z": "c6099cb141cc560e",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1170,
-        "y": 80,
-        "wires": []
     },
     {
         "id": "82116b4c9f5f3a36",
@@ -122,13 +458,10 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 340,
-        "y": 80,
+        "x": 1220,
+        "y": 40,
         "wires": [
-            [
-                "a56a433d841409f0",
-                "9b5386618a655387"
-            ]
+            []
         ]
     },
     {
@@ -139,8 +472,8 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 570,
-        "y": 80,
+        "x": 230,
+        "y": 300,
         "wires": [
             [
                 "0e23f55a502915ef"
@@ -155,11 +488,10 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 960,
-        "y": 80,
+        "x": 660,
+        "y": 300,
         "wires": [
             [
-                "142ba9e7dec06fb7",
                 "b63964cced4fc426"
             ]
         ]
@@ -183,28 +515,78 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 320,
-        "y": 240,
+        "x": 840,
+        "y": 300,
         "wires": [
             []
         ]
     },
     {
-        "id": "9b5386618a655387",
-        "type": "debug",
+        "id": "af0768961aaebe81",
+        "type": "json",
         "z": "c6099cb141cc560e",
         "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 570,
-        "y": 40,
-        "wires": []
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 510,
+        "y": 100,
+        "wires": [
+            [
+                "13e25a5b311e885b"
+            ]
+        ]
+    },
+    {
+        "id": "bd565e260b5ba234",
+        "type": "file in",
+        "z": "c6099cb141cc560e",
+        "name": "Credentials.txt",
+        "filename": "C:\\Users\\Vita\\Unicorn\\weatherstation\\Credentials.txt",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "utf8",
+        "allProps": false,
+        "x": 340,
+        "y": 100,
+        "wires": [
+            [
+                "af0768961aaebe81"
+            ]
+        ]
+    },
+    {
+        "id": "13e25a5b311e885b",
+        "type": "change",
+        "z": "c6099cb141cc560e",
+        "name": "setRequestHeadersAndBody",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "headers",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "headers.content-type",
+                "pt": "msg",
+                "to": "application/json",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 100,
+        "wires": [
+            [
+                "a56a433d841409f0"
+            ]
+        ]
     },
     {
         "id": "ef6140f8cf31fa28",
@@ -221,8 +603,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 80,
-        "y": 480,
+        "x": 120,
+        "y": 700,
         "wires": [
             [
                 "b2fe9bcea0387b04",
@@ -243,8 +625,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 310,
-        "y": 480,
+        "x": 350,
+        "y": 700,
         "wires": []
     },
     {
@@ -351,7 +733,7 @@
         "method": "POST",
         "ret": "txt",
         "paytoqs": "ignore",
-        "url": "http://localhost:4000/weather-data",
+        "url": "https://iotbe.herokuapp.com/weather-data",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -378,7 +760,7 @@
         "finalize": "",
         "libs": [],
         "x": 380,
-        "y": 360,
+        "y": 560,
         "wires": [
             [
                 "a83c83258bbad90d"
@@ -399,6 +781,11 @@
                 "vt": "num"
             },
             {
+                "t": "eq",
+                "v": "ECONNREFUSED",
+                "vt": "str"
+            },
+            {
                 "t": "btwn",
                 "v": "200",
                 "vt": "num",
@@ -408,12 +795,16 @@
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 2,
-        "x": 170,
-        "y": 280,
+        "outputs": 3,
+        "x": 130,
+        "y": 320,
         "wires": [
             [
                 "40c682d24e7caa93"
+            ],
+            [
+                "b3022783e165f3ec",
+                "d3510ba9aad23049"
             ],
             [
                 "0b67c818509c1aa6"
@@ -432,7 +823,7 @@
         "multi": true,
         "operation": "update",
         "x": 710,
-        "y": 360,
+        "y": 560,
         "wires": []
     },
     {
@@ -445,8 +836,8 @@
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "utf8",
-        "x": 490,
-        "y": 560,
+        "x": 530,
+        "y": 780,
         "wires": [
             []
         ]
@@ -477,7 +868,7 @@
         "z": "ef6140f8cf31fa28",
         "name": "",
         "x": 430,
-        "y": 260,
+        "y": 280,
         "wires": []
     },
     {
@@ -506,13 +897,31 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 250,
-        "y": 560,
+        "x": 290,
+        "y": 780,
         "wires": [
             [
                 "a80c07ef6e112c3c"
             ]
         ]
+    },
+    {
+        "id": "b3022783e165f3ec",
+        "type": "subflow:95a2c526f4ef6e01",
+        "z": "ef6140f8cf31fa28",
+        "name": "",
+        "x": 430,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "d3510ba9aad23049",
+        "type": "subflow:cffbbb50e33f7a68",
+        "z": "ef6140f8cf31fa28",
+        "name": "",
+        "x": 420,
+        "y": 360,
+        "wires": []
     },
     {
         "id": "ecb43e63847ff54b",
