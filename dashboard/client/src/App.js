@@ -36,7 +36,7 @@ function App() {
                             element={
                                 route.protected ? (
                                     <AuthRoute>
-                                        <route.component></route.component>
+                                        <route.component />
                                     </AuthRoute>
                                 ) : (
                                     <route.component />

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards, Req, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, Req, BadRequestException, Query } from '@nestjs/common';
 import { TokenType } from 'auth/common/tokenType';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
@@ -46,11 +46,6 @@ export class WeatherDataController extends ControllerBase {
             result.push({
                 gatewayId: gateway.id,
                 gatewayName: gateway.name,
-                data: (await this.weatherDataRepository.findAllByGatewayIdAsync(gateway.id)).map((data) => ({
-                    temperature: data.temperature,
-                    humidity: data.humidity,
-                    timestamp: data.timestamp,
-                })),
             });
         }
 
@@ -59,8 +54,12 @@ export class WeatherDataController extends ControllerBase {
 
     @Get('gateway/:gatewayId')
     @EnforceTokenType(TokenType.User)
-    findByGatewayIdAsync(@Param('gatewayId') gatewayId): Promise<WeatherData[]> {
-        return this.weatherDataRepository.findAllByGatewayIdAsync(gatewayId);
+    findByGatewayIdAsync(
+        @Param('gatewayId') gatewayId,
+        @Query('dateFrom') dateFrom?: Date,
+        @Query('dateTo') dateTo?: Date
+    ): Promise<WeatherData[]> {
+        return this.weatherDataRepository.findAllByGatewayIdAsync(gatewayId, dateFrom, dateTo);
     }
 
     @Post()

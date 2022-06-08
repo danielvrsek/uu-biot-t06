@@ -24,8 +24,11 @@ GET http://localhost:4000/auth/user-info
 ### Logout
 POST http://localhost:4000/auth/logout
 
-### Get weather data
+### Get available gateways
 GET http://localhost:4000/weather-data
+
+### Get weather data for gateway
+GET http://localhost:4000/weather-data/gateway/629c75a8f54e0f35c1f6bc39?dateFrom=2022-06-08T00:00:48.579Z&dateTo=2022-11-13T01:38:56.842Z
 
 ### Get current workspace
 GET http://localhost:4000/workspace/user/current

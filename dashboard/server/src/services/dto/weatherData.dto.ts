@@ -15,5 +15,4 @@ export interface WeatherDataDto {
 export interface GetWeatherDataForWorkspaceResponse {
     gatewayId: string;
     gatewayName: string;
-    data: WeatherDataDto[];
 }
