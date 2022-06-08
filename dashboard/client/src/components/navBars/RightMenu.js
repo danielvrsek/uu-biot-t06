@@ -2,7 +2,7 @@ import React from 'react';
 
 const RightMenu = ({ MenuData, setActiveComponent, activeComponent }) => {
   return (
-    <>
+    <div className={`ui fluid three item menu`}>
       {MenuData.map((item, i) => {
         return (
           <div
@@ -17,7 +17,7 @@ const RightMenu = ({ MenuData, setActiveComponent, activeComponent }) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 

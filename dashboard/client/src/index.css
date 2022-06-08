@@ -63,3 +63,8 @@ h1.ui.inverted.header {
   color: inherit;
   text-decoration: none;
 }
+
+.bottomMenu {
+  width: 50%;
+  margin-left: 25%;
+}

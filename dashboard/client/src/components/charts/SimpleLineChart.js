@@ -75,8 +75,6 @@ SimpleLineChart.defaultProps = {
   disableGrid: false,
   disableLegend: false,
   disableTooltip: false,
-  width: 500,
-  height: 500,
 };
 
 export default SimpleLineChart;
