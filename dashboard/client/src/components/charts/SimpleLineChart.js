@@ -19,6 +19,7 @@ const SimpleLineChart = (props) => {
         type={line.type}
         dataKey={line.dataKey}
         stroke={line.stroke}
+        dot={false}
         activeDot={{ r: 8 }}
       />
     );
@@ -39,7 +40,7 @@ const SimpleLineChart = (props) => {
         key="1"
       >
         {!props.disableGrid ? <CartesianGrid strokeDasharray="3 3" /> : null}
-        <XAxis dataKey="name" />
+        <XAxis dataKey="name" minTickGap={20}/>
         <YAxis />
         {!props.disableTooltip ? <Tooltip /> : null}
         {!props.disableLegend ? <Legend /> : null}
