@@ -21,6 +21,8 @@ const Home = () => {
       DATA = element.data;
     });
   }
+
+  console.log(DATA)
   let data = [];
 
   if (DATA.length > 0) {
@@ -32,6 +34,7 @@ const Home = () => {
       });
     });
   }
+
 
   const lines = [
     {
@@ -47,7 +50,7 @@ const Home = () => {
   ];
 
   return (
-    <Container style={{ height: "600px", paddingBottom: "20px" }}>
+    <Container style={{ height: "650px", paddingBottom: "20px" }}>
       <h1 style={{marginTop:"15px"}}>Graf s naměřenými hodnotami</h1>
       <SetTime />
       <SimpleLineChart data={data} lines={lines} />

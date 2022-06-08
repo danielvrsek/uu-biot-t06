@@ -30,6 +30,7 @@ const UserDashboard = () => {
             activeComponent={activeComponent}
           />
         </div>
+        <div style={{height: "80px"}}></div>
     </>
   );
 };
