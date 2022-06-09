@@ -4,7 +4,7 @@
         "type": "tab",
         "label": "Collect data",
         "disabled": false,
-        "info": "This flow is responsible for listening on serial port for incoming sensor data.\nIf there are no data, sensor sends request to cloud.\nIf there are data, flow saves data in a buffer.\nEvery 5minutes median is calculated base on buffer data. Median value is save in mongodb collection. Data from buffer are deleted.",
+        "info": "This flow is responsible for listening on serial port for incoming sensor data, downscaling and saving value to database.\n\nData are validated on input. If there is an error, it is saved to noDataLog.txt\n After validation data are downscaled using median function and save to MeteoData collection.",
         "env": []
     },
     {
@@ -35,8 +35,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 800,
-        "y": 180,
+        "x": 1140,
+        "y": 160,
         "wires": []
     },
     {
@@ -52,7 +52,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 550,
+        "x": 570,
         "y": 260,
         "wires": []
     },
@@ -68,7 +68,7 @@
         "y": 80,
         "wires": [
             [
-                "6dc058e3e0789ca0"
+                "726b2cd6c410a7a0"
             ]
         ]
     },
@@ -84,6 +84,13 @@
                 "pt": "msg",
                 "to": "",
                 "tot": "date"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -91,12 +98,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 420,
-        "y": 80,
+        "x": 360,
+        "y": 160,
         "wires": [
             [
-                "726b2cd6c410a7a0",
-                "979897e08b6e6ea5"
+                "162ec68bacd83941"
             ]
         ]
     },
@@ -105,17 +111,17 @@
         "type": "function",
         "z": "121db3a117c67412",
         "name": "validateDataInput",
-        "func": "if(!msg.payload.temperature || !msg.payload.humidity){\n    return [msg,null];\n    \n}\n   \n\n \n    \n    \n\nreturn [null, msg]\n\n",
+        "func": "if(!msg.payload.temperature || !msg.payload.humidity){\n    return [msg,null];\n    \n}\n\nreturn [null, msg]\n\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 130,
+        "x": 150,
         "y": 220,
         "wires": [
             [
-                "162ec68bacd83941"
+                "6dc058e3e0789ca0"
             ],
             [
                 "2ca1eaedc6356c14"
@@ -127,13 +133,13 @@
         "type": "file",
         "z": "121db3a117c67412",
         "name": "noDataLog.txt",
-        "filename": "C:\\Users\\Vita\\Unicorn\\weatherstation\\noSensorDataLog.txt",
+        "filename": "",
         "appendNewline": true,
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "utf8",
-        "x": 580,
-        "y": 180,
+        "x": 940,
+        "y": 160,
         "wires": [
             [
                 "7cd7876e186d3da8"
@@ -148,11 +154,11 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 410,
-        "y": 180,
+        "x": 530,
+        "y": 160,
         "wires": [
             [
-                "9df195cdc2791ad6"
+                "c588e867bdf19f86"
             ]
         ]
     },
@@ -167,7 +173,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 380,
+        "x": 360,
         "y": 260,
         "wires": [
             [
@@ -188,9 +194,14 @@
                 "p": "collection",
                 "v": "WeatherData",
                 "vt": "str"
+            },
+            {
+                "p": "timestamp",
+                "v": "",
+                "vt": "date"
             }
         ],
-        "repeat": "300",
+        "repeat": "${INJECT_INTERVAL}",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -201,7 +212,7 @@
         "y": 400,
         "wires": [
             [
-                "293a5156eeadc366"
+                "39d19cdd01a024bc"
             ]
         ]
     },
@@ -222,11 +233,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 380,
+        "x": 580,
         "y": 400,
         "wires": [
             [
-                "1d72efa8fd4c8a07"
+                "e71e66cc6cfe712b"
             ]
         ]
     },
@@ -235,7 +246,7 @@
         "type": "mongodb out",
         "z": "121db3a117c67412",
         "mongodb": "ecb43e63847ff54b",
-        "name": "saveMedianToCollection",
+        "name": "saveToCollection",
         "collection": "",
         "payonly": true,
         "upsert": false,
@@ -246,28 +257,11 @@
         "wires": []
     },
     {
-        "id": "8480b9298ef09a5e",
-        "type": "debug",
-        "z": "121db3a117c67412",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 930,
-        "y": 300,
-        "wires": []
-    },
-    {
         "id": "e71e66cc6cfe712b",
         "type": "function",
         "z": "121db3a117c67412",
         "name": "median",
-        "func": "\n\n    let medianData = {}\n    const keys = Object.keys(msg.payload[0])\n    keys.forEach((key)=>{\n\nlet sorted = msg.payload.slice().sort((a,b)=> (a[key] > b[key]) ? 1 :((b[key] > a[key]  ) ? -1 : 0))\n \n let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle][key]\n   \n   \n   \n   if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1][key] + sorted[middle][key] )/ 2\n      \n    }\n\nmedianData = {\n    ...medianData,\n    [key]: median,\n}\n    })\n    \n    msg.payload = {...medianData}\n\n\n\nreturn msg;",
+        "func": "let medianData = {}\nconst keys = Object.keys(msg.payload[0])\n    keys.forEach((key)=>{\n\nlet sorted = msg.payload.slice().sort((a,b)=> (a[key] > b[key]) ? 1 :((b[key] > a[key]  ) ? -1 : 0))\n \n let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle][key]\n   \n   \n   \n   if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1][key] + sorted[middle][key] )/ 2\n      \n    }\n\nmedianData = {\n    ...medianData,\n    [key]: median,\n}\n    })\n    \n    msg.payload = {...medianData}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -277,8 +271,7 @@
         "y": 400,
         "wires": [
             [
-                "1813a8b3a05f28b2",
-                "8480b9298ef09a5e"
+                "1813a8b3a05f28b2"
             ]
         ]
     },
@@ -286,7 +279,7 @@
         "id": "1813a8b3a05f28b2",
         "type": "change",
         "z": "121db3a117c67412",
-        "name": "setSentToFalse",
+        "name": "setDataProperties",
         "rules": [
             {
                 "t": "set",
@@ -294,6 +287,18 @@
                 "pt": "msg",
                 "to": "false",
                 "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "payload.timestamp",
+                "pt": "msg",
+                "to": "timestamp",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "timestamp",
+                "pt": "msg"
             }
         ],
         "action": "",
@@ -301,7 +306,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 960,
+        "x": 950,
         "y": 400,
         "wires": [
             [
@@ -310,39 +315,46 @@
         ]
     },
     {
-        "id": "1d72efa8fd4c8a07",
+        "id": "39d19cdd01a024bc",
+        "type": "switch",
+        "z": "121db3a117c67412",
+        "name": "validateNotEmpty",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 400,
+        "wires": [
+            [
+                "293a5156eeadc366"
+            ]
+        ]
+    },
+    {
+        "id": "c588e867bdf19f86",
         "type": "function",
         "z": "121db3a117c67412",
-        "name": "checkPayloadLength",
-        "func": "if(msg.payload.length < 60) return\nreturn msg;",
+        "name": "configFilePath",
+        "func": "const DOCS_PATH = env.get(\"DOCS_PATH\")\nconst filename = \"noSensorDataLog.txt\"\nmsg.filename = DOCS_PATH + filename\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 600,
-        "y": 400,
+        "x": 720,
+        "y": 160,
         "wires": [
             [
-                "e71e66cc6cfe712b"
+                "9df195cdc2791ad6"
             ]
         ]
-    },
-    {
-        "id": "979897e08b6e6ea5",
-        "type": "debug",
-        "z": "121db3a117c67412",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 690,
-        "y": 80,
-        "wires": []
     },
     {
         "id": "0f1594c6977ee81e",
