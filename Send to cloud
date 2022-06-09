@@ -11,7 +11,7 @@
                 "y": 100,
                 "wires": [
                     {
-                        "id": "1ede5b622f834e88"
+                        "id": "0c9ed334e0a54299"
                     }
                 ]
             }
@@ -29,13 +29,13 @@
         "method": "GET",
         "ret": "txt",
         "paytoqs": "ignore",
-        "url": "https://iotbe.herokuapp.com",
+        "url": "",
         "tls": "",
         "persist": false,
         "proxy": "",
         "authType": "",
         "senderr": true,
-        "x": 330,
+        "x": 490,
         "y": 140,
         "wires": [
             [
@@ -63,7 +63,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 530,
+        "x": 670,
         "y": 140,
         "wires": [
             [
@@ -93,7 +93,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 740,
+        "x": 860,
         "y": 100,
         "wires": [
             [
@@ -120,7 +120,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 740,
+        "x": 860,
         "y": 180,
         "wires": [
             [
@@ -143,7 +143,7 @@
         "y": 200,
         "wires": [
             [
-                "1ede5b622f834e88"
+                "0c9ed334e0a54299"
             ]
         ]
     },
@@ -152,17 +152,36 @@
         "type": "ui_text",
         "z": "cffbbb50e33f7a68",
         "group": "b5647dd8ac47eae9",
-        "order": 4,
-        "width": "0",
-        "height": "0",
+        "order": 2,
+        "width": 0,
+        "height": 0,
         "name": "",
         "label": "Cloud:",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
-        "x": 910,
+        "x": 1030,
         "y": 140,
         "wires": []
+    },
+    {
+        "id": "0c9ed334e0a54299",
+        "type": "function",
+        "z": "cffbbb50e33f7a68",
+        "name": "configURL",
+        "func": "const CLOUD_URL = env.get(\"CLOUD_URL\")\nconst path = \"\"\nmsg.url = CLOUD_URL + path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 140,
+        "wires": [
+            [
+                "1ede5b622f834e88"
+            ]
+        ]
     },
     {
         "id": "95a2c526f4ef6e01",
@@ -192,8 +211,8 @@
         "z": "95a2c526f4ef6e01",
         "group": "b5647dd8ac47eae9",
         "order": 1,
-        "width": "0",
-        "height": "0",
+        "width": 0,
+        "height": 0,
         "name": "",
         "label": "Connection:",
         "format": "{{msg.payload}}",
@@ -339,7 +358,7 @@
         "tab": "1649194ce587d352",
         "order": 1,
         "disp": true,
-        "width": 6,
+        "width": "6",
         "collapse": false,
         "className": ""
     },
@@ -364,7 +383,7 @@
                 "y": 40,
                 "wires": [
                     {
-                        "id": "bd565e260b5ba234"
+                        "id": "86c0c907e0a4e0bb"
                     }
                 ]
             }
@@ -382,13 +401,13 @@
         "method": "POST",
         "ret": "txt",
         "paytoqs": "ignore",
-        "url": "https://iotbe.herokuapp.com/auth/gateway/authorize",
+        "url": "",
         "tls": "",
         "persist": false,
         "proxy": "",
         "authType": "",
         "senderr": true,
-        "x": 410,
+        "x": 510,
         "y": 300,
         "wires": [
             [
@@ -411,57 +430,8 @@
         "y": 160,
         "wires": [
             [
-                "bd565e260b5ba234"
+                "86c0c907e0a4e0bb"
             ]
-        ]
-    },
-    {
-        "id": "82116b4c9f5f3a36",
-        "type": "change",
-        "z": "c6099cb141cc560e",
-        "name": "setRequestHeadersAndBody",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "headers",
-                "pt": "msg"
-            },
-            {
-                "t": "set",
-                "p": "headers.content-type",
-                "pt": "msg",
-                "to": "application/json",
-                "tot": "str"
-            },
-            {
-                "t": "delete",
-                "p": "payload",
-                "pt": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload.secret",
-                "pt": "msg",
-                "to": "bc982d286906",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.workspaceId",
-                "pt": "msg",
-                "to": "62828f83a7d216494a413951",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1220,
-        "y": 40,
-        "wires": [
-            []
         ]
     },
     {
@@ -472,11 +442,11 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 230,
+        "x": 190,
         "y": 300,
         "wires": [
             [
-                "0e23f55a502915ef"
+                "c0bd80c4e6764fac"
             ]
         ]
     },
@@ -488,7 +458,7 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 660,
+        "x": 680,
         "y": 300,
         "wires": [
             [
@@ -515,7 +485,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 840,
+        "x": 880,
         "y": 300,
         "wires": [
             []
@@ -529,7 +499,7 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 510,
+        "x": 610,
         "y": 100,
         "wires": [
             [
@@ -542,13 +512,13 @@
         "type": "file in",
         "z": "c6099cb141cc560e",
         "name": "Credentials.txt",
-        "filename": "C:\\Users\\Vita\\Unicorn\\weatherstation\\Credentials.txt",
+        "filename": "",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "utf8",
         "allProps": false,
-        "x": 340,
+        "x": 460,
         "y": 100,
         "wires": [
             [
@@ -580,7 +550,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
+        "x": 820,
         "y": 100,
         "wires": [
             [
@@ -589,11 +559,49 @@
         ]
     },
     {
+        "id": "86c0c907e0a4e0bb",
+        "type": "function",
+        "z": "c6099cb141cc560e",
+        "name": "configFilePath",
+        "func": "const DOCS_PATH = env.get(\"DOCS_PATH\")\nconst filename = \"Credentials.txt\"\nmsg.filename = DOCS_PATH + filename\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 100,
+        "wires": [
+            [
+                "bd565e260b5ba234"
+            ]
+        ]
+    },
+    {
+        "id": "c0bd80c4e6764fac",
+        "type": "function",
+        "z": "c6099cb141cc560e",
+        "name": "configURL",
+        "func": "const CLOUD_URL = env.get(\"CLOUD_URL\")\nconst path = \"auth/gateway/authorize\"\nmsg.url = CLOUD_URL + path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "0e23f55a502915ef"
+            ]
+        ]
+    },
+    {
         "id": "ef6140f8cf31fa28",
         "type": "tab",
         "label": "Send to cloud",
         "disabled": false,
-        "info": "",
+        "info": "This flow is reponsible for sendind data to cloud application.\nHappy day scenario:\n1. Data are loaded in msg.payload variable.\n2. Id of every document is stored in documentIds flow variable.\n3. Request is send to cloud app using bearer token for authorization, which was obtained from global variable token.\n4. Based on status code http response is validated.\n5. Property sent is changed to true for every sent document base on id match.\n\nAlternative scenario - statusCode 401 - not authorized:\n1. subflow authGateway is triggered\n2. token is requested using credentials stored in Credentials.txt\n\nAlternative scenario - statusCode ECONNREFUSED :\n1. Subflow pingGoogle is triggered\n2. Get request is sent to http.google.com\n3. Status connection in dashboard is based on reponse\n1. Subflow pingCloud is triggered\n2. Get request is sent to https.iotbe.heroku.com\n3. Status cloud in dashboard is based on\n\nAlternative scenario - unspecified error :\n1. All other errors are caught by catch node\n2. Error is logged in sentToCloudErrorLog.txt\n\n\n",
         "env": []
     },
     {
@@ -603,8 +611,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 120,
-        "y": 700,
+        "x": 100,
+        "y": 540,
         "wires": [
             [
                 "b2fe9bcea0387b04",
@@ -625,8 +633,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 350,
-        "y": 700,
+        "x": 410,
+        "y": 540,
         "wires": []
     },
     {
@@ -640,11 +648,11 @@
             },
             {
                 "p": "projection",
-                "v": "{\"temperature\":1,\"humidity\":1,\"timestamp\":1,\"_id\":0}",
+                "v": "{\"temperature\":1,\"humidity\":1,\"timestamp\":1}",
                 "vt": "json"
             }
         ],
-        "repeat": "301",
+        "repeat": "${INJECT_INTERVAL}",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -655,7 +663,7 @@
         "y": 120,
         "wires": [
             [
-                "3077bedb7ea861e0"
+                "eb5af10b0feef886"
             ]
         ]
     },
@@ -667,30 +675,13 @@
         "name": "",
         "collection": "WeatherData",
         "operation": "find",
-        "x": 410,
+        "x": 570,
         "y": 120,
         "wires": [
             [
-                "e76f173739eab29b"
+                "f0295efa3c82020c"
             ]
         ]
-    },
-    {
-        "id": "62921504dcca70a7",
-        "type": "debug",
-        "z": "ef6140f8cf31fa28",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 950,
-        "y": 60,
-        "wires": []
     },
     {
         "id": "a1afeb34c8fad9f2",
@@ -700,30 +691,13 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 970,
-        "y": 120,
+        "x": 110,
+        "y": 200,
         "wires": [
             [
-                "8956317983e3d7d5"
+                "a517652791171f52"
             ]
         ]
-    },
-    {
-        "id": "bdea5adf607bd20d",
-        "type": "debug",
-        "z": "ef6140f8cf31fa28",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1310,
-        "y": 60,
-        "wires": []
     },
     {
         "id": "8956317983e3d7d5",
@@ -733,18 +707,18 @@
         "method": "POST",
         "ret": "txt",
         "paytoqs": "ignore",
-        "url": "https://iotbe.herokuapp.com/weather-data",
+        "url": "",
         "tls": "",
         "persist": false,
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 1170,
-        "y": 120,
+        "x": 490,
+        "y": 200,
         "wires": [
             [
                 "2fb8eba0176a6a31",
-                "bdea5adf607bd20d"
+                "26cc133efed7a348"
             ]
         ]
     },
@@ -752,15 +726,15 @@
         "id": "0b67c818509c1aa6",
         "type": "function",
         "z": "ef6140f8cf31fa28",
-        "name": "sentTrue",
-        "func": "\nmsg.query = {\"sent\": false};\nmsg.payload = {\"$set\": {\"sent\": true}};\nreturn msg;",
+        "name": "setSentTrue",
+        "func": "const documentIds = flow.get(\"documentIds\")\nmsg.query = {\"_id\": {$in: documentIds }};\nmsg.payload = {\"$set\": {\"sent\": true}};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 380,
-        "y": 560,
+        "x": 510,
+        "y": 440,
         "wires": [
             [
                 "a83c83258bbad90d"
@@ -796,8 +770,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 130,
-        "y": 320,
+        "x": 170,
+        "y": 360,
         "wires": [
             [
                 "40c682d24e7caa93"
@@ -822,8 +796,8 @@
         "upsert": false,
         "multi": true,
         "operation": "update",
-        "x": 710,
-        "y": 560,
+        "x": 750,
+        "y": 440,
         "wires": []
     },
     {
@@ -831,13 +805,13 @@
         "type": "file",
         "z": "ef6140f8cf31fa28",
         "name": "sendToCloudErrorLog.txt",
-        "filename": "C:\\Users\\Vita\\Unicorn\\weatherstation\\SendToCloudErrorLog.txt",
+        "filename": "",
         "appendNewline": true,
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "utf8",
-        "x": 530,
-        "y": 780,
+        "x": 750,
+        "y": 620,
         "wires": [
             []
         ]
@@ -853,11 +827,10 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
+        "x": 1220,
         "y": 120,
         "wires": [
             [
-                "62921504dcca70a7",
                 "a1afeb34c8fad9f2"
             ]
         ]
@@ -867,7 +840,7 @@
         "type": "subflow:c6099cb141cc560e",
         "z": "ef6140f8cf31fa28",
         "name": "",
-        "x": 430,
+        "x": 510,
         "y": 280,
         "wires": []
     },
@@ -897,11 +870,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 290,
-        "y": 780,
+        "x": 350,
+        "y": 620,
         "wires": [
             [
-                "a80c07ef6e112c3c"
+                "dc4a7a4844664699"
             ]
         ]
     },
@@ -910,8 +883,8 @@
         "type": "subflow:95a2c526f4ef6e01",
         "z": "ef6140f8cf31fa28",
         "name": "",
-        "x": 430,
-        "y": 320,
+        "x": 510,
+        "y": 340,
         "wires": []
     },
     {
@@ -919,8 +892,130 @@
         "type": "subflow:cffbbb50e33f7a68",
         "z": "ef6140f8cf31fa28",
         "name": "",
-        "x": 420,
-        "y": 360,
+        "x": 500,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "bcf4d0d4c382af28",
+        "type": "function",
+        "z": "ef6140f8cf31fa28",
+        "name": "storeDocsIds",
+        "func": "let documentIds = []\nconst data = msg.payload.map(({_id, ...rest})=>{\n   documentIds.push(_id)\n    return rest\n})\nflow.set(\"documentIds\", documentIds)\nmsg.payload = data\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 120,
+        "wires": [
+            [
+                "e76f173739eab29b"
+            ]
+        ]
+    },
+    {
+        "id": "f0295efa3c82020c",
+        "type": "switch",
+        "z": "ef6140f8cf31fa28",
+        "name": "validateNotEmpty",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 120,
+        "wires": [
+            [
+                "bcf4d0d4c382af28"
+            ]
+        ]
+    },
+    {
+        "id": "eb5af10b0feef886",
+        "type": "delay",
+        "z": "ef6140f8cf31fa28",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 300,
+        "y": 120,
+        "wires": [
+            [
+                "3077bedb7ea861e0"
+            ]
+        ]
+    },
+    {
+        "id": "dc4a7a4844664699",
+        "type": "function",
+        "z": "ef6140f8cf31fa28",
+        "name": "configFilePath",
+        "func": "const DOCS_PATH = env.get(\"DOCS_PATH\")\nconst filename = \"SendToCloudErrorLog.txt\"\nmsg.filename = DOCS_PATH + filename\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 620,
+        "wires": [
+            [
+                "a80c07ef6e112c3c"
+            ]
+        ]
+    },
+    {
+        "id": "a517652791171f52",
+        "type": "function",
+        "z": "ef6140f8cf31fa28",
+        "name": "configURL",
+        "func": "const CLOUD_URL = env.get(\"CLOUD_URL\")\nconst path = \"weather-data\"\nmsg.url = CLOUD_URL + path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 200,
+        "wires": [
+            [
+                "8956317983e3d7d5"
+            ]
+        ]
+    },
+    {
+        "id": "26cc133efed7a348",
+        "type": "debug",
+        "z": "ef6140f8cf31fa28",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 200,
         "wires": []
     },
     {
