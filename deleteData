@@ -1,100 +1,174 @@
 [
     {
-        "id": "9b32b4be2bf6f0f5",
+        "id": "239ce23dac8b63ec",
         "type": "tab",
         "label": "Delete data",
         "disabled": false,
-        "info": "",
+        "info": "This flow deletes data in local mongoDB databse, which has property set to send and documents are older than 14 days",
         "env": []
     },
     {
-        "id": "4cd613a99286c957",
-        "type": "mongodb out",
-        "z": "9b32b4be2bf6f0f5",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "Temperature",
-        "collection": "Temperature",
-        "payonly": false,
-        "upsert": false,
-        "multi": false,
-        "operation": "delete",
-        "x": 730,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "aa0723d0b8bd65e4",
-        "type": "mongodb out",
-        "z": "9b32b4be2bf6f0f5",
-        "mongodb": "ecb43e63847ff54b",
-        "name": "Humidity",
-        "collection": "Humidity",
-        "payonly": false,
-        "upsert": false,
-        "multi": false,
-        "operation": "delete",
-        "x": 880,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "4d03f907b7540537",
+        "id": "9f9f8f99625021e9",
         "type": "inject",
-        "z": "9b32b4be2bf6f0f5",
+        "z": "239ce23dac8b63ec",
         "name": "deleteDataFromDatabase",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
+        "props": [],
         "repeat": "86400",
         "crontab": "",
         "once": false,
         "onceDelay": "",
         "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 280,
-        "y": 260,
+        "x": 200,
+        "y": 160,
         "wires": [
             [
-                "3cf54b8619ac67d5"
+                "8bb37e9f70e8b4bd"
             ]
         ]
     },
     {
-        "id": "3cf54b8619ac67d5",
+        "id": "8bb37e9f70e8b4bd",
         "type": "function",
-        "z": "9b32b4be2bf6f0f5",
-        "name": "queryDeleteAfter14Days",
-        "func": "msg.payload = {\n    \"sent\": true,\n    \"payload.timestamp\":{$lt: new Date().getTime() - (14*24*60*60*1000)}\n    \n};\n\nreturn msg;",
+        "z": "239ce23dac8b63ec",
+        "name": "queryDelete",
+        "func": "const REMOVAL_INTERVAL = env.get(\"REMOVAL_INTERVAL\")\nmsg.payload = {\n    \"sent\": true,\n    \"timestamp\":{$lt: Date.now() - REMOVAL_INTERVAL}\n    \n};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 590,
-        "y": 260,
+        "x": 430,
+        "y": 160,
         "wires": [
             [
-                "dcdce8f5a31c988a",
-                "aa0723d0b8bd65e4"
+                "f6682de2b1090646"
             ]
         ]
     },
     {
-        "id": "dcdce8f5a31c988a",
+        "id": "f6682de2b1090646",
         "type": "mongodb out",
-        "z": "9b32b4be2bf6f0f5",
+        "z": "239ce23dac8b63ec",
         "mongodb": "ecb43e63847ff54b",
-        "name": "Temperature",
-        "collection": "Temperature",
+        "name": "deleteWeatherData",
+        "collection": "WeatherData",
         "payonly": false,
         "upsert": false,
         "multi": false,
         "operation": "delete",
-        "x": 890,
-        "y": 240,
+        "x": 630,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "3a11ce029c6eb86b",
+        "type": "inject",
+        "z": "239ce23dac8b63ec",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "jsonata",
+        "x": 170,
+        "y": 440,
+        "wires": [
+            [
+                "64a45bfac1bd9c2d"
+            ]
+        ]
+    },
+    {
+        "id": "64a45bfac1bd9c2d",
+        "type": "mongodb out",
+        "z": "239ce23dac8b63ec",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "WeatherData",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 450,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "447e58b08811cead",
+        "type": "inject",
+        "z": "239ce23dac8b63ec",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 500,
+        "wires": [
+            [
+                "0abcd4133104b3b8"
+            ]
+        ]
+    },
+    {
+        "id": "0abcd4133104b3b8",
+        "type": "mongodb in",
+        "z": "239ce23dac8b63ec",
+        "mongodb": "ecb43e63847ff54b",
+        "name": "",
+        "collection": "WeatherData",
+        "operation": "find",
+        "x": 390,
+        "y": 500,
+        "wires": [
+            [
+                "a30745c7b398dcc5"
+            ]
+        ]
+    },
+    {
+        "id": "a30745c7b398dcc5",
+        "type": "debug",
+        "z": "239ce23dac8b63ec",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "5f71dab1ebcd2751",
+        "type": "comment",
+        "z": "239ce23dac8b63ec",
+        "name": "just development",
+        "info": "",
+        "x": 180,
+        "y": 380,
         "wires": []
     },
     {
