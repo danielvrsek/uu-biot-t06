@@ -7,6 +7,9 @@ import InDevelopment from '../inDevelopment/InDevelopment';
 import EditUser from '../user/EditUser';
 import DeleteUser from '../user/DeleteUser';
 
+import WorkspaceList from '../../admin_console/pages/workspaceList';
+import WorkspaceDetail from '../../admin_console/pages/workspaceDetail';
+
 const routes = [
     {
         path: '/',
@@ -67,6 +70,22 @@ const routes = [
         name: 'Delete user',
         protected: true,
         role: [Admin, User],
+    },
+    {
+        path: '/workspaces',
+        exact: true,
+        component: WorkspaceList,
+        name: 'Workspaces',
+        protected: true,
+        role: [Admin, User]
+    },
+    {
+        path: '/workspaces/:id',
+        exact: true,
+        component: WorkspaceDetail,
+        name: 'Workspace detail',
+        protected: true,
+        role: [Admin, User]
     },
 ];
 

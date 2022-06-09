@@ -41,11 +41,16 @@ const Home = () => {
 
   let DATA = [];
 
+  console.log(dateFrom);
+  console.log(dateTo);
+
   useEffect(() => {
-    ApiClient.getWeatherData().then((res) => {
+    ApiClient.getWeatherData(dateFrom.toISOString(), dateTo.toISOString()).then((res) => {
       setChartData(res.data);
     });
   }, []);
+
+  console.log(chartData);
 
   if (chartData !== undefined) {
     chartData.forEach((element) => {
