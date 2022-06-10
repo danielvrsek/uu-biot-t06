@@ -4,8 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { WeatherData } from 'dataLayer/entities/weatherData.entity';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
 import { objectId } from 'utils/schemaHelper';
-import endOfDay from 'date-fns/endOfDay';
-import startOfDay from 'date-fns/startOfDay';
+import * as dateFns from 'date-fns';
 
 @Injectable()
 export class WeatherDataRepository {
@@ -22,8 +21,8 @@ export class WeatherDataRepository {
         return await this.model.find({
             gatewayId: objectId(gatewayId),
             timestamp: {
-                $gte: dateFrom ? startOfDay(dateFrom) : new Date(-8640000000000000),
-                $lte: dateTo ? endOfDay(dateTo) : new Date(8640000000000000),
+                $gte: dateFrom ? dateFns.startOfDay(dateFrom) : new Date(-8640000000000000),
+                $lte: dateTo ? dateFns.endOfDay(dateTo) : new Date(8640000000000000),
             },
         });
     }

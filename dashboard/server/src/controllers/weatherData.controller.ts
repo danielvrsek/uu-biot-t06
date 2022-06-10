@@ -4,7 +4,6 @@ import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { CookieHelper } from 'utils/cookieHelper';
-import { WeatherData } from 'dataLayer/entities/weatherData.entity';
 import { WeatherDataRepository } from 'dataLayer/repositories/weatherData.repository';
 import { WeatherDataService } from 'services/weatherData.service';
 import { GatewayService } from 'services/gateway.service';
@@ -14,6 +13,7 @@ import {
     GetWeatherDataForWorkspaceResponse,
     InsertWeatherDataDto,
     InsertWeatherDataResponse,
+    WeatherDataDto,
 } from 'services/dto/weatherData.dto';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
@@ -54,12 +54,22 @@ export class WeatherDataController extends ControllerBase {
 
     @Get('gateway/:gatewayId')
     @EnforceTokenType(TokenType.User)
-    findByGatewayIdAsync(
+    async findByGatewayIdAsync(
         @Param('gatewayId') gatewayId,
-        @Query('dateFrom') dateFrom?: Date,
-        @Query('dateTo') dateTo?: Date
-    ): Promise<WeatherData[]> {
-        return this.weatherDataRepository.findAllByGatewayIdAsync(gatewayId, dateFrom, dateTo);
+        @Query('dateFrom') dateFrom?: string,
+        @Query('dateTo') dateTo?: string
+    ): Promise<WeatherDataDto[]> {
+        const data = await this.weatherDataRepository.findAllByGatewayIdAsync(
+            gatewayId,
+            new Date(dateFrom),
+            new Date(dateTo)
+        );
+
+        return data.map((x) => ({
+            temperature: x.temperature,
+            humidity: x.humidity,
+            timestamp: x.timestamp,
+        }));
     }
 
     @Post()
