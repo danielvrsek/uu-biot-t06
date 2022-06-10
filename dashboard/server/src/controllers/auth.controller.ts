@@ -5,10 +5,10 @@ import { JwtAuthGuard } from 'auth/guards/jwt.guard';
 import { LocalGatewayAuthGuard } from 'auth/guards/local-gateway.guard';
 import { LocalUserAuthGuard } from 'auth/guards/local-user.guard';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
-import { Cookies } from 'common/cookies';
+import { cookieOptions, Cookies } from 'common/cookies';
 import { UserRequest } from 'common/request';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
-import { Response } from 'express';
+import { CookieOptions, Response } from 'express';
 import { AuthService } from 'services/auth.service';
 import { UserInfo, WorkspaceUserInfo } from 'services/dto/user.dto';
 import { CookieHelper } from 'utils/cookieHelper';
@@ -31,11 +31,7 @@ export class AuthController extends ControllerBase {
     async loginAsync(@Req() request: UserRequest<void>, @Res({ passthrough: true }) response: Response): Promise<void> {
         const token = this.authService.generateToken(request.user);
 
-        response.cookie(Cookies.AuthCookie, token, {
-            httpOnly: true,
-            sameSite: 'none',
-            secure: true,
-        });
+        response.cookie(Cookies.AuthCookie, token, cookieOptions);
         response.status(200);
         //response.json(await this.getWorkspaceUserInfoAsync(request.user, workspace._id));
         response.end();
@@ -45,8 +41,8 @@ export class AuthController extends ControllerBase {
     @EnforceTokenType(TokenType.User)
     @UseGuards(JwtAuthGuard, TokenTypeGuard)
     logout(@Res() response: Response): void {
-        response.clearCookie(Cookies.AuthCookie);
-        response.clearCookie(Cookies.CurrentWorkspace);
+        response.clearCookie(Cookies.AuthCookie, cookieOptions);
+        response.clearCookie(Cookies.CurrentWorkspace, cookieOptions);
         response.statusCode = 200;
         response.end();
     }

@@ -28,4 +28,15 @@ export class WeatherDataService {
             new: true,
         });
     }
+
+    calculateGranularity(data: WeatherData[], dateFrom: Date, dateTo: Date, granularitySeconds: number): WeatherData[] {
+        /*const numberOfItems = dateFrom. - dateTo
+
+        const result: WeatherData[] = dateFrom - dateTo;
+
+        for (const item of data) {
+        }*/
+
+        return data;
+    }
 }

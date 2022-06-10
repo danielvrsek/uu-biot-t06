@@ -56,14 +56,18 @@ export class WeatherDataController extends ControllerBase {
     @EnforceTokenType(TokenType.User)
     async findByGatewayIdAsync(
         @Param('gatewayId') gatewayId,
-        @Query('dateFrom') dateFrom?: string,
-        @Query('dateTo') dateTo?: string
+        @Query('dateFrom') dateFromString?: string,
+        @Query('dateTo') dateToString?: string,
+        @Query('granularity') granularity?: number
     ): Promise<WeatherDataDto[]> {
-        const data = await this.weatherDataRepository.findAllByGatewayIdAsync(
-            gatewayId,
-            new Date(dateFrom),
-            new Date(dateTo)
-        );
+        const dateFrom = new Date(dateFromString);
+        const dateTo = new Date(dateToString);
+
+        let data = await this.weatherDataRepository.findAllByGatewayIdAsync(gatewayId, dateFrom, dateTo);
+
+        if (granularity) {
+            data = this.weatherDataService.calculateGranularity(data, dateFrom, dateTo, granularity);
+        }
 
         return data.map((x) => ({
             temperature: x.temperature,

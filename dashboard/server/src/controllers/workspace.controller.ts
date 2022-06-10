@@ -4,7 +4,7 @@ import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { CookieHelper } from 'utils/cookieHelper';
-import { Cookies } from 'common/cookies';
+import { cookieOptions, Cookies } from 'common/cookies';
 import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { CreateWorkspaceDto, CurrentWorkspaceViewModel, SetCurrentWorkspaceDto } from 'services/dto/workspace.dto';
@@ -54,10 +54,7 @@ export class WorkspaceController extends ControllerBase {
             throw new UnauthorizedException();
         }
 
-        response.cookie(Cookies.CurrentWorkspace, body.workspaceId, {
-            sameSite: 'none',
-            secure: true,
-        });
+        response.cookie(Cookies.CurrentWorkspace, body.workspaceId, cookieOptions);
         response.status(200);
         response.end();
     }
