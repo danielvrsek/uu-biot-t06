@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WeatherDataService } from 'services/weatherData.service';
+import { WeatherDataService } from '../../src/services/weatherData.service';
 
 describe('WeatherDataService', () => {
     let service: WeatherDataService;

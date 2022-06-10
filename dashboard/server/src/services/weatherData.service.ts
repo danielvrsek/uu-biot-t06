@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { WeatherData } from 'dataLayer/entities/weatherData.entity';
-import { InsertWeatherDataDto } from './dto/weatherData.dto';
+import { InsertWeatherDataDto, WeatherDataDto } from './dto/weatherData.dto';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
 import { objectId } from 'utils/schemaHelper';
 
@@ -29,14 +29,15 @@ export class WeatherDataService {
         });
     }
 
-    calculateGranularity(data: WeatherData[], dateFrom: Date, dateTo: Date, granularitySeconds: number): WeatherData[] {
-        /*const numberOfItems = dateFrom. - dateTo
+    sortWeatherData(data: WeatherData[]): WeatherData[] {
+        return data.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+    }
 
-        const result: WeatherData[] = dateFrom - dateTo;
-
-        for (const item of data) {
-        }*/
-
-        return data;
+    mapToWeatherDataDto(data: WeatherData[]): WeatherDataDto[] {
+        return data.map((x) => ({
+            temperature: x.temperature,
+            humidity: x.humidity,
+            timestamp: x.timestamp,
+        }));
     }
 }

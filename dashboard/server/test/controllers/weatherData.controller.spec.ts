@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WeatherDataController } from 'controllers/weatherData.controller';
+import { WeatherDataController } from '../../src/controllers/weatherData.controller';
 
 describe('WeatherDataController', () => {
     let controller: WeatherDataController;

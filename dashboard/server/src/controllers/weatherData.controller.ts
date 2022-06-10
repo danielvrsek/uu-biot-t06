@@ -18,11 +18,13 @@ import {
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 import { GatewayRequest, UserRequest } from 'common/request';
+import { WeatherDataGranularityService } from 'services/weatherDataGranularity.service';
 
 @Controller('weather-data')
 @UseGuards(JwtAuthGuard, TokenTypeGuard)
 export class WeatherDataController extends ControllerBase {
     constructor(
+        private readonly weatherDataGranuralityService: WeatherDataGranularityService,
         private readonly weatherDataRepository: WeatherDataRepository,
         private readonly weatherDataService: WeatherDataService,
         private readonly gatewayRepository: GatewayRepository,
@@ -64,16 +66,14 @@ export class WeatherDataController extends ControllerBase {
         const dateTo = new Date(dateToString);
 
         let data = await this.weatherDataRepository.findAllByGatewayIdAsync(gatewayId, dateFrom, dateTo);
+        data = this.weatherDataService.sortWeatherData(data);
+        let dataDto = this.weatherDataService.mapToWeatherDataDto(data);
 
         if (granularity) {
-            data = this.weatherDataService.calculateGranularity(data, dateFrom, dateTo, granularity);
+            dataDto = this.weatherDataGranuralityService.transformByGranularity(dataDto, dateFrom, dateTo, granularity);
         }
 
-        return data.map((x) => ({
-            temperature: x.temperature,
-            humidity: x.humidity,
-            timestamp: x.timestamp,
-        }));
+        return dataDto;
     }
 
     @Post()

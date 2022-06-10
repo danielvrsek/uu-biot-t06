@@ -5,6 +5,7 @@ import { SchemaConstants } from 'dataLayer/common/schemaConstants';
 import { WeatherDataSchema } from 'dataLayer/entities/weatherData.entity';
 import { WeatherDataRepository } from 'dataLayer/repositories/weatherData.repository';
 import { WeatherDataService } from 'services/weatherData.service';
+import { WeatherDataGranularityService } from 'services/weatherDataGranularity.service';
 import { GatewayModule } from './gateway.module';
 import { SharedModule } from './shared.module';
 import { WorkspaceModule } from './workspace.module';
@@ -17,6 +18,6 @@ import { WorkspaceModule } from './workspace.module';
         SharedModule,
     ],
     controllers: [WeatherDataController],
-    providers: [WeatherDataService, WeatherDataRepository],
+    providers: [WeatherDataService, WeatherDataRepository, WeatherDataGranularityService],
 })
 export class WeatherDataModule {}
