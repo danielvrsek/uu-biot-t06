@@ -47,4 +47,4 @@ admin
 
 user
 
-- cumí na graf
+- čumí na graf
