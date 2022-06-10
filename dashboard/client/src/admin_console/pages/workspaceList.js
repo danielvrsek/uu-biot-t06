@@ -5,18 +5,22 @@ import Loading from '../components/core/Loading';
 const WorkspaceList = () => {
     const data = [
         {
+            id: "123",
             name: "Workspace 1",
             weatherstations: 2
         },
         {
+            id: "123",
             name: "Workspace 2",
             weatherstations: 2
         },
         {
+            id: "123",
             name: "Workspace 3",
             weatherstations: 2
         },
         {
+            id: "123",
             name: "Workspace 4",
             weatherstations: 2
         }

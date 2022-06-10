@@ -1,6 +1,6 @@
 import WeatherstationItem from './WeatherstationItem';
 
-import { Container, Grid, Typography } from '@mui/material';
+import { Container, Grid, Typography, Button } from '@mui/material';
 
 const WeatherstationListReady = (props) => {
     const prepareItems = (itemList) => {
@@ -27,6 +27,7 @@ const WeatherstationListReady = (props) => {
     return (
         <Container sx={{ pt: 4 }}>
             <Typography variant="h3" mb={3}>Seznam stanic</Typography>
+            <Button>Přidat stanici</Button>
             <Grid container spacing={2}>
                 {
                     prepareItems(props.data)
