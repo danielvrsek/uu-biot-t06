@@ -32,3 +32,19 @@ Server - Patrik Kuba
 -   Learn more about Node RED (everyone)
 -   Meetings once a week
 -   Ask about documentation requirements (Kuba)
+
+Fuknčknost rolí
+---------------------------------------
+super admina 
+
+- vytváří workspaces
+
+admin 
+
+- může přidávat stanci
+- může editovat usery workspace 
+- přidat usera
+
+user
+
+- cumí na graf
