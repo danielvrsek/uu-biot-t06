@@ -9,7 +9,6 @@ import { WorkspaceModule } from './modules/workspace.module';
 import { CommandModule } from 'nestjs-command';
 import { SeedCommand } from 'seed/seed.command';
 import { SharedModule } from 'modules/shared.module';
-import { PagesController } from './pages/pages.controller';
 
 @Module({
     imports: [
@@ -23,6 +22,5 @@ import { PagesController } from './pages/pages.controller';
         CommandModule,
     ],
     providers: [SeedCommand],
-    controllers: [PagesController],
 })
 export class AppModule {}

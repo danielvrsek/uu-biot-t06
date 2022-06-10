@@ -15,17 +15,14 @@ export class WeatherDataGranularityService {
         const dateFromMillis = dateFrom.getTime();
         const dateToMillis = dateTo.getTime();
 
-        const numberOfItems = this.#calculateNumberOfItemsInTimeFrame(
-            dateFromMillis,
-            dateToMillis,
-            granularitySeconds * 1000
-        );
+        const itemCount = this.#calculateItemCount(dateFromMillis, dateToMillis, granularitySeconds * 1000);
+        const ratio = Math.floor(data.length / itemCount);
 
-        const ratio = Math.floor(data.length / numberOfItems);
-        const result = this.#generateDummyData(numberOfItems, dateFromMillis, granularitySeconds * 1000);
-        for (let i = 0; i < numberOfItems; i++) {
-            const timestamp = result[i].timestamp;
-            result[i] = this.#calculateGranularityBetween(timestamp, this.#getRelatedData(timestamp, data, ratio));
+        const timestamps = this.#generateTimestamps(itemCount, dateFromMillis, granularitySeconds * 1000);
+        const result: WeatherDataDto[] = [];
+        for (let i = 0; i < itemCount; i++) {
+            const timestamp = timestamps[i];
+            result.push(this.#calculateGranularityBetween(timestamp, this.#getRelatedData(timestamp, data, ratio)));
         }
 
         return result;
@@ -39,17 +36,13 @@ export class WeatherDataGranularityService {
         return [...iterator.takePreviousFor(timestamp), ...iterator.takeNextFor(timestamp)];
     }
 
-    #generateDummyData(length: number, dateFromMillis: number, granularityMillis: number): WeatherDataDto[] {
+    #generateTimestamps(length: number, dateFromMillis: number, granularityMillis: number): Date[] {
         const calculateTimestamp = (itemNumber) => new Date(dateFromMillis + itemNumber * granularityMillis);
 
-        return Array.from({ length }, (_, i) => ({
-            timestamp: calculateTimestamp(i),
-            humidity: 0,
-            temperature: 0,
-        }));
+        return Array.from({ length }, (_, i) => calculateTimestamp(i));
     }
 
-    #calculateNumberOfItemsInTimeFrame(millisFrom: number, millisTo: number, granularityMillis) {
+    #calculateItemCount(millisFrom: number, millisTo: number, granularityMillis) {
         if (millisFrom > millisTo) {
             throw new Error(`Invalid values - from: ${millisFrom}, to: ${millisTo}`);
         }
@@ -70,6 +63,7 @@ export class WeatherDataGranularityService {
             return 0;
         }
 
-        return numbers.reduce((a, b) => a + b) / numbers.length;
+        const avg = numbers.reduce((a, b) => a + b) / numbers.length;
+        return Math.round(avg * 10) / 10;
     }
 }

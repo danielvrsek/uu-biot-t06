@@ -24,7 +24,7 @@ const ApiClient = {
     login: async (credentials) => postMethod('/auth/login', credentials),
     getWeatherData: async (dateFrom, dateTo, granularity) =>
         getMethod(
-            `/weather-data/gateway/629c75a8f54e0f35c1f6bc39?dateFrom=${dateFrom.toISOString()}&dateTo=${dateTo.toISOString()}&granularity=${granularity.toString()}`
+            `/weather-data/gateway/629c75a8f54e0f35c1f6bc39?dateFrom=${dateFrom.toISOString()}&dateTo=${dateTo.toISOString()}&granularity=${granularity}`
         ),
     logout: () => postMethod('/auth/logout'),
     createGateway: async (name) => postMethod('/gateway', { name }),

@@ -52,8 +52,8 @@ const Home = () => {
             const date = new Date(element.timestamp);
             data.push({
                 name: date.toLocaleString(),
-                temperature: element.temperature,
-                humidity: element.humidity,
+                temperature: element.temperature.toFixed(1),
+                humidity: element.humidity.toFixed(1),
             });
         });
     }
