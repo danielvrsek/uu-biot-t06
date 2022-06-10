@@ -6,7 +6,6 @@ import Stack from "@mui/material/Stack";
 
 const UserLogedIn = () => {
   const [{ user }] = useAuth();
-  console.log(user);
 
   return (
     <div>
