@@ -48,3 +48,20 @@ admin
 user
 
 - čumí na graf
+
+Pohled dashboardu
+---------------------------------------
+
+# MAIN PAGE PO PŘIHLÁŠENÍ
+
+Po přihlášení budou oba dva dashboardy stejné (jak user tak admin)
+
+# PO KLIKNUTÍ NA URČITOU WORKSPACE
+
+user
+
+
+admin
+
+
+
