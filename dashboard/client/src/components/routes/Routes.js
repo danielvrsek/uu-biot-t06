@@ -1,6 +1,5 @@
-import Admin from '../../pages/AdminDashboard';
 import Home from '../../pages/Home';
-import User from '../../pages/UserDashboard';
+
 import Login from '../../pages/Login';
 import CustomerInfo from '../../pages/CustomerInfo';
 import InDevelopment from '../inDevelopment/InDevelopment';
@@ -18,22 +17,8 @@ const routes = [
         name: 'Home Page',
         protected: false,
     },
-    {
-        path: '/admin',
-        exact: true,
-        component: Admin,
-        name: 'Admin Dashboard',
-        protected: true,
-        role: [Admin],
-    },
-    {
-        path: '/user',
-        exact: true,
-        component: User,
-        name: 'User Dashboard',
-        protected: true,
-        role: [Admin, User],
-    },
+   
+   
     {
         path: '/login',
         exact: true,
@@ -61,7 +46,7 @@ const routes = [
         component: EditUser,
         name: 'Edit user',
         protected: true,
-        role: [Admin, User],
+       
     },
     {
         path: '/delete/:id',
@@ -69,7 +54,7 @@ const routes = [
         component: DeleteUser,
         name: 'Delete user',
         protected: true,
-        role: [Admin, User],
+
     },
     {
         path: '/workspaces',
@@ -77,7 +62,7 @@ const routes = [
         component: WorkspaceList,
         name: 'Workspaces',
         protected: true,
-        role: [Admin, User]
+
     },
     {
         path: '/workspaces/:id',
@@ -85,7 +70,7 @@ const routes = [
         component: WorkspaceDetail,
         name: 'Workspace detail',
         protected: true,
-        role: [Admin, User]
+  
     },
 ];
 

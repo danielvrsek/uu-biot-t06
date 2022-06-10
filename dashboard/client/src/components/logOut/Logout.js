@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useClearAuth } from "../context/AuthContext";
 import ApiClient from "../../api/ApiClient";
+import Button from '@mui/material/Button';
 
 const Logout = () => {
     const clearAuth = useClearAuth();
@@ -15,10 +16,9 @@ const Logout = () => {
 
     return (
         <div>
-            <h2>Opravdu se chcete odhlásit?</h2>
-            <button className="ui left floated button" onClick={submit}>
+            <Button variant='contained' size='small' onClick={submit}>
                 Odhlásit se
-            </button>
+            </Button>
         </div>
     );
 };
