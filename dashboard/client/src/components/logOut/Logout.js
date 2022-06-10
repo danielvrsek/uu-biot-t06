@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useClearAuth } from "../context/AuthContext";
+import ApiClient from "../../api/ApiClient";
 
 const Logout = () => {
     const clearAuth = useClearAuth();
@@ -9,6 +10,7 @@ const Logout = () => {
     const submit = () => {
         clearAuth();
         navigate("/");
+        ApiClient.logout();
     };
 
     return (

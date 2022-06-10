@@ -1,0 +1,6 @@
+
+> client@0.1.0 start
+> set HTTPS=true&&react-scripts start
+
+Starting the development server...
+

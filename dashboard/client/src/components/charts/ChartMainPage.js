@@ -14,7 +14,7 @@ const Home = () => {
   const [dateFrom, setDateFrom] = React.useState(yesterday);
   const [dateTo, setDateTo] = React.useState(today);
   const [granularity, setGranularity] = React.useState(defaultGranularity);
-
+  console.log(dateTo.toISOString())
   const handleDateFrom = (newDateFrom) => {
     setDateFrom(newDateFrom);
   };
@@ -42,7 +42,7 @@ const Home = () => {
   let DATA = [];
 
   useEffect(() => {
-    ApiClient.getWeatherData().then((res) => {
+    ApiClient.getWeatherData({dateFrom,dateTo}).then((res) => {
       setChartData(res.data);
     });
   }, []);
