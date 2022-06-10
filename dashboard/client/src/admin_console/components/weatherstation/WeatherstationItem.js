@@ -46,9 +46,8 @@ const WeatherstationItem = (props) => {
                     }
                 />
                 <Divider/>
-                <CardActionArea href={`../weatherstations/${props.data.id}`}>
+                <CardActionArea href={`/weatherstations/${props.data.id}`}>
                     <CardContent>
-                        
                         Content
                     </CardContent>
                 </CardActionArea>

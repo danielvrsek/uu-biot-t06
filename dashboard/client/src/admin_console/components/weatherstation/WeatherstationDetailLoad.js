@@ -4,8 +4,6 @@ import Error from '../core/Error';
 import Loading from '../core/Loading';
 import WeatherstationDetailReady from '../weatherstation/WeatherstationDetailReady';
 
-import ApiClient from "../../../api/ApiClient";
-
 const WeatherstationDetailLoad = () => {
     const data = {
         id: "123456",
@@ -18,14 +16,14 @@ const WeatherstationDetailLoad = () => {
     let result;
 
     switch (status) {
-        case "loading":
-            result = <Loading/>
-            break;
         case "success":
             result = <WeatherstationDetailReady data={data}/>
             break;
         case "error":
             result = <Error content="Error"/>
+            break;
+        default:
+            result = <Loading/>
     }
 
     return  result;

@@ -16,6 +16,7 @@ const SimpleLineChart = (props) => {
   props.lines.forEach((line) => {
     lines.push(
       <Line
+        key={line.dataKey}
         type={line.type}
         dataKey={line.dataKey}
         stroke={line.stroke}

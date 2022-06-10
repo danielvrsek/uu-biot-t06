@@ -36,11 +36,11 @@ const MainChartReady = (props) => {
                 dateFrom={props.dateFrom}
                 dateTo={props.dateTo}
                 granularity={props.granularity}
+                availableGranularity={props.availableGranularity}
                 handleDateFrom={props.handleDateFrom}
                 handleDateTo={props.handleDateTo}
                 handleGranularity={props.handleGranularity}
-                handleReset={props.reset}
-                handleSet={props.set}
+                handleReset={props.handleReset}
             />
             <SimpleLineChart data={chartData} lines={lines} />
         </Card>
