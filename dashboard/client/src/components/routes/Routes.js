@@ -8,6 +8,7 @@ import DeleteUser from '../user/DeleteUser';
 
 import WorkspaceList from '../../admin_console/pages/workspaceList';
 import WorkspaceDetail from '../../admin_console/pages/workspaceDetail';
+import WeatherstationDetail from '../../admin_console/pages/weatherstationDetail';
 
 const routes = [
     {
@@ -72,6 +73,14 @@ const routes = [
         protected: true,
   
     },
+    {
+        path: '/weatherstations/:id',
+        exact: true,
+        component: WeatherstationDetail,
+        name: 'Weatherstation detail',
+        protected: true,
+  
+    }
 ];
 
 export default routes;
