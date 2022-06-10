@@ -7,7 +7,7 @@ import { Container, Grid, Typography, Button } from '@mui/material';
 
 const WeatherstationListReady = (props) => {
     const prepareItems = (itemList) => {
-        if (props.data.length == 0) {
+        if (props.data.length === 0) {
             return (
                 <div>
                     Žádné dostupné stanice

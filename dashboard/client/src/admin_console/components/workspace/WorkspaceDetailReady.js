@@ -1,5 +1,3 @@
-import WorkspaceItem from "./WorkspaceItem";
-
 import { Container, Typography, Table, TableRow, TableCell } from '@mui/material';
 
 const WorkspaceDetailReady = (props) => {
