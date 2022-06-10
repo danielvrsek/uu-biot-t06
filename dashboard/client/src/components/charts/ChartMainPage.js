@@ -41,16 +41,11 @@ const Home = () => {
 
   let DATA = [];
 
-  console.log(dateFrom);
-  console.log(dateTo);
-
   useEffect(() => {
-    ApiClient.getWeatherData(dateFrom.toISOString(), dateTo.toISOString()).then((res) => {
+    ApiClient.getWeatherData().then((res) => {
       setChartData(res.data);
     });
   }, []);
-
-  console.log(chartData);
 
   if (chartData !== undefined) {
     chartData.forEach((element) => {
@@ -105,3 +100,4 @@ const Home = () => {
 };
 
 export default Home;
+

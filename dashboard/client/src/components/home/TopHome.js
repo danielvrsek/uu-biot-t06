@@ -1,7 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
 
 const TopHome = () => {
+  const [auth] = useAuth();
+  console.log(auth.user)
+ 
   return (
     <div className="ui inverted vertical masthead center aligned segment">
       <div className="ui text container" id="midCenter">
@@ -15,12 +20,13 @@ const TopHome = () => {
             <i className="right arrow icon" />
           </div>
         </NavLink>
-        <NavLink to="/login">
+        {auth.user === undefined ? ( <NavLink to="/login">
           <div className="ui huge primary button" id="topButton">
             "Přihlášení"
             <i className="right arrow icon" />
           </div>
-        </NavLink>
+        </NavLink>) : ""}
+        
       </div>
     </div>
   );

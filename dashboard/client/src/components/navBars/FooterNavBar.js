@@ -8,7 +8,7 @@ export default function BottomAppBar() {
         <div className="ui stackable inverted divided grid">
           <div className="four wide column">
             <NavLink to="/in-development" id="inherit-buttom">
-              <h4>Kontaky</h4>
+              <h4>Kontakty</h4>
             </NavLink>
           </div>
           <div className="four wide column">
