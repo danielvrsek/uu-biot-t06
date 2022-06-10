@@ -14,7 +14,7 @@ export default function MenuAppBar() {
                 <h4>Administrator</h4>
             </NavLink>
         ) : (
-            <NavLink to="/user" className="item">
+            <NavLink to="/workspaces" className="item">
                 <h4>Klientská sekce</h4>
             </NavLink>
         );

@@ -6,7 +6,7 @@ const WorkspaceItem = (props) => {
     return (
         <Grid item xs={12} sm={6} md={4} lg={3}>
             <Card>
-                <CardActionArea href={`./workspaces/${props.data.id}`} style={{ minHeight: "64px"}}>
+                <CardActionArea href={`/workspaces/${props.data.id}`} style={{ minHeight: "64px"}}>
                     <CardHeader 
                         title={props.data.name} 
                     />
