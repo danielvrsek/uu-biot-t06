@@ -1,7 +1,9 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function BottomAppBar() {
+  const [auth] = useAuth();
   return (
     <div className="footer">
       <div className="ui center aligned container">
@@ -28,14 +30,18 @@ export default function BottomAppBar() {
           </div>
         </div>
         <div className="ui inverted section divider"></div>
+
         <div
           className="ui horizontal small divided link list"
-          style={{ marginTop: '-10px' }}
+          style={{ marginTop: "-10px" }}
         >
-          <NavLink to="/login" className="item">
-            <h4>Přihlášení</h4>
-          </NavLink>
-
+          {auth.user === null ? (
+            <NavLink to="/login" className="item">
+              <h4>Přihlášení</h4>
+            </NavLink>
+          ) : (
+            ""
+          )}
           <NavLink to="/in-development" className="item">
             <div href="/" className="item">
               Obchodní podmínky

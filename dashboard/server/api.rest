@@ -38,8 +38,8 @@ POST http://localhost:4000/auth/gateway/authorize
 Content-Type: application/json
 
 {
-    "workspaceId": "629c75a8f54e0f35c1f6bc33",
-    "secret": "6b5cda537741"
+    "workspaceId": "62a38ae739b278d0c99583a2",
+    "secret": "772cecd8f255"
 }
 
 ### Insert weather data
@@ -60,7 +60,7 @@ POST http://localhost:4000/gateway
 Content-Type: application/json
 
 {
-    "name": "Test gateway"
+    "name": "Houbec"
 }
 
 ### Create workspace
@@ -68,5 +68,5 @@ POST http://localhost:4000/workspace
 Content-Type: application/json
 
 {
-    "name": "Test workspace"
+    "name": "Houbec"
 }

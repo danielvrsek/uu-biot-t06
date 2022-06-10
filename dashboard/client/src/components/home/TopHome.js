@@ -5,7 +5,6 @@ import { useAuth } from '../context/AuthContext';
 
 const TopHome = () => {
   const [auth] = useAuth();
-  console.log(auth.user)
  
   return (
     <div className="ui inverted vertical masthead center aligned segment">
@@ -20,7 +19,7 @@ const TopHome = () => {
             <i className="right arrow icon" />
           </div>
         </NavLink>
-        {auth.user === undefined ? ( <NavLink to="/login">
+        {auth.user === null ? ( <NavLink to="/login">
           <div className="ui huge primary button" id="topButton">
             "Přihlášení"
             <i className="right arrow icon" />

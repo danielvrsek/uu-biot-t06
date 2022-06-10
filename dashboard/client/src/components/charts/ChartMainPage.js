@@ -14,7 +14,7 @@ const Home = () => {
   const [dateFrom, setDateFrom] = React.useState(yesterday);
   const [dateTo, setDateTo] = React.useState(today);
   const [granularity, setGranularity] = React.useState(defaultGranularity);
-
+  console.log(dateTo.toISOString())
   const handleDateFrom = (newDateFrom) => {
     setDateFrom(newDateFrom);
   };
@@ -39,24 +39,16 @@ const Home = () => {
 
   const [chartData, setChartData] = useState();
 
-  let DATA = [];
-
   useEffect(() => {
-    ApiClient.getWeatherData().then((res) => {
+    ApiClient.getWeatherData(dateFrom.toISOString(), dateTo.toISOString()).then((res) => {
       setChartData(res.data);
     });
   }, []);
 
-  if (chartData !== undefined) {
-    chartData.forEach((element) => {
-      DATA = element.data;
-    });
-  }
-
   let data = [];
 
-  if (DATA.length > 0) {
-    DATA.forEach((element) => {
+  if (chartData && chartData.length > 0) {
+    chartData.forEach((element) => {
       const date = new Date(element.timestamp);
       data.push({
         name: date.toLocaleString(),

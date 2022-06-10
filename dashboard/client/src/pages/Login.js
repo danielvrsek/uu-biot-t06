@@ -61,9 +61,9 @@ const Login = () => {
         const { data } = await ApiClient.getUserInfo();
         setAuth({ user: data });
         if (data.roles.some((x) => x === 'Admin')) {
-            navigate('/admin');
+            navigate('/workspaces');
         } else {
-            navigate('/user');
+            navigate('/workspaces');
         }
     };
 

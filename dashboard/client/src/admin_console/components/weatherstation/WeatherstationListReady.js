@@ -1,10 +1,13 @@
+import React from 'react';
 import WeatherstationItem from './WeatherstationItem';
+import AddWeatherStation from './AddWeatherStation';
+import { Container, Grid, Typography, Button } from '@mui/material';
 
-import { Container, Grid, Typography } from '@mui/material';
+
 
 const WeatherstationListReady = (props) => {
     const prepareItems = (itemList) => {
-        if (props.data.length == 0) {
+        if (props.data.length === 0) {
             return (
                 <div>
                     Žádné dostupné stanice
@@ -27,6 +30,8 @@ const WeatherstationListReady = (props) => {
     return (
         <Container sx={{ pt: 4 }}>
             <Typography variant="h3" mb={3}>Seznam stanic</Typography>
+            
+            <AddWeatherStation />
             <Grid container spacing={2}>
                 {
                     prepareItems(props.data)

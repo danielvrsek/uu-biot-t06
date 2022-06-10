@@ -26,7 +26,7 @@ const SimpleLineChart = (props) => {
   });
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="80%">
       <LineChart
         width={props.width}
         height={props.height}

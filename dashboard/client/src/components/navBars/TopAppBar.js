@@ -10,11 +10,11 @@ export default function MenuAppBar() {
     let menu = null;
     if (user) {
         menu = user.roles.some((x) => x === 'Admin') ? (
-            <NavLink to="/admin" className="item">
+            <NavLink to="/workspaces" className="item">
                 <h4>Administrator</h4>
             </NavLink>
         ) : (
-            <NavLink to="/user" className="item">
+            <NavLink to="/workspaces" className="item">
                 <h4>Klientská sekce</h4>
             </NavLink>
         );

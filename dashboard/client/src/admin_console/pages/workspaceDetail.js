@@ -7,9 +7,11 @@ const WorkspaceDetail = () => {
     const stationList = [
         {
             name: "Weatherstation 1",
+            id: 123
         },
         {
             name: "Weatherstation 2",
+            id: 123
         }
     ];
 

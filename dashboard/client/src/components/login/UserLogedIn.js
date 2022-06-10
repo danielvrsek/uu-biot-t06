@@ -1,30 +1,35 @@
-import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import React from "react";
+import { useAuth } from "../context/AuthContext";
+import Logout from "../logOut/Logout";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
 
 const UserLogedIn = () => {
-    const [{ user }] = useAuth();
+  const [{ user }] = useAuth();
 
-    return (
+  return (
+    <div>
+      {user == null ? (
+        <div></div>
+      ) : (
         <div>
-            {user == null ? (
-                <div></div>
-            ) : (
-                <div className="ui comments">
-                    <div className="comment">
-                        <div className="avatar" style={{ marginTop: '5px' }}>
-                            <img src="https://semantic-ui.com/images/avatar/small/joe.jpg" alt="Avatar"></img>
-                        </div>
-                        <div className="content">
-                            <div className="autor">{user.email}</div>
-                            <div className="date" style={{ marginTop: '2px' }}>
-                                Tady bude vypsaná místnost
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+          <Stack direction="row" spacing={2}>
+            <Avatar
+              alt="Remy Sharp"
+              src="https://m.actve.net/evropa2/2021/08/1257915-660x372.jpg"
+            />
+
+            <h3 style={{ marginTop: "8px" }}>
+              {user.firstName} {user.lastname}
+            </h3>
+            <div style={{ marginTop: "5px" }}>
+              <Logout />
+            </div>
+          </Stack>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default UserLogedIn;
