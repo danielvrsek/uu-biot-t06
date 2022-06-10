@@ -6,7 +6,6 @@ import Stack from "@mui/material/Stack";
 
 const UserLogedIn = () => {
   const [{ user }] = useAuth();
-  console.log(user);
 
   return (
     <div>
@@ -19,13 +18,14 @@ const UserLogedIn = () => {
               alt="Remy Sharp"
               src="https://m.actve.net/evropa2/2021/08/1257915-660x372.jpg"
             />
-            
-            <h3 style={{marginTop: "8px"}}>
+
+            <h3 style={{ marginTop: "8px" }}>
               {user.firstName} {user.lastname}
             </h3>
-           <div style={{marginTop: "5px"}}><Logout /></div> 
-            </Stack>
-        
+            <div style={{ marginTop: "5px" }}>
+              <Logout />
+            </div>
+          </Stack>
         </div>
       )}
     </div>
