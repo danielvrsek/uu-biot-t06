@@ -103,6 +103,7 @@ export class ExternalAuthController extends ControllerBase {
             email: user.email,
             username: user.username,
             tokenType: TokenType.User,
+            profilePhotoUrl,
         });
         response.cookie(Cookies.AuthCookie, token, cookieOptions);
 

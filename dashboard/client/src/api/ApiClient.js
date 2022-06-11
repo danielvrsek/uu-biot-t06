@@ -1,15 +1,13 @@
 import axios from 'axios';
 import { getBasePath } from '../components/utils/pathHelper';
 
-const getMethod = (path, headers) =>
-    axios.get(getBasePath() + path, { headers, withCredentials: true });
+const getMethod = (path, headers) => axios.get(getBasePath() + path, { headers, withCredentials: true });
 const postMethod = (path, payload, headers) =>
     axios.post(getBasePath() + path, payload, {
         headers,
         withCredentials: true,
     });
-const deleteMethod = (path, headers) =>
-    axios.delete(getBasePath() + path, { headers, withCredentials: true });
+const deleteMethod = (path, headers) => axios.delete(getBasePath() + path, { headers, withCredentials: true });
 const putMethod = (path, payload, headers) =>
     axios.put(getBasePath() + path, payload, {
         headers,
@@ -24,8 +22,7 @@ const ApiClient = {
     getUserInfo: async () => getMethod('/auth/user-info'),
     getWorkspaceInfo: async () => getMethod('/auth/workspace-info'),
     getUserAvailableWorkspaces: async () => getMethod('/workspaces/user'),
-    setUserWorkspace: async (workspaceId) =>
-        putMethod('/workspaces/user/current', { workspaceId }, getHeaders()),
+    setUserWorkspace: async (workspaceId) => putMethod('/workspaces/user/current', { workspaceId }, getHeaders()),
     login: async (credentials) => postMethod('/auth/login', credentials),
     getWeatherData: async (gatewayId, dateFrom, dateTo, granularity) =>
         getMethod(
@@ -36,10 +33,8 @@ const ApiClient = {
     getGateway: async (id) => getMethod(`/gateways/${id}`),
     getGateways: async () => getMethod(`/gateways`),
     getCurrentWorkspace: async () => getMethod(`/workspaces/user/current`),
-    getCurrentWorkspaceUsers: async () =>
-        getMethod(`/workspaces/current/users`),
-    getAddUserToCurrentSpace: async (username) =>
-        postMethod(`/workspaces/current/users`, { username }),
+    getCurrentWorkspaceUsers: async () => getMethod(`/workspaces/current/users`),
+    addUserToCurrentSpace: async (username) => postMethod(`/workspaces/current/users`, { username }),
 };
 
 export default ApiClient;

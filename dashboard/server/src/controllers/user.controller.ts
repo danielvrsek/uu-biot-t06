@@ -52,28 +52,6 @@ export class UserController extends ControllerBase {
         }));
     }
 
-    @Get('profile-photo')
-    async getProfilePhotoAsync(@Req() request: UserRequest<void>, @Res() res): Promise<void> {
-        const user = await this.getCurrentUserAsync(request);
-        if (!user) {
-            throw new UnauthorizedException();
-        }
-
-        const profilePhotoUrl = user.profilePhotoUrl ? user.profilePhotoUrl : 'default.jpg';
-        const path = join(process.cwd(), 'public/profile-photos/', profilePhotoUrl);
-        if (!fs.existsSync(path)) {
-            res.status = 404;
-            return;
-        }
-
-        res.set({
-            'Content-Type': 'image/jpeg',
-        });
-
-        const file = createReadStream(path);
-        file.pipe(res);
-    }
-
     @Get('profile-photo/:filename')
     getProfilePhotoFromFilename(@Param('filename') filename: string, @Res() res) {
         const path = join(process.cwd(), 'public/profile-photos/', filename);

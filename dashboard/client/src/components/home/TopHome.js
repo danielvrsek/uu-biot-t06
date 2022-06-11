@@ -12,14 +12,14 @@ const TopHome = () => {
                 <h2>Jednodušší už to být nemůže ...</h2>
                 <NavLink to="/customer-info">
                     <div className="ui huge primary button" id="topButton">
-                        "Jak vše funguje?"
+                        Jak vše funguje?
                         <i className="right arrow icon" />
                     </div>
                 </NavLink>
                 {userContext === null ? (
                     <NavLink to="/login">
                         <div className="ui huge primary button" id="topButton">
-                            "Přihlášení"
+                            Přihlášení
                             <i className="right arrow icon" />
                         </div>
                     </NavLink>

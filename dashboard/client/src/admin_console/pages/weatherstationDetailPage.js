@@ -33,7 +33,7 @@ const WeatherstationDetailPage = () => {
             <Typography sx={{ mt: '48px' }} variant="h4">
                 Graf naměřených hodnot
             </Typography>
-            <MainChartLoad gatewayId={data._id} />
+            <MainChartLoad gateway={data} />
         </Container>
     );
 };

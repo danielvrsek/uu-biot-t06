@@ -7,19 +7,6 @@ import UserLogedIn from '../login/UserLogedIn';
 export default function MenuAppBar() {
     const [workspaceContext] = useWorkspaceContext();
 
-    let menu = null;
-    if (workspaceContext) {
-        menu = workspaceContext.roles.some((x) => x === 'Admin') ? (
-            <NavLink to="/workspaces" className="item">
-                <h4>Administrator</h4>
-            </NavLink>
-        ) : (
-            <NavLink to="/workspace" className="item">
-                <h4>Klientská sekce</h4>
-            </NavLink>
-        );
-    }
-
     return (
         <div>
             <div className="ui secondary pointing menu">
@@ -29,7 +16,16 @@ export default function MenuAppBar() {
                 <NavLink to="/customer-info" className="item">
                     <h4>Zákaznické prostředí</h4>
                 </NavLink>
-                {menu ? menu : <div></div>}
+                <NavLink to="/workspaces" className="item">
+                    <h4>Workspaces</h4>
+                </NavLink>
+                {workspaceContext && workspaceContext.roles.some((x) => x === 'User') ? (
+                    <NavLink to="/workspace" className="item">
+                        <h4>Klientská sekce</h4>
+                    </NavLink>
+                ) : (
+                    <></>
+                )}
                 <div className="right menu">
                     <div className="ui item">
                         {' '}

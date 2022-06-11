@@ -6,7 +6,7 @@ import MainChartReady from './MainChartReady';
 
 import ApiClient from '../../../api/ApiClient';
 
-const MainChartLoad = ({ gatewayId }) => {
+const MainChartLoad = ({ gateway }) => {
     //Dates
     const today = new Date();
     const yesterday = new Date(today);
@@ -21,7 +21,7 @@ const MainChartLoad = ({ gatewayId }) => {
         let data = granularityList.filter((item) => item.granularity === 0 || item.granularity >= dateRange);
         setGranularity(data[0].granularity);
         setAvailableGranularity(data);
-    }, []);
+    }, [dateFrom, dateTo]);
 
     //Granularity
     const [granularity, setGranularity] = useState(null);
@@ -41,19 +41,21 @@ const MainChartLoad = ({ gatewayId }) => {
             return;
         }
 
-        ApiClient.getWeatherData(gatewayId, dateFrom, dateTo, granularity).then((res) => {
-            if (res.status === 200) {
-                setChartData(res.data);
-                setStatus('success');
-            } else {
-                setStatus('error');
-            }
-        }).catch((e) => setStatus('error'));;
-    }, [gatewayId, dateFrom, dateTo, granularity]);
+        ApiClient.getWeatherData(gateway._id, dateFrom, dateTo, granularity)
+            .then((res) => {
+                if (res.status === 200) {
+                    setChartData(res.data);
+                    setStatus('success');
+                } else {
+                    setStatus('error');
+                }
+            })
+            .catch((e) => setStatus('error'));
+    }, [gateway, dateFrom, dateTo, granularity]);
 
     switch (status) {
         case 'success':
-            return (
+            return gateway.state ? (
                 <MainChartReady
                     data={chartData}
                     dateFrom={dateFrom}
@@ -65,6 +67,8 @@ const MainChartLoad = ({ gatewayId }) => {
                     handleGranularity={(event) => setGranularity(event.target.value)}
                     handleReset={reset}
                 />
+            ) : (
+                <Error content="Žádná data pro graf nejsou zatím k dispozici." />
             );
         case 'error':
             return <Error content="Nepodařilo se načíst data pro graf." />;

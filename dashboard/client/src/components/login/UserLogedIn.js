@@ -11,6 +11,7 @@ const UserLogedIn = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [firstName, setFirstName] = useState();
     const [lastname, setLastname] = useState();
+    const [profilePhotoUrl, setProfilePhotoUrl] = useState();
 
     useEffect(() => {
         if (!userContext) {
@@ -20,10 +21,9 @@ const UserLogedIn = () => {
 
         setFirstName(userContext.firstName);
         setLastname(userContext.lastname);
+        setProfilePhotoUrl(`${getBasePath()}/users/profile-photo/${userContext.profilePhotoUrl}`);
         setIsAuthenticated(true);
     }, [userContext]);
-
-    const profilePhotoUrl = getBasePath() + '/users/profile-photo';
 
     return (
         <>
