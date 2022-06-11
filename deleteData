@@ -1,6 +1,6 @@
 [
     {
-        "id": "239ce23dac8b63ec",
+        "id": "3390cf1eb1f74b65",
         "type": "tab",
         "label": "Delete data",
         "disabled": false,
@@ -8,9 +8,9 @@
         "env": []
     },
     {
-        "id": "9f9f8f99625021e9",
+        "id": "a73566f5ded172d1",
         "type": "inject",
-        "z": "239ce23dac8b63ec",
+        "z": "3390cf1eb1f74b65",
         "name": "deleteDataFromDatabase",
         "props": [],
         "repeat": "86400",
@@ -22,14 +22,14 @@
         "y": 160,
         "wires": [
             [
-                "8bb37e9f70e8b4bd"
+                "c7792f2c80b0e272"
             ]
         ]
     },
     {
-        "id": "8bb37e9f70e8b4bd",
+        "id": "c7792f2c80b0e272",
         "type": "function",
-        "z": "239ce23dac8b63ec",
+        "z": "3390cf1eb1f74b65",
         "name": "queryDelete",
         "func": "const REMOVAL_INTERVAL = env.get(\"REMOVAL_INTERVAL\")\nmsg.payload = {\n    \"sent\": true,\n    \"timestamp\":{$lt: Date.now() - REMOVAL_INTERVAL}\n    \n};\n\nreturn msg;",
         "outputs": 1,
@@ -41,14 +41,14 @@
         "y": 160,
         "wires": [
             [
-                "f6682de2b1090646"
+                "8c6eb7bec51bd285"
             ]
         ]
     },
     {
-        "id": "f6682de2b1090646",
+        "id": "8c6eb7bec51bd285",
         "type": "mongodb out",
-        "z": "239ce23dac8b63ec",
+        "z": "3390cf1eb1f74b65",
         "mongodb": "ecb43e63847ff54b",
         "name": "deleteWeatherData",
         "collection": "WeatherData",
@@ -61,9 +61,9 @@
         "wires": []
     },
     {
-        "id": "3a11ce029c6eb86b",
+        "id": "bb565d7a6d903f91",
         "type": "inject",
-        "z": "239ce23dac8b63ec",
+        "z": "3390cf1eb1f74b65",
         "name": "",
         "props": [
             {
@@ -81,14 +81,14 @@
         "y": 440,
         "wires": [
             [
-                "64a45bfac1bd9c2d"
+                "7ef31fc212911535"
             ]
         ]
     },
     {
-        "id": "64a45bfac1bd9c2d",
+        "id": "7ef31fc212911535",
         "type": "mongodb out",
-        "z": "239ce23dac8b63ec",
+        "z": "3390cf1eb1f74b65",
         "mongodb": "ecb43e63847ff54b",
         "name": "",
         "collection": "WeatherData",
@@ -101,9 +101,9 @@
         "wires": []
     },
     {
-        "id": "447e58b08811cead",
+        "id": "7dff22a73e897e24",
         "type": "inject",
-        "z": "239ce23dac8b63ec",
+        "z": "3390cf1eb1f74b65",
         "name": "",
         "props": [
             {
@@ -125,14 +125,14 @@
         "y": 500,
         "wires": [
             [
-                "0abcd4133104b3b8"
+                "b92b7d3339ccec2c"
             ]
         ]
     },
     {
-        "id": "0abcd4133104b3b8",
+        "id": "b92b7d3339ccec2c",
         "type": "mongodb in",
-        "z": "239ce23dac8b63ec",
+        "z": "3390cf1eb1f74b65",
         "mongodb": "ecb43e63847ff54b",
         "name": "",
         "collection": "WeatherData",
@@ -141,14 +141,14 @@
         "y": 500,
         "wires": [
             [
-                "a30745c7b398dcc5"
+                "749d47b1fcd3d8e7"
             ]
         ]
     },
     {
-        "id": "a30745c7b398dcc5",
+        "id": "749d47b1fcd3d8e7",
         "type": "debug",
-        "z": "239ce23dac8b63ec",
+        "z": "3390cf1eb1f74b65",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -162,14 +162,116 @@
         "wires": []
     },
     {
-        "id": "5f71dab1ebcd2751",
+        "id": "8bcab6b18c34ef5d",
         "type": "comment",
-        "z": "239ce23dac8b63ec",
+        "z": "3390cf1eb1f74b65",
         "name": "just development",
         "info": "",
         "x": 180,
         "y": 380,
         "wires": []
+    },
+    {
+        "id": "a8321df972a2ae95",
+        "type": "catch",
+        "z": "3390cf1eb1f74b65",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 80,
+        "y": 220,
+        "wires": [
+            [
+                "b96f69b17367bd7e",
+                "0e215bd4755d30e4"
+            ]
+        ]
+    },
+    {
+        "id": "b96f69b17367bd7e",
+        "type": "debug",
+        "z": "3390cf1eb1f74b65",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 390,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "0c7af36b9c92e873",
+        "type": "file",
+        "z": "3390cf1eb1f74b65",
+        "name": "DeleteDataError.txt",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 710,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0e215bd4755d30e4",
+        "type": "change",
+        "z": "3390cf1eb1f74b65",
+        "name": "setErrorLog",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "error",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "5650afc0e5e69a8b"
+            ]
+        ]
+    },
+    {
+        "id": "5650afc0e5e69a8b",
+        "type": "function",
+        "z": "3390cf1eb1f74b65",
+        "name": "configFilePath",
+        "func": "const DOCS_PATH = env.get(\"DOCS_PATH\")\nconst filename = \"DeleteDataError.txt\"\nmsg.filename = DOCS_PATH + filename\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [
+                "0c7af36b9c92e873"
+            ]
+        ]
     },
     {
         "id": "ecb43e63847ff54b",
