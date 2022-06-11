@@ -11,7 +11,7 @@ Content-Type: application/json
 GET http://localhost:4000/workspaces/user
 
 ### Get all users in workspace
-GET http://localhost:4000/workspaces/629c75a8f54e0f35c1f6bc33/users
+GET http://localhost:4000/workspaces/current/users
 
 ### Set current workspace
 PUT http://localhost:4000/workspaces/user/current

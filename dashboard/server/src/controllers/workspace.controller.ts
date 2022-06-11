@@ -70,9 +70,14 @@ export class WorkspaceController extends ControllerBase {
         return this.workspaceRepository.findByIdAsync(id);
     }
 
-    @Get(':id/users')
-    async getAllUsersForWorkspaceAsync(@Param('id') id): Promise<UserDto[]> {
-        const memberships = await this.workspaceMembershipRepository.getAllMembershipsByWorkspaceAsync(objectId(id));
+    @Get('current/users')
+    async getAllUsersForWorkspaceAsync(@Req() request: UserRequest<void>): Promise<UserDto[]> {
+        const workspace = await this.getCurrentWorkspaceAsync(request);
+        if (!workspace) {
+            throw new UnauthorizedException();
+        }
+
+        const memberships = await this.workspaceMembershipRepository.getAllMembershipsByWorkspaceAsync(workspace._id);
         const users = await this.userRepository.findAllByIdsAsync(memberships.map((x) => x.userId));
         return users.map((x) => ({
             userId: x._id.toString(),
