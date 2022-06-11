@@ -11,7 +11,7 @@ import { CryptoHelper } from 'utils/cryptoHelper';
 import { GatewayAuthorizationRepository } from 'dataLayer/repositories/gatewayAuthorization.repository';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 import { objectId } from 'utils/schemaHelper';
-import { GatewayAuthorizationType } from 'dataLayer/entities/enums/gatewayAuthorizationType';
+import { GatewayAuthorizationType } from 'dataLayer/entities/enums/gatewayAuthorizationType.enum';
 
 @Injectable()
 export class GatewayService {

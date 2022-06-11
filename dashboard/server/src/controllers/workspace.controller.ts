@@ -34,6 +34,7 @@ import { Response } from 'express';
 import { WorkspaceMembershipRepository } from 'dataLayer/repositories/workspaceMembership.repository';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { UserDto } from 'services/dto/user.dto';
+import { WorkspaceType } from 'dataLayer/entities/enums/workspaceType.enum';
 
 @Controller('workspaces')
 @EnforceTokenType(TokenType.User)
@@ -55,8 +56,11 @@ export class WorkspaceController extends ControllerBase {
     }
 
     @Get('user')
-    findAllForCurrentUser(@Req() request: UserRequest<void>) {
-        return this.workspaceRepository.findAllForUserAsync(objectId(request.user.userId));
+    async findAllForCurrentUserAsync(@Req() request: UserRequest<void>): Promise<Workspace[]> {
+        const userId = objectId(request.user.userId);
+        const memberships = await this.workspaceMembershipRepository.getAllMembershipsForUserAsync(userId);
+
+        return this.workspaceRepository.findAllByIdsAsync(memberships.map((x) => x.workspaceId));
     }
 
     @Get('user/current')
@@ -126,7 +130,7 @@ export class WorkspaceController extends ControllerBase {
     @Post()
     async createAsync(@Req() request: UserRequest<void>, @Body() createDto: CreateWorkspaceDto): Promise<Workspace> {
         const user = await this.getCurrentUserAsync(request);
-        const workspace = await this.workspaceService.createAsync(createDto);
+        const workspace = await this.workspaceService.createAsync(createDto, WorkspaceType.Private);
         await this.workspaceService.addUserToWorkspaceAsync(workspace._id, user._id, [UserRole.Admin]);
 
         return workspace;

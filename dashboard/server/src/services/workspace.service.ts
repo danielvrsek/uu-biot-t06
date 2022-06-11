@@ -6,6 +6,7 @@ import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
 import { WorkspaceMembership } from 'dataLayer/entities/workspaceMembership.entity';
 import { UserRole } from 'dataLayer/entities/enums/role.enum';
+import { WorkspaceType } from 'dataLayer/entities/enums/workspaceType.enum';
 
 @Injectable()
 export class WorkspaceService {
@@ -14,8 +15,8 @@ export class WorkspaceService {
         @InjectModel(SchemaConstants.WorkspaceMembership) private readonly membershipModel: Model<WorkspaceMembership>
     ) {}
 
-    async createAsync(item: CreateWorkspaceDto): Promise<Workspace> {
-        const newItem = new this.model(item);
+    async createAsync(item: CreateWorkspaceDto, workspaceType: WorkspaceType): Promise<Workspace> {
+        const newItem = new this.model({ ...item, type: workspaceType });
         return await newItem.save();
     }
 
