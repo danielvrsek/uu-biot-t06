@@ -7,7 +7,7 @@ const Line = (props) => {
                 <Typography variant="subtitle1">{props.header}</Typography>
             </Grid>
             <Grid item xs={8}>
-                <Typography variant='body2'>{props.content}</Typography>
+                <Typography sx={{lineHeight: 2}} variant='body2'>{props.content}</Typography>
             </Grid>
         </Grid>
     )
