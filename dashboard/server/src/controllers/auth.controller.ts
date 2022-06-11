@@ -1,4 +1,4 @@
-import { Controller, Req, Post, UseGuards, Res, Get, HttpCode, UnauthorizedException } from '@nestjs/common';
+import { Controller, Req, Post, UseGuards, Res, Get, HttpCode, UnauthorizedException, Body } from '@nestjs/common';
 import { TokenType } from 'auth/common/tokenType';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
@@ -11,19 +11,42 @@ import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { Response } from 'express';
 import { AuthService } from 'services/auth.service';
-import { UserInfo, WorkspaceInfo } from 'services/dto/user.dto';
+import { RegisterDto, UserDto, UserInfo, WorkspaceInfo } from 'services/dto/user.dto';
 import { CookieHelper } from 'utils/cookieHelper';
 import { ControllerBase } from './controllerBase';
+import { UserService } from '../services/user.service';
 
 @Controller('auth')
 export class AuthController extends ControllerBase {
     constructor(
         private authService: AuthService,
+        private userService: UserService,
         cookieHelper: CookieHelper,
         workspaceRepository: WorkspaceRepository,
         userRepository: UserRepository
     ) {
         super(cookieHelper, workspaceRepository, userRepository);
+    }
+
+    @Post('register')
+    async registerAsync(@Body() payload: RegisterDto): Promise<UserDto> {
+        const user = await this.userService.createAsync({
+            email: payload.email,
+            username: payload.email,
+            firstName: payload.firstName,
+            lastname: payload.lastname,
+            passwordRaw: payload.passwordRaw,
+            isExternal: false,
+            profilePhotoUrl: null,
+        });
+
+        return {
+            userId: user._id.toString(),
+            email: user.email,
+            username: user.username,
+            firstName: user.firstName,
+            lastname: user.lastname,
+        };
     }
 
     @Post('login')

@@ -7,6 +7,24 @@ describe('WeatherDataGranuralityService', () => {
         service = new WeatherDataGranularityService();
     });
 
+    describe('calculateGranularity', () => {
+        it('should calculate granularity', async () => {
+            const dateFrom = new Date('2022-06-09T16:40:08.107Z');
+            const dateTo = new Date(dateFrom);
+            dateTo.setHours(dateFrom.getHours() + WeatherDataGranularityService.DefaultCount);
+
+            const result = 3600; // hour
+            expect(service.calculateGranularity(dateFrom, dateTo)).toEqual(result);
+        });
+
+        it('should calculate granularity for a day', async () => {
+            const dateFrom = new Date('2022-06-09T16:40:08.107Z');
+            const dateTo = new Date('2022-06-10T16:40:08.107Z');
+
+            const result = 432;
+            expect(service.calculateGranularity(dateFrom, dateTo)).toEqual(result);
+        });
+    });
     describe('transformByGranularity', () => {
         it('should upscale the data', async () => {
             const data = [

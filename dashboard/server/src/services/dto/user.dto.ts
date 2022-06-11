@@ -1,6 +1,14 @@
 import { UserRole } from 'dataLayer/entities/enums/role.enum';
 import { TokenInfo } from './token';
 
+export interface RegisterDto {
+    firstName: string;
+    lastname: string;
+    email: string;
+    username: string;
+    passwordRaw: string;
+}
+
 export interface CreateUserDto {
     firstName: string;
     lastname: string;

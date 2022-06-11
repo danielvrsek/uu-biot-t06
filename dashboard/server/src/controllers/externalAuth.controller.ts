@@ -14,8 +14,6 @@ import { AuthService } from 'services/auth.service';
 import { cookieOptions, Cookies } from 'common/cookies';
 import { AssetService } from 'services/assetService';
 import * as msal from '@azure/msal-node';
-import { User } from 'dataLayer/entities/user.entity';
-import { use } from 'passport';
 import { TokenType } from 'auth/common/tokenType';
 
 @Controller('external-auth')

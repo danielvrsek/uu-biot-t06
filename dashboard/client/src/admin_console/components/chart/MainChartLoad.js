@@ -6,34 +6,7 @@ import MainChartReady from './MainChartReady';
 
 import ApiClient from '../../../api/ApiClient';
 
-const MainChartLoad = (props) => {
-    const granularityList = [
-        {
-            name: "1 minuta",
-            granularity: 60
-        },
-        {
-            name: "5 minut",
-            granularity: 300
-        },
-        {
-            name: "10 minut",
-            granularity: 600
-        },
-        {
-            name: "30 minut",
-            granularity: 1800
-        },
-        {
-            name: "1 hodina",
-            granularity: 3600
-        },
-        {
-            name: "1 den",
-            granularity: 86400
-        },
-    ];
-
+const MainChartLoad = ({ gatewayId }) => {
     //Dates
     const today = new Date();
     const yesterday = new Date(today);
@@ -44,34 +17,14 @@ const MainChartLoad = (props) => {
     const [availableGranularity, setAvailableGranularity] = useState([]);
 
     useEffect(() => {
-        let data = [];
-        const dateRange = (dateTo - dateFrom) / 1000;
-        granularityList.forEach((item) => {
-            if (item.granularity >= dateRange / 200) {
-                data.push(item);
-            }
-        });
-
-        setGranularity(data[0].granularity)
-
+        const dateRange = (dateTo - dateFrom) / 1000 / 150;
+        let data = granularityList.filter((item) => item.granularity === 0 || item.granularity >= dateRange);
+        setGranularity(data[0].granularity);
         setAvailableGranularity(data);
-    }, [dateFrom, dateTo])
-
-    const handleDateFrom = (newDateFrom) => {
-        setDateFrom(newDateFrom);
-    };
-
-    const handleDateTo = (newDateTo) => {
-        setDateTo(newDateTo);
-    };
+    }, []);
 
     //Granularity
-    const [granularity, setGranularity] = useState();
-
-
-    const handleGranularity = (event) => {
-        setGranularity(event.target.value);
-    };
+    const [granularity, setGranularity] = useState(null);
 
     //Chart
     const [chartData, setChartData] = useState();
@@ -84,7 +37,11 @@ const MainChartLoad = (props) => {
     };
 
     useEffect(() => {
-        ApiClient.getWeatherData(dateFrom, dateTo, granularity).then((res) => {
+        if (granularity === null) {
+            return;
+        }
+
+        ApiClient.getWeatherData(gatewayId, dateFrom, dateTo, granularity).then((res) => {
             if (res.status === 200) {
                 setChartData(res.data);
                 setStatus('success');
@@ -92,34 +49,59 @@ const MainChartLoad = (props) => {
                 setStatus('error');
             }
         });
-    }, [dateFrom, dateTo, granularity]);
-
-    let result;
+    }, [gatewayId, dateFrom, dateTo, granularity]);
 
     switch (status) {
-        case 'loading':
-            result = <Loading />;
-            break;
         case 'success':
-            result = (
+            return (
                 <MainChartReady
                     data={chartData}
                     dateFrom={dateFrom}
                     dateTo={dateTo}
                     granularity={granularity}
                     availableGranularity={availableGranularity}
-                    handleDateFrom={handleDateFrom}
-                    handleDateTo={handleDateTo}
-                    handleGranularity={handleGranularity}
+                    handleDateFrom={(newDateFrom) => setDateFrom(newDateFrom)}
+                    handleDateTo={(newDateTo) => setDateTo(newDateTo)}
+                    handleGranularity={(event) => setGranularity(event.target.value)}
                     handleReset={reset}
                 />
             );
-            break;
         case 'error':
-            result = <Error content="Error" />;
+            return <Error content="Error" />;
+        default:
+            return <Loading />;
     }
-
-    return result;
 };
+
+const granularityList = [
+    {
+        name: 'automaticky',
+        granularity: 0,
+    },
+    {
+        name: '1 minuta',
+        granularity: 60,
+    },
+    {
+        name: '5 minut',
+        granularity: 5 * 60,
+    },
+    {
+        name: '10 minut',
+        granularity: 10 * 60,
+    },
+    {
+        name: '30 minut',
+        granularity: 30 * 60,
+    },
+    {
+        name: '1 hodina',
+        granularity: 3600,
+    },
+    {
+        name: '1 den',
+        granularity: 24 * 3600,
+    },
+];
 
 export default MainChartLoad;
