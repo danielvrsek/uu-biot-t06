@@ -1,60 +1,78 @@
+import React, { useEffect, useState } from 'react';
 import WorkspaceDetailReady from '../components/workspace/WorkspaceDetailReady';
 import WeatherstationListReady from '../components/weatherstation/WeatherstationListReady';
 import Error from '../components/core/Error';
 import Loading from '../components/core/Loading';
+import ApiClient from '../../api/ApiClient';
 
 const WorkspaceDetail = () => {
-    const stationList = [
-        {
-            name: "Weatherstation 1",
-            id: 123
-        },
-        {
-            name: "Weatherstation 2",
-            id: 123
-        }
-    ];
+  const [gateways, setGateways] = useState();
+  const [currentWorkspace, setCurrentWorkspace] = useState();
+  const [detailStatus, setDetailStatus] = useState('loading');
+  const [listStatus, setListStatus] = useState('loading');
 
-    const data = {
-        id: "123456",
-        name: "Workspace 1",
-        weatherstations: 2
-    };
+  useEffect(() => {
+    ApiClient.getGateways()
+      .then((response) => {
+        setGateways(response.data);
+        setListStatus('success');
+      })
+      .catch((error) => {
+        setListStatus('error');
+        return error;
+      });
+  }, []);
 
-    const detailStatus = "success";
-    const listStatus = "success";
-    
-    let detailResult;
-    let listResult;
+  useEffect(() => {
+    ApiClient.getCurrentWorkspace()
+      .then((response) => {
+        setCurrentWorkspace(response.data);
+        setDetailStatus('success');
+      })
+      .catch((error) => {
+        setDetailStatus('error');
+        return error;
+      });
+  }, []);
 
-    switch (detailStatus) {
-        case "loading":
-            detailResult = <Loading/>
-            break;
-        case "success":
-            detailResult = <WorkspaceDetailReady data={data}/>
-            break;
-        case "error":
-            detailResult = <Error content="Error"/>
-    }
+  console.log(currentWorkspace);
 
-    switch (listStatus) {
-        case "loading":
-            listResult = <Loading/>
-            break;
-        case "success":
-            listResult = <WeatherstationListReady data={stationList}/>
-            break;
-        case "error":
-            listResult = <Error content="Error"/>
-    }
+  const data = {
+    id: '123456',
+    name: 'Workspace 1',
+    weatherstations: 2,
+  };
 
-    return  (
-        <div>
-            {detailResult}
-            {listResult}
-        </div>
-    );
+  let detailResult;
+  let listResult;
+
+  switch (detailStatus) {
+    case 'success':
+      detailResult = <WorkspaceDetailReady data={data} />;
+      break;
+    case 'error':
+      detailResult = <Error content="Error" />;
+      break;
+    default:
+      detailResult = <Loading />;
+  }
+
+  switch (listStatus) {
+    case 'success':
+      listResult = <WeatherstationListReady data={gateways} />;
+      break;
+    case 'error':
+      listResult = <Error content="Error" />;
+    default:
+      listResult = <Loading />;
+  }
+
+  return (
+    <div>
+      {detailResult}
+      {listResult}
+    </div>
+  );
 };
 
 export default WorkspaceDetail;
