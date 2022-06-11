@@ -94,6 +94,7 @@ const WorkspaceDetail = () => {
             break;
         default:
             detailResult = <Loading />;
+            break;
     }
 
     switch (listStatus) {
@@ -102,18 +103,10 @@ const WorkspaceDetail = () => {
             break;
         case 'error':
             listResult = <Error content="Error" />;
-        default:
-            listResult = <Loading />;
-    }
-
-    switch (listStatus) {
-        case 'success':
-            listResult = <WeatherstationListReady data={gateways} />;
             break;
-        case 'error':
-            listResult = <Error content="Error" />;
         default:
             listResult = <Loading />;
+            break;
     }
 
     return (

@@ -1,15 +1,13 @@
 import axios from 'axios';
 import { getBasePath } from '../components/utils/pathHelper';
 
-const getMethod = (path, headers) =>
-    axios.get(getBasePath() + path, { headers, withCredentials: true });
+const getMethod = (path, headers) => axios.get(getBasePath() + path, { headers, withCredentials: true });
 const postMethod = (path, payload, headers) =>
     axios.post(getBasePath() + path, payload, {
         headers,
         withCredentials: true,
     });
-const deleteMethod = (path, headers) =>
-    axios.delete(getBasePath() + path, { headers, withCredentials: true });
+const deleteMethod = (path, headers) => axios.delete(getBasePath() + path, { headers, withCredentials: true });
 const putMethod = (path, payload, headers) =>
     axios.put(getBasePath() + path, payload, {
         headers,
@@ -24,8 +22,7 @@ const ApiClient = {
     getUserInfo: async () => getMethod('/auth/user-info'),
     getWorkspaceInfo: async () => getMethod('/auth/workspace-info'),
     getUserAvailableWorkspaces: async () => getMethod('/workspaces/user'),
-    setUserWorkspace: async (workspaceId) =>
-        putMethod('/workspaces/user/current', { workspaceId }, getHeaders()),
+    setUserWorkspace: async (workspaceId) => putMethod('/workspaces/user/current', { workspaceId }, getHeaders()),
     getUser: async (id) => getMethod(`/users/${id}`, getHeaders()),
     getUsers: async () => getMethod('/users', getHeaders()),
     editUser: async (id, user) => putMethod(`/users/${id}`, user, getHeaders()),
@@ -38,10 +35,9 @@ const ApiClient = {
         ),
     logout: () => postMethod('/auth/logout'),
     createGateway: async (name) => postMethod('/gateways', { name }),
-    getGateways: async () => getMethod(`/weather-data`),
+    getGateways: async () => getMethod(`/gateways`),
     getCurrentWorkspace: async () => getMethod(`/workspaces/user/current`),
-    getCurrentWorkspaceUsers: async () =>
-        getMethod(`/workspaces/current/users`),
+    getCurrentWorkspaceUsers: async () => getMethod(`/workspaces/current/users`),
 };
 
 export default ApiClient;
