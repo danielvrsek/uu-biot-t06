@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import ApiClient from '../../api/ApiClient';
 import { ApiState } from '../../components/common/apiHelper';
 
-const WorkspaceList = () => {
+const WorkspaceListPage = () => {
     const [availableWorkspaces, setAvailableWorkspaces] = useState(null);
     const [status, setStatus] = useState(ApiState.Loading);
 
@@ -31,4 +31,4 @@ const WorkspaceList = () => {
     }
 };
 
-export default WorkspaceList;
+export default WorkspaceListPage;

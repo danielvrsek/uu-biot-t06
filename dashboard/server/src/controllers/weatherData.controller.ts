@@ -6,18 +6,12 @@ import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { CookieHelper } from 'utils/cookieHelper';
 import { WeatherDataRepository } from 'dataLayer/repositories/weatherData.repository';
 import { WeatherDataService } from 'services/weatherData.service';
-import { GatewayService } from 'services/gateway.service';
 import { objectId } from 'utils/schemaHelper';
 import { ControllerBase } from './controllerBase';
-import {
-    GetWeatherDataForWorkspaceResponse,
-    InsertWeatherDataDto,
-    InsertWeatherDataResponse,
-    WeatherDataDto,
-} from 'services/dto/weatherData.dto';
+import { InsertWeatherDataDto, InsertWeatherDataResponse, WeatherDataDto } from 'services/dto/weatherData.dto';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
-import { GatewayRequest, UserRequest } from 'common/request';
+import { GatewayRequest } from 'common/request';
 import { WeatherDataGranularityService } from 'services/weatherDataGranularity.service';
 
 @Controller('weather-data')
@@ -28,7 +22,6 @@ export class WeatherDataController extends ControllerBase {
         private readonly weatherDataRepository: WeatherDataRepository,
         private readonly weatherDataService: WeatherDataService,
         private readonly gatewayRepository: GatewayRepository,
-        private readonly gatewayService: GatewayService,
         workspaceRepository: WorkspaceRepository,
         cookieHelper: CookieHelper
     ) {
@@ -41,7 +34,7 @@ export class WeatherDataController extends ControllerBase {
         @Param('gatewayId') gatewayId,
         @Query('dateFrom') dateFromString?: string,
         @Query('dateTo') dateToString?: string,
-        @Query('granularity') granularity?: number
+        @Query('granularity') granularityString?: string
     ): Promise<WeatherDataDto[]> {
         const dateFrom = new Date(dateFromString);
         const dateTo = new Date(dateToString);
@@ -50,9 +43,12 @@ export class WeatherDataController extends ControllerBase {
         data = this.weatherDataService.sortWeatherData(data);
         let dataDto = this.weatherDataService.mapToWeatherDataDto(data);
 
-        if (granularity) {
-            dataDto = this.weatherDataGranuralityService.transformByGranularity(dataDto, dateFrom, dateTo, granularity);
+        let granularity = granularityString ? parseInt(granularityString) : 0;
+        if (granularity === 0 || isNaN(granularity)) {
+            granularity = this.weatherDataGranuralityService.calculateGranularity(dateFrom, dateTo);
         }
+
+        dataDto = this.weatherDataGranuralityService.transformByGranularity(dataDto, dateFrom, dateTo, granularity);
 
         return dataDto;
     }

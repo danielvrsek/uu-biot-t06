@@ -45,7 +45,7 @@ function a11yProps(index) {
     };
 }
 
-const WorkspaceDetail = () => {
+const WorkspaceDetailPage = () => {
     const [gateways, setGateways] = useState();
     const [currentWorkspace, setCurrentWorkspace] = useState();
     const [value, setValue] = useState(0);
@@ -130,4 +130,4 @@ const WorkspaceDetail = () => {
     );
 };
 
-export default WorkspaceDetail;
+export default WorkspaceDetailPage;

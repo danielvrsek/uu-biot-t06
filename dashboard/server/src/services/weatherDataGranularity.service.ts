@@ -5,6 +5,15 @@ import { WeatherDataIterator } from './weatherDataIterator.service';
 
 @Injectable()
 export class WeatherDataGranularityService {
+    public static DefaultCount = 150;
+
+    calculateGranularity(dateFrom: Date, dateTo: Date): number {
+        const dateFromMillis = dateFrom.getTime();
+        const dateToMillis = dateTo.getTime();
+
+        return Math.ceil((dateToMillis - dateFromMillis) / 1000 / WeatherDataGranularityService.DefaultCount);
+    }
+
     transformByGranularity(
         data: WeatherDataDto[],
         dateFrom: Date,

@@ -6,9 +6,9 @@ import InDevelopment from '../inDevelopment/InDevelopment';
 import EditUser from '../user/EditUser';
 import DeleteUser from '../user/DeleteUser';
 
-import WorkspaceList from '../../admin_console/pages/workspaceList';
-import WorkspaceDetail from '../../admin_console/pages/workspaceDetail';
-import WeatherstationDetail from '../../admin_console/pages/weatherstationDetail';
+import WorkspaceListPage from '../../admin_console/pages/workspaceListPage';
+import WorkspaceDetailPage from '../../admin_console/pages/workspaceDetailPage';
+import WeatherstationDetailPage from '../../admin_console/pages/weatherstationDetailPage';
 
 const routes = [
     {
@@ -57,21 +57,21 @@ const routes = [
     {
         path: '/workspaces',
         exact: true,
-        component: WorkspaceList,
+        component: WorkspaceListPage,
         name: 'Workspaces',
         protected: true,
     },
     {
         path: '/workspace',
         exact: true,
-        component: WorkspaceDetail,
+        component: WorkspaceDetailPage,
         name: 'Workspace detail',
         protected: true,
     },
     {
         path: '/weatherstations/:id',
         exact: true,
-        component: WeatherstationDetail,
+        component: WeatherstationDetailPage,
         name: 'Weatherstation detail',
         protected: true,
     },

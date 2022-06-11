@@ -15,7 +15,7 @@ import {
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const WeatherstationItem = (props) => {
+const WeatherstationItem = ({ data }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleOpenSettings = (event) => {
@@ -33,13 +33,10 @@ const WeatherstationItem = (props) => {
         <Grid item xs={12} sm={6} md={4} lg={3}>
             <Card>
                 <CardHeader
-                    title={props.data.name}
+                    title={data.name}
                     action={
                         <div>
-                            <IconButton
-                                onClick={handleOpenSettings}
-                                aria-label="settings"
-                            >
+                            <IconButton onClick={handleOpenSettings} aria-label="settings">
                                 <MoreVertIcon />
                             </IconButton>
                             <Popover
@@ -60,7 +57,7 @@ const WeatherstationItem = (props) => {
                     }
                 />
                 <Divider />
-                <CardActionArea href={`/weatherstations/${props.data.id}`}>
+                <CardActionArea href={`/weatherstations/${data._id}`}>
                     <CardContent>Content</CardContent>
                 </CardActionArea>
             </Card>
