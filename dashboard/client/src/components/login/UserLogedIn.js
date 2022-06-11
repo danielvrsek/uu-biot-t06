@@ -3,6 +3,7 @@ import { useUserContext } from '../context/AuthContext';
 import Logout from '../logOut/Logout';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import { getBasePath } from '../utils/pathHelper';
 
 const UserLogedIn = () => {
     const [userContext] = useUserContext();
@@ -22,15 +23,14 @@ const UserLogedIn = () => {
         setIsAuthenticated(true);
     }, [userContext]);
 
+    const profilePhotoUrl = getBasePath() + '/users/profile-photo';
+
     return (
         <>
             {isAuthenticated ? (
                 <div>
                     <Stack direction="row" spacing={2}>
-                        <Avatar
-                            alt="Remy Sharp"
-                            src="https://m.actve.net/evropa2/2021/08/1257915-660x372.jpg"
-                        />
+                        <Avatar alt="Profile photo" src={profilePhotoUrl} />
 
                         <h3 style={{ marginTop: '8px' }}>
                             {firstName} {lastname}

@@ -1,21 +1,44 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Req } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Put,
+    Delete,
+    Body,
+    Param,
+    UseGuards,
+    Req,
+    UnauthorizedException,
+    StreamableFile,
+    Res,
+    NotFoundException,
+} from '@nestjs/common';
 import { UserService } from 'services/user.service';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
-import RoleGuard from 'auth/guards/roles.guard';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { CreateUserDto, UpdateUserDto, UserDto } from 'services/dto/user.dto';
 import { User } from 'dataLayer/entities/user.entity';
-import { UserRole } from 'dataLayer/entities/enums/role.enum';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { TokenType } from 'auth/common/tokenType';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { UserRequest } from 'common/request';
+import { createReadStream } from 'fs';
+import { join } from 'path';
+import { ControllerBase } from './controllerBase';
+import { CookieHelper } from 'utils/cookieHelper';
+import * as fs from 'fs';
 
 @Controller('users')
 @EnforceTokenType(TokenType.User)
 @UseGuards(JwtAuthGuard, TokenTypeGuard)
-export class UserController {
-    constructor(private readonly userRepository: UserRepository, private readonly userService: UserService) {}
+export class UserController extends ControllerBase {
+    constructor(
+        private readonly userRepository: UserRepository,
+        private readonly userService: UserService,
+        cookieHelper: CookieHelper
+    ) {
+        super(cookieHelper, null, userRepository);
+    }
 
     @Get()
     async findAllAsync(): Promise<UserDto[]> {
@@ -27,6 +50,45 @@ export class UserController {
             email: x.email,
             username: x.username,
         }));
+    }
+
+    @Get('profile-photo')
+    async getProfilePhotoAsync(@Req() request: UserRequest<void>, @Res() res): Promise<void> {
+        const user = await this.getCurrentUserAsync(request);
+        if (!user) {
+            throw new UnauthorizedException();
+        }
+
+        const profilePhotoUrl = user.profilePhotoUrl ? user.profilePhotoUrl : 'default.jpg';
+        const path = join(process.cwd(), 'public/profile-photos/', profilePhotoUrl);
+        if (!fs.existsSync(path)) {
+            res.status = 404;
+            return;
+        }
+
+        res.set({
+            'Content-Type': 'image/jpeg',
+        });
+
+        const file = createReadStream(path);
+        file.pipe(res);
+    }
+
+    @Get('profile-photo/:filename')
+    getProfilePhotoFromFilename(@Param('filename') filename: string, @Res() res) {
+        const path = join(process.cwd(), 'public/profile-photos/', filename);
+        if (!fs.existsSync(path)) {
+            res.status(404);
+            res.end();
+            return;
+        }
+
+        res.set({
+            'Content-Type': 'image/jpeg',
+        });
+
+        const file = createReadStream(path);
+        file.pipe(res);
     }
 
     @Get('profile')
