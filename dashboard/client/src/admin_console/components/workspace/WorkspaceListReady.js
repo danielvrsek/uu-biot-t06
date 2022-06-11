@@ -2,18 +2,17 @@ import WorkspaceItem from './WorkspaceItem';
 
 import { Container, Grid, Typography } from '@mui/material';
 import ApiClient from '../../../api/ApiClient';
-import { useAuth } from '../../../components/context/AuthContext';
+import { useWorkspaceContext } from '../../../components/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const WorkspaceListReady = ({ data }) => {
     const navigate = useNavigate();
-    const [auth, setAuth] = useAuth();
+    const [, setWorkspaceContext] = useWorkspaceContext();
 
     const handleItemOnClick = (item) => {
-        ApiClient.setUserWorkspace(item._id).then(() =>
-            ApiClient.getWorkspaceInfo().then(({ data }) => setAuth({ ...auth, workspace: data }))
-        );
-        navigate('/');
+        ApiClient.setUserWorkspace(item._id)
+            .then(() => ApiClient.getWorkspaceInfo().then(({ data }) => setWorkspaceContext(data)))
+            .then(() => navigate('/workspace'));
     };
 
     return (

@@ -14,7 +14,6 @@ import { ControllerBase } from './controllerBase';
 import { UserRequest } from 'common/request';
 import { objectId } from 'utils/schemaHelper';
 import { Response } from 'express';
-import { AuthService } from 'services/auth.service';
 
 @Controller('workspace')
 @EnforceTokenType(TokenType.User)

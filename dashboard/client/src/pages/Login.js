@@ -6,7 +6,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ApiClient from '../api/ApiClient';
 import MicrosoftLoginButton from '../components/login/MicrosoftLoginButton';
-import { useAuth } from '../components/context/AuthContext';
+import { useUserContext } from '../components/context/AuthContext';
 
 const Login = () => {
     //Style
@@ -24,7 +24,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
-    const [auth, setAuth] = useAuth();
+    const [, setUserContext] = useUserContext();
 
     // Functionality
     const handleClickShowPassword = () => {
@@ -51,7 +51,7 @@ const Login = () => {
         }
 
         const { data } = await ApiClient.getUserInfo();
-        setAuth({ ...auth, user: data });
+        setUserContext(data);
 
         navigate('/workspaces', { replace: true });
     };

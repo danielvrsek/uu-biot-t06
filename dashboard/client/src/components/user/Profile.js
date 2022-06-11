@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useUserContext } from '../context/AuthContext';
 
 const Profile = () => {
-    const [{ user }] = useAuth();
+    const [userContext] = useUserContext();
 
     return (
         <div className="card">
@@ -14,21 +14,21 @@ const Profile = () => {
                     alt="avatar"
                 />
                 <div className="header">
-                    {user.name} {user.surname}
+                    {userContext.name} {userContext.surname}
                 </div>
-                <div className="meta">{user.email}</div>
+                <div className="meta">{userContext.email}</div>
                 <div className="description">
                     <p>
-                        Tento učet je v režimu: <b>{user.role}</b>
+                        Tento učet je v režimu: <b>{userContext.role}</b>
                     </p>
                 </div>
             </div>
             <div className="extra content">
                 <div className="ui two buttons">
-                    <NavLink to={`/edit/${user.userId}`} className="ui basic green button">
+                    <NavLink to={`/edit/${userContext.userId}`} className="ui basic green button">
                         Editovat
                     </NavLink>
-                    <NavLink to={`/delete/${user.userId}`} className="ui basic red button">
+                    <NavLink to={`/delete/${userContext.userId}`} className="ui basic red button">
                         Odstranit
                     </NavLink>
                 </div>

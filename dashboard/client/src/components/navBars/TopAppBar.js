@@ -1,20 +1,20 @@
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useWorkspaceContext } from '../context/AuthContext';
 import { NavLink } from 'react-router-dom';
 
 import UserLogedIn from '../login/UserLogedIn';
 
 export default function MenuAppBar() {
-    const [{ workspace }] = useAuth();
+    const [workspaceContext] = useWorkspaceContext();
 
     let menu = null;
-    if (workspace) {
-        menu = workspace.roles.some((x) => x === 'Admin') ? (
+    if (workspaceContext) {
+        menu = workspaceContext.roles.some((x) => x === 'Admin') ? (
             <NavLink to="/workspaces" className="item">
                 <h4>Administrator</h4>
             </NavLink>
         ) : (
-            <NavLink to="/workspaces" className="item">
+            <NavLink to="/workspace" className="item">
                 <h4>Klientská sekce</h4>
             </NavLink>
         );
