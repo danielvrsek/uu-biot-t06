@@ -12,7 +12,13 @@ const WeatherstationDetailReady = ({ data }) => {
                         <TableCell>
                             <Typography sx={{ fontWeight: 'bold' }}>Id</Typography>
                         </TableCell>
-                        <TableCell>{data.id}</TableCell>
+                        <TableCell>{data._id}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>
+                            <Typography sx={{ fontWeight: 'bold' }}>Přidáno</Typography>
+                        </TableCell>
+                        <TableCell>{new Date(data.createdAt).toLocaleString()}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

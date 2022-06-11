@@ -33,7 +33,7 @@ const AddWeatherStation = () => {
     });
   };
   return (
-    <div style={{ marginBottom: "10px" }}>
+    <div style={{ margin: "8px 0" }}>
       <Button onClick={handleOpen} variant="contained" size="small">
         Přidat stanici
       </Button>

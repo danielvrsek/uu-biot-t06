@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import UserWeatherStatuinDetail from './UserWeatherStationDetail';
 import ApiClient from '../../../api/ApiClient';
 import Error from '../core/Error';
@@ -32,16 +32,13 @@ const ListWeateherUsers = () => {
     }
 
     return (
-        <Container sx={{ pt: 4 }}>
-            <Typography variant="h3" mb={3}>
-                Seznam uživatelů
-            </Typography>
+        <div style={{margin: "8px 0"}}>
             <AddUserGateway />
-            <Grid container spacing={2}>
+            <Grid sx={{pt: 4}} container spacing={2}>
                 {detailResult}
             </Grid>
             <div style={{ height: '100px' }}></div>
-        </Container>
+        </div>
     );
 };
 

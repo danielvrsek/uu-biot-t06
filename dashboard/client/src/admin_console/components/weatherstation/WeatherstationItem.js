@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Line from '../core/Line';
 
 const WeatherstationItem = ({ data }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -58,7 +59,10 @@ const WeatherstationItem = ({ data }) => {
                 />
                 <Divider />
                 <CardActionArea href={`/weatherstations/${data._id}`}>
-                    <CardContent>Content</CardContent>
+                    <CardContent>
+                        <Line header="Id" content={data._id}/>
+                        <Line header="Přidáno" content={new Date(data.createdAt).toLocaleString()}/>
+                    </CardContent>
                 </CardActionArea>
             </Card>
         </Grid>

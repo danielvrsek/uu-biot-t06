@@ -3,7 +3,6 @@ import React from 'react';
 import {
     Grid,
     Card,
-    CardActionArea,
     Divider,
     CardHeader,
     CardContent,
@@ -14,6 +13,7 @@ import {
 } from '@mui/material';
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Line from '../core/Line';
 
 const UserWeatherStationDetail = (props) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -66,9 +66,11 @@ const UserWeatherStationDetail = (props) => {
                                 }
                             />
                             <Divider />
-                            <CardActionArea>
-                                <CardContent>Content</CardContent>
-                            </CardActionArea>
+                            <CardContent>
+                                <Line header="User id" content={item.userId}/>
+                                <Line header="Email" content={item.email}/>
+                                <Line header="Username" content={item.username}/>
+                            </CardContent>
                         </Card>
                     </Grid>
                 );
