@@ -11,6 +11,7 @@ import { CryptoHelper } from 'utils/cryptoHelper';
 import { GatewayAuthorizationRepository } from 'dataLayer/repositories/gatewayAuthorization.repository';
 import { GatewayRepository } from 'dataLayer/repositories/gateway.repository';
 import { objectId } from 'utils/schemaHelper';
+import { GatewayAuthorizationType } from 'dataLayer/entities/enums/gatewayAuthorizationType';
 
 @Injectable()
 export class GatewayService {
@@ -34,9 +35,19 @@ export class GatewayService {
             secret,
             gatewayId: gateway._id,
             workspaceId,
+            authorizationType: GatewayAuthorizationType.Master,
         }).save();
 
         return { gateway, secret };
+    }
+
+    async addToSlaveWorkspace(workspaceId: Types.ObjectId, gatewayId: Types.ObjectId): Promise<GatewayAuthorization> {
+        return await new this.authorizationModel({
+            gatewayId,
+            workspaceId,
+            authorizationType: GatewayAuthorizationType.Slave,
+            secret: null,
+        }).save();
     }
 
     async getAllGatewaysForWorkspace(workspaceId: Types.ObjectId) {
