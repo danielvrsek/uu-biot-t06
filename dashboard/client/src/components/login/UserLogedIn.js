@@ -12,8 +12,6 @@ const UserLogedIn = () => {
     const [lastname, setLastname] = useState();
 
     useEffect(() => {
-        console.log(userContext);
-
         if (!userContext) {
             setIsAuthenticated(false);
             return;
@@ -29,7 +27,10 @@ const UserLogedIn = () => {
             {isAuthenticated ? (
                 <div>
                     <Stack direction="row" spacing={2}>
-                        <Avatar alt="Remy Sharp" src="https://m.actve.net/evropa2/2021/08/1257915-660x372.jpg" />
+                        <Avatar
+                            alt="Remy Sharp"
+                            src="https://m.actve.net/evropa2/2021/08/1257915-660x372.jpg"
+                        />
 
                         <h3 style={{ marginTop: '8px' }}>
                             {firstName} {lastname}

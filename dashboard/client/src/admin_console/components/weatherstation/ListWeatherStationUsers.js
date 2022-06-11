@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid, Typography } from '@mui/material';
-import AddWeatherStationUser from './AddWeatherStationUser';
 import UserWeatherStatuinDetail from './UserWeatherStationDetail';
 import ApiClient from '../../../api/ApiClient';
 import Error from '../core/Error';
 import Loading from '../core/Loading';
+import AddUserGateway from './AddUserGateway';
 
 const ListWeateherUsers = () => {
     const [users, setUsers] = useState();
@@ -20,7 +20,6 @@ const ListWeateherUsers = () => {
             });
     }, []);
     let detailResult;
-
     switch (detailStatus) {
         case 'success':
             detailResult = <UserWeatherStatuinDetail data={users} />;
@@ -37,10 +36,11 @@ const ListWeateherUsers = () => {
             <Typography variant="h3" mb={3}>
                 Seznam uživatelů
             </Typography>
-            <AddWeatherStationUser />
+            <AddUserGateway />
             <Grid container spacing={2}>
                 {detailResult}
             </Grid>
+            <div style={{ height: '100px' }}></div>
         </Container>
     );
 };

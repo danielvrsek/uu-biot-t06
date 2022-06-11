@@ -30,41 +30,50 @@ const UserWeatherStationDetail = (props) => {
     const id = open ? 'simple-popover' : undefined;
 
     return (
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-            <Card>
-                <CardHeader
-                    title={props.data.firstName}
-                    action={
-                        <div>
-                            <IconButton
-                                onClick={handleOpenSettings}
-                                aria-label="settings"
-                            >
-                                <MoreVertIcon />
-                            </IconButton>
-                            <Popover
-                                id={id}
-                                open={open}
-                                anchorEl={anchorEl}
-                                onClose={handleCloseSettings}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                            >
-                                <MenuList>
-                                    <MenuItem>Odebrat uživatele</MenuItem>
-                                </MenuList>
-                            </Popover>
-                        </div>
-                    }
-                />
-                <Divider />
-                <CardActionArea>
-                    <CardContent>Content</CardContent>
-                </CardActionArea>
-            </Card>
-        </Grid>
+        <>
+            {props.data.map((item, key) => {
+                console.log(item);
+                return (
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={key}>
+                        <Card>
+                            <CardHeader
+                                title={`${item.firstName} ${item.lastname}`}
+                                action={
+                                    <div>
+                                        <IconButton
+                                            onClick={handleOpenSettings}
+                                            aria-label="settings"
+                                        >
+                                            <MoreVertIcon />
+                                        </IconButton>
+                                        <Popover
+                                            id={id}
+                                            open={open}
+                                            anchorEl={anchorEl}
+                                            onClose={handleCloseSettings}
+                                            anchorOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'right',
+                                            }}
+                                        >
+                                            <MenuList>
+                                                <MenuItem>
+                                                    Odebrat uživatele
+                                                </MenuItem>
+                                            </MenuList>
+                                        </Popover>
+                                    </div>
+                                }
+                            />
+                            <Divider />
+                            <CardActionArea>
+                                <CardContent>Content</CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                );
+            })}
+        </>
     );
 };
 
