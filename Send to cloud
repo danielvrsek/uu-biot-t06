@@ -1,6 +1,6 @@
 [
     {
-        "id": "cffbbb50e33f7a68",
+        "id": "1961c2c7c7bd9d95",
         "type": "subflow",
         "name": "pingCloud",
         "info": "",
@@ -11,7 +11,7 @@
                 "y": 100,
                 "wires": [
                     {
-                        "id": "0c9ed334e0a54299"
+                        "id": "77c069b3f6288661"
                     }
                 ]
             }
@@ -22,9 +22,9 @@
         "color": "#DDAA99"
     },
     {
-        "id": "1ede5b622f834e88",
+        "id": "5a9f508587c757a3",
         "type": "http request",
-        "z": "cffbbb50e33f7a68",
+        "z": "1961c2c7c7bd9d95",
         "name": "",
         "method": "GET",
         "ret": "txt",
@@ -39,14 +39,14 @@
         "y": 140,
         "wires": [
             [
-                "f0d2108925835eb7"
+                "b4e366132316febf"
             ]
         ]
     },
     {
-        "id": "f0d2108925835eb7",
+        "id": "b4e366132316febf",
         "type": "switch",
-        "z": "cffbbb50e33f7a68",
+        "z": "1961c2c7c7bd9d95",
         "name": "validateStatusCode",
         "property": "statusCode",
         "propertyType": "msg",
@@ -67,17 +67,17 @@
         "y": 140,
         "wires": [
             [
-                "fc2899f39a7e806c"
+                "0b51717858cc69fb"
             ],
             [
-                "d0bac1b99cdade0f"
+                "0a2c309cb0c2b034"
             ]
         ]
     },
     {
-        "id": "fc2899f39a7e806c",
+        "id": "0b51717858cc69fb",
         "type": "change",
-        "z": "cffbbb50e33f7a68",
+        "z": "1961c2c7c7bd9d95",
         "name": "setOnline",
         "rules": [
             {
@@ -97,14 +97,14 @@
         "y": 100,
         "wires": [
             [
-                "eb579c13d0a190b7"
+                "a2a3d9b378efe90a"
             ]
         ]
     },
     {
-        "id": "d0bac1b99cdade0f",
+        "id": "0a2c309cb0c2b034",
         "type": "change",
-        "z": "cffbbb50e33f7a68",
+        "z": "1961c2c7c7bd9d95",
         "name": "setOffline",
         "rules": [
             {
@@ -124,14 +124,14 @@
         "y": 180,
         "wires": [
             [
-                "eb579c13d0a190b7"
+                "a2a3d9b378efe90a"
             ]
         ]
     },
     {
-        "id": "e0766e1d08fff2e4",
+        "id": "efb5b5a4d4a9142f",
         "type": "inject",
-        "z": "cffbbb50e33f7a68",
+        "z": "1961c2c7c7bd9d95",
         "name": "",
         "props": [],
         "repeat": "",
@@ -143,15 +143,15 @@
         "y": 200,
         "wires": [
             [
-                "0c9ed334e0a54299"
+                "77c069b3f6288661"
             ]
         ]
     },
     {
-        "id": "eb579c13d0a190b7",
+        "id": "a2a3d9b378efe90a",
         "type": "ui_text",
-        "z": "cffbbb50e33f7a68",
-        "group": "b5647dd8ac47eae9",
+        "z": "1961c2c7c7bd9d95",
+        "group": "51e95487f6c1eab5",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -165,9 +165,9 @@
         "wires": []
     },
     {
-        "id": "0c9ed334e0a54299",
+        "id": "77c069b3f6288661",
         "type": "function",
-        "z": "cffbbb50e33f7a68",
+        "z": "1961c2c7c7bd9d95",
         "name": "configURL",
         "func": "const CLOUD_URL = env.get(\"CLOUD_URL\")\nconst path = \"\"\nmsg.url = CLOUD_URL + path\nreturn msg;",
         "outputs": 1,
@@ -179,12 +179,12 @@
         "y": 140,
         "wires": [
             [
-                "1ede5b622f834e88"
+                "5a9f508587c757a3"
             ]
         ]
     },
     {
-        "id": "95a2c526f4ef6e01",
+        "id": "b11af126e424138a",
         "type": "subflow",
         "name": "pingGoogle",
         "info": "",
@@ -195,7 +195,7 @@
                 "y": 120,
                 "wires": [
                     {
-                        "id": "40cedfcf95cd5644"
+                        "id": "ed59f9ab12c881a4"
                     }
                 ]
             }
@@ -206,10 +206,10 @@
         "color": "#DDAA99"
     },
     {
-        "id": "3cc5b17ddf5f6655",
+        "id": "1fb368516e59ec50",
         "type": "ui_text",
-        "z": "95a2c526f4ef6e01",
-        "group": "b5647dd8ac47eae9",
+        "z": "b11af126e424138a",
+        "group": "51e95487f6c1eab5",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -224,9 +224,9 @@
         "info": "if(true){\n    return yes;\n}else{\n    return no;\n}"
     },
     {
-        "id": "40cedfcf95cd5644",
+        "id": "ed59f9ab12c881a4",
         "type": "http request",
-        "z": "95a2c526f4ef6e01",
+        "z": "b11af126e424138a",
         "name": "",
         "method": "GET",
         "ret": "txt",
@@ -241,14 +241,14 @@
         "y": 120,
         "wires": [
             [
-                "a834a833d50c6ede"
+                "eb032d7ac202e75c"
             ]
         ]
     },
     {
-        "id": "a834a833d50c6ede",
+        "id": "eb032d7ac202e75c",
         "type": "switch",
-        "z": "95a2c526f4ef6e01",
+        "z": "b11af126e424138a",
         "name": "validateStatusCode",
         "property": "statusCode",
         "propertyType": "msg",
@@ -271,17 +271,17 @@
         "y": 120,
         "wires": [
             [
-                "b51fae7da387a559"
+                "b6a5a4b9de846be9"
             ],
             [
-                "67b0215008bb617e"
+                "94abc801c1f0d27c"
             ]
         ]
     },
     {
-        "id": "b51fae7da387a559",
+        "id": "b6a5a4b9de846be9",
         "type": "change",
-        "z": "95a2c526f4ef6e01",
+        "z": "b11af126e424138a",
         "name": "setOnline",
         "rules": [
             {
@@ -301,14 +301,14 @@
         "y": 80,
         "wires": [
             [
-                "3cc5b17ddf5f6655"
+                "1fb368516e59ec50"
             ]
         ]
     },
     {
-        "id": "67b0215008bb617e",
+        "id": "94abc801c1f0d27c",
         "type": "change",
-        "z": "95a2c526f4ef6e01",
+        "z": "b11af126e424138a",
         "name": "setOffline",
         "rules": [
             {
@@ -328,14 +328,14 @@
         "y": 160,
         "wires": [
             [
-                "3cc5b17ddf5f6655"
+                "1fb368516e59ec50"
             ]
         ]
     },
     {
-        "id": "0b8c37cfc495c128",
+        "id": "7e62edb8a301838d",
         "type": "inject",
-        "z": "95a2c526f4ef6e01",
+        "z": "b11af126e424138a",
         "name": "",
         "props": [],
         "repeat": "",
@@ -347,15 +347,15 @@
         "y": 180,
         "wires": [
             [
-                "40cedfcf95cd5644"
+                "ed59f9ab12c881a4"
             ]
         ]
     },
     {
-        "id": "b5647dd8ac47eae9",
+        "id": "51e95487f6c1eab5",
         "type": "ui_group",
         "name": "Connection",
-        "tab": "1649194ce587d352",
+        "tab": "ded90cb29638710a",
         "order": 1,
         "disp": true,
         "width": "6",
@@ -363,7 +363,7 @@
         "className": ""
     },
     {
-        "id": "1649194ce587d352",
+        "id": "ded90cb29638710a",
         "type": "ui_tab",
         "name": "Home",
         "icon": "dashboard",
@@ -372,7 +372,7 @@
         "hidden": false
     },
     {
-        "id": "c6099cb141cc560e",
+        "id": "4f7a04bf39dfe515",
         "type": "subflow",
         "name": "authGateway",
         "info": "",
@@ -383,7 +383,7 @@
                 "y": 40,
                 "wires": [
                     {
-                        "id": "86c0c907e0a4e0bb"
+                        "id": "17fb326d8faaadbc"
                     }
                 ]
             }
@@ -394,9 +394,9 @@
         "color": "#DDAA99"
     },
     {
-        "id": "0e23f55a502915ef",
+        "id": "9a21f64b0f4fbebc",
         "type": "http request",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "authGateway",
         "method": "POST",
         "ret": "txt",
@@ -411,14 +411,14 @@
         "y": 300,
         "wires": [
             [
-                "c1ac311303bda025"
+                "723cdabc064ba643"
             ]
         ]
     },
     {
-        "id": "b226ff8c1814552f",
+        "id": "344390789f3012e9",
         "type": "inject",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "injectOnStart",
         "props": [],
         "repeat": "",
@@ -430,14 +430,14 @@
         "y": 160,
         "wires": [
             [
-                "86c0c907e0a4e0bb"
+                "17fb326d8faaadbc"
             ]
         ]
     },
     {
-        "id": "a56a433d841409f0",
+        "id": "ca1c27db12dfe959",
         "type": "json",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "parseToJson",
         "property": "payload",
         "action": "",
@@ -446,14 +446,14 @@
         "y": 300,
         "wires": [
             [
-                "c0bd80c4e6764fac"
+                "5d3fc0603db73ba0"
             ]
         ]
     },
     {
-        "id": "c1ac311303bda025",
+        "id": "723cdabc064ba643",
         "type": "json",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "parseFromJson",
         "property": "payload",
         "action": "",
@@ -462,14 +462,14 @@
         "y": 300,
         "wires": [
             [
-                "b63964cced4fc426"
+                "800f4fcfb62c7971"
             ]
         ]
     },
     {
-        "id": "b63964cced4fc426",
+        "id": "8a768ec73a49767e",
         "type": "change",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "setAuthToken",
         "rules": [
             {
@@ -485,16 +485,16 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 880,
-        "y": 300,
+        "x": 440,
+        "y": 460,
         "wires": [
             []
         ]
     },
     {
-        "id": "af0768961aaebe81",
+        "id": "fb447e8f0da017cc",
         "type": "json",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "",
         "property": "payload",
         "action": "obj",
@@ -503,14 +503,14 @@
         "y": 100,
         "wires": [
             [
-                "13e25a5b311e885b"
+                "ca64f343fac42918"
             ]
         ]
     },
     {
-        "id": "bd565e260b5ba234",
+        "id": "c512820cdc7e9a4c",
         "type": "file in",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "Credentials.txt",
         "filename": "",
         "format": "utf8",
@@ -522,14 +522,14 @@
         "y": 100,
         "wires": [
             [
-                "af0768961aaebe81"
+                "fb447e8f0da017cc"
             ]
         ]
     },
     {
-        "id": "13e25a5b311e885b",
+        "id": "ca64f343fac42918",
         "type": "change",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "setRequestHeadersAndBody",
         "rules": [
             {
@@ -554,14 +554,14 @@
         "y": 100,
         "wires": [
             [
-                "a56a433d841409f0"
+                "ca1c27db12dfe959"
             ]
         ]
     },
     {
-        "id": "86c0c907e0a4e0bb",
+        "id": "17fb326d8faaadbc",
         "type": "function",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "configFilePath",
         "func": "const DOCS_PATH = env.get(\"DOCS_PATH\")\nconst filename = \"Credentials.txt\"\nmsg.filename = DOCS_PATH + filename\nreturn msg;",
         "outputs": 1,
@@ -573,14 +573,14 @@
         "y": 100,
         "wires": [
             [
-                "bd565e260b5ba234"
+                "c512820cdc7e9a4c"
             ]
         ]
     },
     {
-        "id": "c0bd80c4e6764fac",
+        "id": "5d3fc0603db73ba0",
         "type": "function",
-        "z": "c6099cb141cc560e",
+        "z": "4f7a04bf39dfe515",
         "name": "configURL",
         "func": "const CLOUD_URL = env.get(\"CLOUD_URL\")\nconst path = \"auth/gateway/authorize\"\nmsg.url = CLOUD_URL + path\nreturn msg;",
         "outputs": 1,
@@ -592,12 +592,97 @@
         "y": 300,
         "wires": [
             [
-                "0e23f55a502915ef"
+                "9a21f64b0f4fbebc"
             ]
         ]
     },
     {
-        "id": "ef6140f8cf31fa28",
+        "id": "800f4fcfb62c7971",
+        "type": "switch",
+        "z": "4f7a04bf39dfe515",
+        "name": "validateStatusCode",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "400",
+                "vt": "num",
+                "v2": "599",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "200",
+                "vt": "num",
+                "v2": "299",
+                "v2t": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 210,
+        "y": 400,
+        "wires": [
+            [
+                "8bd97345dd8aeff7"
+            ],
+            [
+                "8a768ec73a49767e"
+            ]
+        ]
+    },
+    {
+        "id": "e784dfbe67e5b8a8",
+        "type": "ui_toast",
+        "z": "4f7a04bf39dfe515",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Cannot Authorize",
+        "name": "cannotAuthorizeNotification",
+        "x": 660,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8bd97345dd8aeff7",
+        "type": "change",
+        "z": "4f7a04bf39dfe515",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Cannot authorize gateway",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 380,
+        "wires": [
+            [
+                "e784dfbe67e5b8a8"
+            ]
+        ]
+    },
+    {
+        "id": "f0273a97bd0b2883",
         "type": "tab",
         "label": "Send to cloud",
         "disabled": false,
@@ -605,9 +690,9 @@
         "env": []
     },
     {
-        "id": "d28137a93d159b90",
+        "id": "a10e53eb4188a2e7",
         "type": "catch",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "",
         "scope": null,
         "uncaught": false,
@@ -615,15 +700,15 @@
         "y": 540,
         "wires": [
             [
-                "b2fe9bcea0387b04",
-                "0ed1d5c6fefe555b"
+                "5a51ba1ca50bfffd",
+                "d16779bd4ed97fec"
             ]
         ]
     },
     {
-        "id": "b2fe9bcea0387b04",
+        "id": "5a51ba1ca50bfffd",
         "type": "debug",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -638,9 +723,9 @@
         "wires": []
     },
     {
-        "id": "5064970467f89778",
+        "id": "0ab40e0a5b0c3c2a",
         "type": "inject",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "loadFromCollection",
         "props": [
             {
@@ -663,14 +748,14 @@
         "y": 120,
         "wires": [
             [
-                "eb5af10b0feef886"
+                "440a25497398d609"
             ]
         ]
     },
     {
-        "id": "3077bedb7ea861e0",
+        "id": "35f2b4fa90bfd12e",
         "type": "mongodb in",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "mongodb": "ecb43e63847ff54b",
         "name": "",
         "collection": "WeatherData",
@@ -679,14 +764,14 @@
         "y": 120,
         "wires": [
             [
-                "f0295efa3c82020c"
+                "3e4ff2b5c399d2ad"
             ]
         ]
     },
     {
-        "id": "a1afeb34c8fad9f2",
+        "id": "602c6c53dce22fef",
         "type": "json",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "parseToJson",
         "property": "payload",
         "action": "",
@@ -695,14 +780,14 @@
         "y": 200,
         "wires": [
             [
-                "a517652791171f52"
+                "16e693beef86f75b"
             ]
         ]
     },
     {
-        "id": "8956317983e3d7d5",
+        "id": "5a5ef348dd0bce86",
         "type": "http request",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "postDataToCloud",
         "method": "POST",
         "ret": "txt",
@@ -717,15 +802,15 @@
         "y": 200,
         "wires": [
             [
-                "2fb8eba0176a6a31",
-                "26cc133efed7a348"
+                "1514ba7e76668f6a",
+                "5cb8c2a02a753cf2"
             ]
         ]
     },
     {
-        "id": "0b67c818509c1aa6",
+        "id": "3d7d0221419b99db",
         "type": "function",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "setSentTrue",
         "func": "const documentIds = flow.get(\"documentIds\")\nmsg.query = {\"_id\": {$in: documentIds }};\nmsg.payload = {\"$set\": {\"sent\": true}};\nreturn msg;",
         "outputs": 1,
@@ -737,14 +822,14 @@
         "y": 440,
         "wires": [
             [
-                "a83c83258bbad90d"
+                "226f56e8ba0307e7"
             ]
         ]
     },
     {
-        "id": "2fb8eba0176a6a31",
+        "id": "1514ba7e76668f6a",
         "type": "switch",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "validateStatusCode",
         "property": "statusCode",
         "propertyType": "msg",
@@ -774,21 +859,21 @@
         "y": 360,
         "wires": [
             [
-                "40c682d24e7caa93"
+                "1a05814ee1ccbda4"
             ],
             [
-                "b3022783e165f3ec",
-                "d3510ba9aad23049"
+                "d816a25ad97cadcd",
+                "876766f8edac308f"
             ],
             [
-                "0b67c818509c1aa6"
+                "3d7d0221419b99db"
             ]
         ]
     },
     {
-        "id": "a83c83258bbad90d",
+        "id": "226f56e8ba0307e7",
         "type": "mongodb out",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "mongodb": "ecb43e63847ff54b",
         "name": "",
         "collection": "WeatherData",
@@ -801,9 +886,9 @@
         "wires": []
     },
     {
-        "id": "a80c07ef6e112c3c",
+        "id": "b49810e46cdba53f",
         "type": "file",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "sendToCloudErrorLog.txt",
         "filename": "",
         "appendNewline": true,
@@ -817,9 +902,9 @@
         ]
     },
     {
-        "id": "e76f173739eab29b",
+        "id": "ea26c5f415de9b18",
         "type": "function",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "setRequestHeadersAndBody",
         "func": "const token = global.get(\"token\")\nmsg.headers = {\n    Authorization: \"Bearer \"+ token,\n    [\"content-type\"]: \"application/json\"\n}\nmsg.payload = {\n    data: msg.payload\n}\n\nreturn msg;",
         "outputs": 1,
@@ -831,23 +916,23 @@
         "y": 120,
         "wires": [
             [
-                "a1afeb34c8fad9f2"
+                "602c6c53dce22fef"
             ]
         ]
     },
     {
-        "id": "40c682d24e7caa93",
-        "type": "subflow:c6099cb141cc560e",
-        "z": "ef6140f8cf31fa28",
+        "id": "1a05814ee1ccbda4",
+        "type": "subflow:4f7a04bf39dfe515",
+        "z": "f0273a97bd0b2883",
         "name": "",
         "x": 510,
         "y": 280,
         "wires": []
     },
     {
-        "id": "0ed1d5c6fefe555b",
+        "id": "d16779bd4ed97fec",
         "type": "change",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "setErrorLog",
         "rules": [
             {
@@ -874,32 +959,32 @@
         "y": 620,
         "wires": [
             [
-                "dc4a7a4844664699"
+                "6163e262e8e5d88b"
             ]
         ]
     },
     {
-        "id": "b3022783e165f3ec",
-        "type": "subflow:95a2c526f4ef6e01",
-        "z": "ef6140f8cf31fa28",
+        "id": "d816a25ad97cadcd",
+        "type": "subflow:b11af126e424138a",
+        "z": "f0273a97bd0b2883",
         "name": "",
         "x": 510,
         "y": 340,
         "wires": []
     },
     {
-        "id": "d3510ba9aad23049",
-        "type": "subflow:cffbbb50e33f7a68",
-        "z": "ef6140f8cf31fa28",
+        "id": "876766f8edac308f",
+        "type": "subflow:1961c2c7c7bd9d95",
+        "z": "f0273a97bd0b2883",
         "name": "",
         "x": 500,
         "y": 380,
         "wires": []
     },
     {
-        "id": "bcf4d0d4c382af28",
+        "id": "2185295c43943d9e",
         "type": "function",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "storeDocsIds",
         "func": "let documentIds = []\nconst data = msg.payload.map(({_id, ...rest})=>{\n   documentIds.push(_id)\n    return rest\n})\nflow.set(\"documentIds\", documentIds)\nmsg.payload = data\nreturn msg;",
         "outputs": 1,
@@ -911,14 +996,14 @@
         "y": 120,
         "wires": [
             [
-                "e76f173739eab29b"
+                "ea26c5f415de9b18"
             ]
         ]
     },
     {
-        "id": "f0295efa3c82020c",
+        "id": "3e4ff2b5c399d2ad",
         "type": "switch",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "validateNotEmpty",
         "property": "payload",
         "propertyType": "msg",
@@ -934,14 +1019,14 @@
         "y": 120,
         "wires": [
             [
-                "bcf4d0d4c382af28"
+                "2185295c43943d9e"
             ]
         ]
     },
     {
-        "id": "eb5af10b0feef886",
+        "id": "440a25497398d609",
         "type": "delay",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "",
         "pauseType": "delay",
         "timeout": "1",
@@ -959,14 +1044,14 @@
         "y": 120,
         "wires": [
             [
-                "3077bedb7ea861e0"
+                "35f2b4fa90bfd12e"
             ]
         ]
     },
     {
-        "id": "dc4a7a4844664699",
+        "id": "6163e262e8e5d88b",
         "type": "function",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "configFilePath",
         "func": "const DOCS_PATH = env.get(\"DOCS_PATH\")\nconst filename = \"SendToCloudErrorLog.txt\"\nmsg.filename = DOCS_PATH + filename\nreturn msg;",
         "outputs": 1,
@@ -978,14 +1063,14 @@
         "y": 620,
         "wires": [
             [
-                "a80c07ef6e112c3c"
+                "b49810e46cdba53f"
             ]
         ]
     },
     {
-        "id": "a517652791171f52",
+        "id": "16e693beef86f75b",
         "type": "function",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "configURL",
         "func": "const CLOUD_URL = env.get(\"CLOUD_URL\")\nconst path = \"weather-data\"\nmsg.url = CLOUD_URL + path\nreturn msg;",
         "outputs": 1,
@@ -997,16 +1082,16 @@
         "y": 200,
         "wires": [
             [
-                "8956317983e3d7d5"
+                "5a5ef348dd0bce86"
             ]
         ]
     },
     {
-        "id": "26cc133efed7a348",
+        "id": "5cb8c2a02a753cf2",
         "type": "debug",
-        "z": "ef6140f8cf31fa28",
+        "z": "f0273a97bd0b2883",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
