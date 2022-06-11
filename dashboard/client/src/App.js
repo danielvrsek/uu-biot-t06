@@ -13,10 +13,14 @@ function App() {
     const [auth, setAuth] = useState({ user: null });
     const [isInitialized, setIsInitialized] = useState(false);
     useEffect(() => {
-        ApiClient.getUserInfo().then((res) => {
-            if (res.status !== 401) setAuth({ user: res.data });
-            setIsInitialized(true);
-        }).catch(() => setIsInitialized(true));
+        ApiClient.getUserInfo()
+            .then(({ userInfo }) => {
+                ApiClient.getWorkspaceInfo().then(({ workspaceInfo }) => {
+                    setAuth({ user: userInfo, workspace: workspaceInfo });
+                    setIsInitialized(true);
+                });
+            })
+            .catch(() => setIsInitialized(true));
     }, [setAuth]);
 
     if (!isInitialized) {

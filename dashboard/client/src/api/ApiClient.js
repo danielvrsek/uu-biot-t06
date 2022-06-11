@@ -14,6 +14,7 @@ const getHeaders = () => ({
 
 const ApiClient = {
     getUserInfo: async () => getMethod('/auth/user-info'),
+    getWorkspaceInfo: async () => getMethod('/auth/workspace-info'),
     getUserAvailableWorkspaces: async () => getMethod('/workspace/user'),
     setUserWorkspace: async (workspaceId) => putMethod('/workspace/user/current', { workspaceId }, getHeaders()),
     getUser: async (id) => getMethod(`/users/${id}`, getHeaders()),

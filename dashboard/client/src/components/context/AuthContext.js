@@ -6,5 +6,5 @@ export const useAuth = () => useContext(AuthContext);
 
 export const useClearAuth = () => {
     const [, setAuth] = useAuth();
-    return () => setAuth({ user: null });
+    return () => setAuth({ user: null, workspace: null });
 };

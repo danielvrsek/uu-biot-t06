@@ -5,11 +5,11 @@ import { NavLink } from 'react-router-dom';
 import UserLogedIn from '../login/UserLogedIn';
 
 export default function MenuAppBar() {
-    const [{ user }] = useAuth();
+    const [{ workspace }] = useAuth();
 
     let menu = null;
-    if (user) {
-        menu = user.roles.some((x) => x === 'Admin') ? (
+    if (workspace) {
+        menu = workspace.roles.some((x) => x === 'Admin') ? (
             <NavLink to="/workspaces" className="item">
                 <h4>Administrator</h4>
             </NavLink>

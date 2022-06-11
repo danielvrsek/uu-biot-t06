@@ -1,47 +1,34 @@
 import WorkspaceListReady from '../components/workspace/WorkspaceListReady';
 import Error from '../components/core/Error';
 import Loading from '../components/core/Loading';
+import React, { useEffect, useState } from 'react';
+import ApiClient from '../../api/ApiClient';
+import { ApiState } from '../../components/common/apiHelper';
 
 const WorkspaceList = () => {
-    const data = [
-        {
-            id: "123",
-            name: "Workspace 1",
-            weatherstations: 2
-        },
-        {
-            id: "123",
-            name: "Workspace 2",
-            weatherstations: 2
-        },
-        {
-            id: "123",
-            name: "Workspace 3",
-            weatherstations: 2
-        },
-        {
-            id: "123",
-            name: "Workspace 4",
-            weatherstations: 2
-        }
-    ];
+    const [availableWorkspaces, setAvailableWorkspaces] = useState(null);
+    const [status, setStatus] = useState(ApiState.Loading);
 
-    const status = "success";
-    
-    let result;
+    useEffect(() => {
+        ApiClient.getUserAvailableWorkspaces().then((result) => {
+            if (result.status !== 200) {
+                setStatus(ApiState.Error);
+                return;
+            }
+
+            setAvailableWorkspaces(result.data);
+            setStatus(ApiState.Success);
+        });
+    }, []);
 
     switch (status) {
-        case "loading":
-            result = <Loading/>
-            break;
-        case "success":
-            result = <WorkspaceListReady data={data}/>
-            break;
-        case "error":
-            result = <Error content="Error"/>
+        case ApiState.Success:
+            return <WorkspaceListReady data={availableWorkspaces} />;
+        case ApiState.Error:
+            return <Error content="Error" />;
+        default:
+            return <Loading />;
     }
-
-    return  result;
 };
 
 export default WorkspaceList;

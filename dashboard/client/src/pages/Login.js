@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { Container, Grid, Paper, Avatar, TextField, Button, InputAdornment, IconButton } from '@mui/material';
-
 import LoginIcon from '@mui/icons-material/Login';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ApiClient from '../api/ApiClient';
-import { useAuth } from '../components/context/AuthContext';
 import MicrosoftLoginButton from '../components/login/MicrosoftLoginButton';
+import { useAuth } from '../components/context/AuthContext';
 
 const Login = () => {
     //Style
@@ -25,8 +23,8 @@ const Login = () => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const [, setAuth] = useAuth();
     const navigate = useNavigate();
+    const [auth, setAuth] = useAuth();
 
     // Functionality
     const handleClickShowPassword = () => {
@@ -52,20 +50,10 @@ const Login = () => {
             throw new Error('TODO: Handle bad login');
         }
 
-        const workspacesResult = await ApiClient.getUserAvailableWorkspaces();
-        if (workspacesResult.status !== 200) {
-            throw new Error('TODO: Handle');
-        }
-        const workspaceId = workspacesResult.data[0]._id;
-        await ApiClient.setUserWorkspace(workspaceId);
-
         const { data } = await ApiClient.getUserInfo();
-        setAuth({ user: data });
-        if (data.roles.some((x) => x === 'Admin')) {
-            navigate('/workspaces');
-        } else {
-            navigate('/workspaces');
-        }
+        setAuth({ ...auth, user: data });
+
+        navigate('/workspaces', { replace: true });
     };
 
     return (

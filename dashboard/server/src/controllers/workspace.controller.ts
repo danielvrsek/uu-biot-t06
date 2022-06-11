@@ -14,6 +14,7 @@ import { ControllerBase } from './controllerBase';
 import { UserRequest } from 'common/request';
 import { objectId } from 'utils/schemaHelper';
 import { Response } from 'express';
+import { AuthService } from 'services/auth.service';
 
 @Controller('workspace')
 @EnforceTokenType(TokenType.User)
@@ -50,11 +51,12 @@ export class WorkspaceController extends ControllerBase {
         @Res() response: Response
     ): Promise<void> {
         const availableWorkspaces = await this.workspaceRepository.findAllForUserAsync(objectId(request.user.userId));
-        if (!availableWorkspaces.some((x) => x._id.toString() == body.workspaceId)) {
+        const workspace = availableWorkspaces.filter((x) => x._id.toString() == body.workspaceId)[0];
+        if (!workspace) {
             throw new UnauthorizedException();
         }
 
-        response.cookie(Cookies.CurrentWorkspace, body.workspaceId, cookieOptions);
+        response.cookie(Cookies.CurrentWorkspace, workspace._id, cookieOptions);
         response.status(200);
         response.end();
     }
