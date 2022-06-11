@@ -1,4 +1,4 @@
-import { Controller, Req, Post, UseGuards, Res, Get, HttpCode } from '@nestjs/common';
+import { Controller, Req, Post, UseGuards, Res, Get, HttpCode, UnauthorizedException } from '@nestjs/common';
 import { TokenType } from 'auth/common/tokenType';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
@@ -7,23 +7,23 @@ import { LocalUserAuthGuard } from 'auth/guards/local-user.guard';
 import { TokenTypeGuard } from 'auth/guards/tokenType.guard';
 import { cookieOptions, Cookies } from 'common/cookies';
 import { UserRequest } from 'common/request';
+import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
-import { CookieOptions, Response } from 'express';
+import { Response } from 'express';
 import { AuthService } from 'services/auth.service';
-import { UserInfo, WorkspaceUserInfo } from 'services/dto/user.dto';
+import { UserInfo, WorkspaceInfo } from 'services/dto/user.dto';
 import { CookieHelper } from 'utils/cookieHelper';
 import { ControllerBase } from './controllerBase';
-import { Types } from 'mongoose';
-import { objectId } from 'utils/schemaHelper';
 
 @Controller('auth')
 export class AuthController extends ControllerBase {
     constructor(
         private authService: AuthService,
         cookieHelper: CookieHelper,
-        workspaceRepository: WorkspaceRepository
+        workspaceRepository: WorkspaceRepository,
+        userRepository: UserRepository
     ) {
-        super(cookieHelper, workspaceRepository);
+        super(cookieHelper, workspaceRepository, userRepository);
     }
 
     @Post('login')
@@ -50,9 +50,25 @@ export class AuthController extends ControllerBase {
     @Get('user-info')
     @EnforceTokenType(TokenType.User)
     @UseGuards(JwtAuthGuard, TokenTypeGuard)
-    async getUserInfoAsync(@Req() request: UserRequest<void>) {
+    async getUserInfoAsync(@Req() request: UserRequest<void>): Promise<UserInfo> {
+        return request.user;
+    }
+
+    @Get('workspace-info')
+    @EnforceTokenType(TokenType.User)
+    @UseGuards(JwtAuthGuard, TokenTypeGuard)
+    async getWorkspaceInfoAsync(@Req() request: UserRequest<void>): Promise<WorkspaceInfo> {
         const workspace = await this.getCurrentWorkspaceAsync(request);
-        return await this.getWorkspaceUserInfoAsync(request.user, workspace._id);
+        if (!workspace) {
+            throw new UnauthorizedException();
+        }
+
+        const user = await this.getCurrentUserAsync(request);
+        return {
+            workspaceId: workspace._id.toString(),
+            name: workspace.name,
+            roles: await this.authService.getUserRolesForWorkspaceAsync(user._id, workspace._id),
+        };
     }
 
     @HttpCode(200)
@@ -60,12 +76,5 @@ export class AuthController extends ControllerBase {
     @UseGuards(LocalGatewayAuthGuard)
     authorizeGateway(@Req() request: UserRequest<void>): { token: string } {
         return { token: this.authService.generateToken(request.user) };
-    }
-
-    async getWorkspaceUserInfoAsync(user: UserInfo, workspaceId: Types.ObjectId): Promise<WorkspaceUserInfo> {
-        return {
-            ...user,
-            roles: await this.authService.getUserRolesForWorkspaceAsync(objectId(user.userId), workspaceId),
-        };
     }
 }

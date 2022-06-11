@@ -1,10 +1,17 @@
 import { createContext, useContext } from 'react';
 
-export const AuthContext = createContext();
+export const UserContext = createContext();
+export const WorkspaceContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
+export const useUserContext = () => useContext(UserContext);
+export const useWorkspaceContext = () => useContext(WorkspaceContext);
 
 export const useClearAuth = () => {
-    const [, setAuth] = useAuth();
-    return () => setAuth({ user: null });
+    const [, setUserContext] = useUserContext();
+    const [, setWorkspaceContext] = useWorkspaceContext();
+
+    return () => {
+        setUserContext(null);
+        setWorkspaceContext(null);
+    };
 };

@@ -13,11 +13,13 @@ import { objectId } from 'utils/schemaHelper';
 import { GatewayInfo } from './dto/gateway.dto';
 import { UserInfo } from './dto/user.dto';
 import { Types } from 'mongoose';
+import { GatewayService } from './gateway.service';
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly userRepository: UserRepository,
+        private readonly gatewayService: GatewayService,
         private readonly gatewayRepository: GatewayRepository,
         private readonly gatewayAuthorizationRepository: GatewayAuthorizationRepository,
         private readonly workspaceMembershipRepository: WorkspaceMembershipRepository,
@@ -60,7 +62,9 @@ export class AuthService {
             throw new BadRequestException();
         }
 
-        gateway.state = GatewayState.Registered;
+        await this.gatewayService.updateAsync(gateway._id, {
+            state: GatewayState.Registered,
+        });
 
         return {
             gatewayId: gateway._id.toString(),

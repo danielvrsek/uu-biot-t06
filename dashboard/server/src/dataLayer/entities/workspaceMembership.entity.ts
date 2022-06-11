@@ -10,10 +10,10 @@ export class WorkspaceMembership {
     @Prop() roles: UserRole[];
 
     @Prop({ type: Types.ObjectId, ref: SchemaConstants.Workspace })
-    workspaceId: string;
+    workspaceId: Types.ObjectId;
 
     @Prop({ type: Types.ObjectId, ref: SchemaConstants.User })
-    userId: string;
+    userId: Types.ObjectId;
 }
 
 export const WorkspaceMembershipSchema = SchemaFactory.createForClass(WorkspaceMembership);

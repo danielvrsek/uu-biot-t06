@@ -5,6 +5,7 @@ import { Workspace } from 'dataLayer/entities/workspace.entity';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { CookieHelper } from 'utils/cookieHelper';
+import { objectId } from 'utils/schemaHelper';
 
 export class ControllerBase {
     constructor(
@@ -15,7 +16,7 @@ export class ControllerBase {
 
     protected async getCurrentUserAsync<TPayload>(request: UserRequest<TPayload>): Promise<User> {
         const userId = request.user.userId;
-        const user = await this._userRepository.findByIdAsync(userId);
+        const user = await this._userRepository.findByIdAsync(objectId(userId));
         if (!user) {
             throw new BadRequestException('User does not exist.');
         }
