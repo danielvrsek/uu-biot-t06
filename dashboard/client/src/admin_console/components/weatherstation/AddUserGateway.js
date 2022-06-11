@@ -3,6 +3,7 @@ import { Grid, TextField, Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import ApiClient from '../../../api/ApiClient';
 
 const style = {
     position: 'absolute',
@@ -24,7 +25,7 @@ const AddUserGateway = () => {
     const handleClose = () => setOpen(false);
 
     const submit = () => {
-        console.log(username);
+        ApiClient.getCurrentWorkspaceUsers(username);
         setOpen(false);
     };
     return (
