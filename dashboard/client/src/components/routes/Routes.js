@@ -18,8 +18,7 @@ const routes = [
         name: 'Home Page',
         protected: false,
     },
-   
-   
+
     {
         path: '/login',
         exact: true,
@@ -47,7 +46,6 @@ const routes = [
         component: EditUser,
         name: 'Edit user',
         protected: true,
-       
     },
     {
         path: '/delete/:id',
@@ -55,7 +53,6 @@ const routes = [
         component: DeleteUser,
         name: 'Delete user',
         protected: true,
-
     },
     {
         path: '/workspaces',
@@ -63,15 +60,13 @@ const routes = [
         component: WorkspaceList,
         name: 'Workspaces',
         protected: true,
-
     },
     {
-        path: '/workspaces/:id',
+        path: '/workspace',
         exact: true,
         component: WorkspaceDetail,
         name: 'Workspace detail',
         protected: true,
-  
     },
     {
         path: '/weatherstations/:id',
@@ -79,8 +74,7 @@ const routes = [
         component: WeatherstationDetail,
         name: 'Weatherstation detail',
         protected: true,
-  
-    }
+    },
 ];
 
 export default routes;
