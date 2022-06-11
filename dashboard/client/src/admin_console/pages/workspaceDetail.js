@@ -48,8 +48,13 @@ function a11yProps(index) {
 const WorkspaceDetail = () => {
     const [gateways, setGateways] = useState();
     const [currentWorkspace, setCurrentWorkspace] = useState();
+    const [value, setValue] = useState(0);
     const [detailStatus, setDetailStatus] = useState('loading');
     const [listStatus, setListStatus] = useState('loading');
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     useEffect(() => {
         ApiClient.getGateways()
@@ -116,11 +121,7 @@ const WorkspaceDetail = () => {
             <div style={{ marginBottom: '20px' }}>{detailResult}</div>
             <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        aria-label="basic tabs example"
-                    >
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Seznam stanic" {...a11yProps(0)} />
                         <Tab label="Seznam uživatelů" {...a11yProps(1)} />
                     </Tabs>
