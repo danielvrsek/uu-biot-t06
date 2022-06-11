@@ -7,17 +7,55 @@ import MainChartReady from './MainChartReady';
 import ApiClient from '../../../api/ApiClient';
 
 const MainChartLoad = (props) => {
-    //Chart
+    const granularityList = [
+        {
+            name: "1 minuta",
+            granularity: 60
+        },
+        {
+            name: "5 minut",
+            granularity: 300
+        },
+        {
+            name: "10 minut",
+            granularity: 600
+        },
+        {
+            name: "30 minut",
+            granularity: 1800
+        },
+        {
+            name: "1 hodina",
+            granularity: 3600
+        },
+        {
+            name: "1 den",
+            granularity: 86400
+        },
+    ];
+
+    //Dates
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-    const defaultGranularity = 1800;
 
     const [dateFrom, setDateFrom] = useState(yesterday);
     const [dateTo, setDateTo] = useState(today);
-    const [granularity, setGranularity] = React.useState(defaultGranularity);
-    const [chartData, setChartData] = useState();
-    const [status, setStatus] = useState('loading');
+    const [availableGranularity, setAvailableGranularity] = useState([]);
+
+    useEffect(() => {
+        let data = [];
+        const dateRange = (dateTo - dateFrom) / 1000;
+        granularityList.forEach((item) => {
+            if (item.granularity >= dateRange / 200) {
+                data.push(item);
+            }
+        });
+
+        setGranularity(data[0].granularity)
+
+        setAvailableGranularity(data);
+    }, [dateFrom, dateTo])
 
     const handleDateFrom = (newDateFrom) => {
         setDateFrom(newDateFrom);
@@ -27,18 +65,22 @@ const MainChartLoad = (props) => {
         setDateTo(newDateTo);
     };
 
+    //Granularity
+    const [granularity, setGranularity] = useState();
+
+
     const handleGranularity = (event) => {
         setGranularity(event.target.value);
     };
 
+    //Chart
+    const [chartData, setChartData] = useState();
+    const [status, setStatus] = useState('loading');
+
     const reset = () => {
         setDateFrom(yesterday);
         setDateTo(today);
-        setGranularity(defaultGranularity);
-    };
-
-    const set = () => {
-        //call server
+        setGranularity();
     };
 
     useEffect(() => {
@@ -65,11 +107,11 @@ const MainChartLoad = (props) => {
                     dateFrom={dateFrom}
                     dateTo={dateTo}
                     granularity={granularity}
+                    availableGranularity={availableGranularity}
                     handleDateFrom={handleDateFrom}
                     handleDateTo={handleDateTo}
                     handleGranularity={handleGranularity}
                     handleReset={reset}
-                    handleSet={set}
                 />
             );
             break;
