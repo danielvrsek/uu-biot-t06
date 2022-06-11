@@ -5,6 +5,7 @@ import { UserService } from 'services/user.service';
 import { WorkspaceService } from 'services/workspace.service';
 import { UserRole } from 'dataLayer/entities/enums/role.enum';
 import { GatewayService } from 'services/gateway.service';
+import { WorkspaceType } from 'dataLayer/entities/enums/workspaceType.enum';
 
 @Injectable()
 export class SeedCommand {
@@ -16,6 +17,17 @@ export class SeedCommand {
 
     @Command({ command: 'seed', describe: 'Seed data' })
     async seedAsync() {
+        const superAdmin = await this.userService.createAsync({
+            firstName: 'Super',
+            lastname: 'Admin',
+            email: 'super@admin.com',
+            username: 'superadmin',
+            passwordRaw: 'superadmin',
+            isExternal: false,
+            profilePhotoUrl: null,
+        });
+        console.log(superAdmin);
+
         const user1 = await this.userService.createAsync({
             firstName: 'Test',
             lastname: 'User',
@@ -38,20 +50,38 @@ export class SeedCommand {
         });
         console.log(user2);
 
-        const workspace1 = await this.workspaceService.createAsync({
-            name: 'Default workspace',
-        });
+        const adminWorkspace = await this.workspaceService.createAsync(
+            {
+                name: 'Admin workspace',
+            },
+            WorkspaceType.Admin
+        );
+        console.log(adminWorkspace);
+
+        const workspace1 = await this.workspaceService.createAsync(
+            {
+                name: 'Default workspace',
+            },
+            WorkspaceType.Private
+        );
         console.log(workspace1);
 
-        const workspaceMembership1 = await this.workspaceService.addUserToWorkspaceAsync(workspace1._id, user1._id, [
-            UserRole.User,
-        ]);
+        const workspaceMembership1 = await this.workspaceService.addUserToWorkspaceAsync(
+            adminWorkspace._id,
+            superAdmin._id,
+            [UserRole.Admin]
+        );
         console.log(workspaceMembership1);
 
-        const workspaceMembership2 = await this.workspaceService.addUserToWorkspaceAsync(workspace1._id, user2._id, [
-            UserRole.Admin,
+        const workspaceMembership2 = await this.workspaceService.addUserToWorkspaceAsync(workspace1._id, user1._id, [
+            UserRole.User,
         ]);
         console.log(workspaceMembership2);
+
+        const workspaceMembership3 = await this.workspaceService.addUserToWorkspaceAsync(workspace1._id, user2._id, [
+            UserRole.Admin,
+        ]);
+        console.log(workspaceMembership3);
 
         const gateway1 = await this.gatewayService.createAsync(workspace1._id, {
             name: 'Default gateway',

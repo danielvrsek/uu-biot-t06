@@ -1,4 +1,5 @@
 export const Environment = {
+    mongoDbUrl: 'MONGODB_URL',
     webUrl: 'WEB_URL',
     authMicrosoftAuthority: 'AUTH_MICROSOFT_AUTHORITY',
     authMicrosoftClientId: 'AUTH_MICROSOFT_CLIENTID',

@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
 import { Types } from 'mongoose';
 import { GatewayAuthorization } from 'dataLayer/entities/gatewayAuthorization.entity';
+import { GatewayAuthorizationType } from 'dataLayer/entities/enums/gatewayAuthorizationType.enum';
 
 @Injectable()
 export class GatewayAuthorizationRepository {
@@ -16,7 +17,11 @@ export class GatewayAuthorizationRepository {
     }
 
     async findBySecretAsync(workspaceId: Types.ObjectId, secret: string): Promise<GatewayAuthorization> {
-        const gatewayAuthorization = await this.model.findOne({ workspaceId, secret });
+        const gatewayAuthorization = await this.model.findOne({
+            workspaceId,
+            secret,
+            authorizationType: GatewayAuthorizationType.Master,
+        });
         if (!gatewayAuthorization) {
             return null;
         }
