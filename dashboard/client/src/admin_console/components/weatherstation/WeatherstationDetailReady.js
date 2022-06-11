@@ -1,4 +1,4 @@
-import { Typography, Table, TableRow, TableCell } from '@mui/material';
+import { Typography, Table, TableBody, TableRow, TableCell } from '@mui/material';
 
 const WeatherstationDetailReady = (props) => {
 
@@ -6,10 +6,12 @@ const WeatherstationDetailReady = (props) => {
         <div>
             <Typography mt={8} variant="h3">{props.data.name}</Typography>
             <Table>
-                <TableRow>
-                    <TableCell><Typography sx={{ fontWeight: 'bold' }}>Id</Typography></TableCell>
-                    <TableCell>{props.data.id}</TableCell>
-                </TableRow>
+                <TableBody>
+                    <TableRow>
+                        <TableCell><Typography sx={{ fontWeight: 'bold' }}>Id</Typography></TableCell>
+                        <TableCell>{props.data.id}</TableCell>
+                    </TableRow>
+                </TableBody>
             </Table>
         </div>
     )

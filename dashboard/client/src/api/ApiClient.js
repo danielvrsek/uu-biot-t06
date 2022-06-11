@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { getBasePath } from '../components/utils/pathHelper';
 
-const getMethod = (path, headers) => axios.get(getBasePath() + path, { headers, withCredentials: true });
+const getMethod = (path, headers) =>
+  axios.get(getBasePath() + path, { headers, withCredentials: true });
 const postMethod = (path, payload, headers) =>
-    axios.post(getBasePath() + path, payload, { headers, withCredentials: true });
-const deleteMethod = (path, headers) => axios.delete(getBasePath() + path, { headers, withCredentials: true });
+  axios.post(getBasePath() + path, payload, { headers, withCredentials: true });
+const deleteMethod = (path, headers) =>
+  axios.delete(getBasePath() + path, { headers, withCredentials: true });
 const putMethod = (path, payload, headers) =>
-    axios.put(getBasePath() + path, payload, { headers, withCredentials: true });
+  axios.put(getBasePath() + path, payload, { headers, withCredentials: true });
 
 const getHeaders = () => ({
-    'Content-type': 'application/json',
+  'Content-type': 'application/json',
 });
 
 const ApiClient = {
@@ -29,6 +31,9 @@ const ApiClient = {
         ),
     logout: () => postMethod('/auth/logout'),
     createGateway: async (name) => postMethod('/gateway', { name }),
-};
+    getCurrentWorkspace: async () => getMethod(`/workspace/user/current`),
+    getGateways: async () => getMethod(`/weather-data`)
+};,
+  
 
 export default ApiClient;
