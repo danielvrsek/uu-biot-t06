@@ -33,6 +33,7 @@ const ApiClient = {
   createGateway: async (name) => postMethod('/gateway', { name }),
   getGateways: async () => getMethod(`/weather-data`),
   getCurrentWorkspace: async () => getMethod(`/workspace/user/current`),
+  getCurrentWorkspaceUsers: async (id) => getMethod(`/workspaces/${id}/users`),
 };
 
 export default ApiClient;
