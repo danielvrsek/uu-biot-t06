@@ -19,7 +19,7 @@ const Profile = () => {
                 <div className="meta">{userContext.email}</div>
                 <div className="description">
                     <p>
-                        Tento učet je v režimu: <b>{userContext.role}</b>
+                        Tento učet je v režimu: <b>TODO</b>
                     </p>
                 </div>
             </div>

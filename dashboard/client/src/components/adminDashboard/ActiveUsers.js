@@ -29,7 +29,7 @@ const ActiveUsers = () => {
                                 <div className="meta">{user.email}</div>
                                 <div className="description">
                                     <p>
-                                        Tento učet je v režimu: <b>{user.role}</b>
+                                        Tento učet je v režimu: <b>TODO</b>
                                     </p>
                                 </div>
                             </div>
