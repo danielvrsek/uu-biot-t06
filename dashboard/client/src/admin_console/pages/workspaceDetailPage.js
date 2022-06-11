@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { Container } from '@mui/material';
 import ListUsers from '../components/weatherstation/ListWeatherStationUsers';
+import { useWorkspaceContext } from '../../components/context/AuthContext';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -51,6 +52,9 @@ const WorkspaceDetailPage = () => {
     const [value, setValue] = useState(0);
     const [detailStatus, setDetailStatus] = useState('loading');
     const [listStatus, setListStatus] = useState('loading');
+
+    const [workspaceContext] = useWorkspaceContext();
+    console.log(workspaceContext);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

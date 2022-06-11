@@ -15,8 +15,11 @@ import {
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Line from '../core/Line';
+import { useWorkspaceContext } from '../../../components/context/AuthContext';
 
 const WeatherstationItem = ({ data }) => {
+    const [workspaceContext] = useWorkspaceContext();
+
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleOpenSettings = (event) => {
@@ -36,7 +39,7 @@ const WeatherstationItem = ({ data }) => {
                 <CardHeader
                     title={data.name}
                     action={
-                        <div>
+                        (workspaceContext.roles.includes('Admin')) ? (<div>
                             <IconButton onClick={handleOpenSettings} aria-label="settings">
                                 <MoreVertIcon />
                             </IconButton>
@@ -54,7 +57,7 @@ const WeatherstationItem = ({ data }) => {
                                     <MenuItem>Odebrat stanici</MenuItem>
                                 </MenuList>
                             </Popover>
-                        </div>
+                        </div>) : <></>
                     }
                 />
                 <Divider />

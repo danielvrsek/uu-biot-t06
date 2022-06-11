@@ -5,10 +5,13 @@ import ApiClient from '../../../api/ApiClient';
 import Error from '../core/Error';
 import Loading from '../core/Loading';
 import AddUserGateway from './AddUserGateway';
+import { useWorkspaceContext } from '../../../components/context/AuthContext';
 
 const ListWeateherUsers = () => {
     const [users, setUsers] = useState();
     const [detailStatus, setDetailStatus] = useState('loading');
+    const [workspaceContext] = useWorkspaceContext();
+
     useEffect(() => {
         ApiClient.getCurrentWorkspaceUsers()
             .then((response) => {
@@ -33,7 +36,7 @@ const ListWeateherUsers = () => {
 
     return (
         <div style={{margin: "8px 0"}}>
-            <AddUserGateway />
+            {(workspaceContext.roles.includes('Admin')) ? <AddUserGateway /> : <></>}
             <Grid sx={{pt: 4}} container spacing={2}>
                 {detailResult}
             </Grid>
