@@ -14,14 +14,19 @@ import { ControllerBase } from './controllerBase';
 import { UserRequest } from 'common/request';
 import { objectId } from 'utils/schemaHelper';
 import { Response } from 'express';
+import { WorkspaceMembershipRepository } from 'dataLayer/repositories/workspaceMembership.repository';
+import { UserRepository } from 'dataLayer/repositories/user.repository';
+import { UserDto } from 'services/dto/user.dto';
 
-@Controller('workspace')
+@Controller('workspaces')
 @EnforceTokenType(TokenType.User)
 @UseGuards(JwtAuthGuard, TokenTypeGuard)
 export class WorkspaceController extends ControllerBase {
     constructor(
+        private readonly workspaceMembershipRepository: WorkspaceMembershipRepository,
         private readonly workspaceRepository: WorkspaceRepository,
         private readonly workspaceService: WorkspaceService,
+        private readonly userRepository: UserRepository,
         cookieHelper: CookieHelper
     ) {
         super(cookieHelper, workspaceRepository);
@@ -63,6 +68,19 @@ export class WorkspaceController extends ControllerBase {
     @Get(':id')
     findByIdAsync(@Param('id') id): Promise<Workspace> {
         return this.workspaceRepository.findByIdAsync(id);
+    }
+
+    @Get(':id/users')
+    async getAllUsersForWorkspaceAsync(@Param('id') id): Promise<UserDto[]> {
+        const memberships = await this.workspaceMembershipRepository.getAllMembershipsByWorkspaceAsync(objectId(id));
+        const users = await this.userRepository.findAllByIdsAsync(memberships.map((x) => x.userId));
+        return users.map((x) => ({
+            userId: x._id.toString(),
+            firstName: x.firstName,
+            lastname: x.lastname,
+            email: x.email,
+            username: x.username,
+        }));
     }
 
     @Post()

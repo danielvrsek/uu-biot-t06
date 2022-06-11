@@ -3,7 +3,7 @@ import { UserService } from 'services/user.service';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
 import RoleGuard from 'auth/guards/roles.guard';
 import { UserRepository } from 'dataLayer/repositories/user.repository';
-import { CreateUserDto, UpdateUserDto } from 'services/dto/user.dto';
+import { CreateUserDto, UpdateUserDto, UserDto } from 'services/dto/user.dto';
 import { User } from 'dataLayer/entities/user.entity';
 import { UserRole } from 'dataLayer/entities/enums/role.enum';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
@@ -18,8 +18,15 @@ export class UserController {
     constructor(private readonly userRepository: UserRepository, private readonly userService: UserService) {}
 
     @Get()
-    findAll(): Promise<User[]> {
-        return this.userRepository.findAllAsync();
+    async findAllAsync(): Promise<UserDto[]> {
+        const data = await this.userRepository.findAllAsync();
+        return data.map((x) => ({
+            userId: x._id.toString(),
+            firstName: x.firstName,
+            lastname: x.lastname,
+            email: x.email,
+            username: x.username,
+        }));
     }
 
     @Get('profile')

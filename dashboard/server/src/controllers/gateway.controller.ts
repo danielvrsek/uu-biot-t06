@@ -13,7 +13,7 @@ import { ControllerBase } from './controllerBase';
 import { WorkspaceRepository } from 'dataLayer/repositories/workspace.repository';
 import { UserRequest } from 'common/request';
 
-@Controller('gateway')
+@Controller('gateways')
 @EnforceTokenType(TokenType.User)
 @UseGuards(JwtAuthGuard, TokenTypeGuard)
 export class GatewayController extends ControllerBase {

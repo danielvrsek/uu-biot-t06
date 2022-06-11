@@ -17,6 +17,14 @@ export interface UpdateUserDto {
     email: string;
 }
 
+export interface UserDto {
+    userId: string;
+    username: string;
+    firstName: string;
+    lastname: string;
+    email: string;
+}
+
 export interface UserInfo extends TokenInfo {
     userId: string;
     username: string;

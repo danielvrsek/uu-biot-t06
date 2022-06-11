@@ -8,10 +8,13 @@ Content-Type: application/json
 }
 
 ### Get all available workspaces
-GET http://localhost:4000/workspace/user
+GET http://localhost:4000/workspaces/user
+
+### Get all users in workspace
+GET http://localhost:4000/workspaces/629c75a8f54e0f35c1f6bc33/users
 
 ### Set current workspace
-PUT http://localhost:4000/workspace/user/current
+PUT http://localhost:4000/workspaces/user/current
 Content-Type: application/json
 
 {
@@ -25,7 +28,7 @@ GET http://localhost:4000/auth/user-info
 POST http://localhost:4000/auth/logout
 
 ### Get available gateways
-GET http://localhost:4000/weather-data
+GET http://localhost:4000/gateways
 
 ### Get weather data for gateway
 GET http://localhost:4000/weather-data/gateway/629c75a8f54e0f35c1f6bc39?dateFrom=2022-06-09T16:40:08.107Z&dateTo=2022-06-10T16:40:08.107Z&granularity=3600
@@ -56,7 +59,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnYXRld2F5SWQiOiI2M
 }
 
 ### Create gateway
-POST http://localhost:4000/gateway
+POST http://localhost:4000/gateways
 Content-Type: application/json
 
 {
