@@ -35,25 +35,6 @@ export class WeatherDataController extends ControllerBase {
         super(cookieHelper, workspaceRepository);
     }
 
-    @Get()
-    @EnforceTokenType(TokenType.User)
-    async findAllForCurrentWorkspaceAsync(
-        @Req() request: UserRequest<void>
-    ): Promise<GetWeatherDataForWorkspaceResponse[]> {
-        const workspace = await this.getCurrentWorkspaceAsync(request);
-        const availableGateways = await this.gatewayService.getAllGatewaysForWorkspace(workspace._id);
-
-        const result: GetWeatherDataForWorkspaceResponse[] = [];
-        for (const gateway of availableGateways) {
-            result.push({
-                gatewayId: gateway.id,
-                gatewayName: gateway.name,
-            });
-        }
-
-        return result;
-    }
-
     @Get('gateway/:gatewayId')
     @EnforceTokenType(TokenType.User)
     async findByGatewayIdAsync(

@@ -22,7 +22,7 @@ const WorkspaceListReady = ({ data }) => {
             </Typography>
             <Grid container spacing={2}>
                 {data.length ? (
-                    data.map((x) => <WorkspaceItem key={x} data={x} onClick={handleItemOnClick} />)
+                    data.map((item) => <WorkspaceItem key={item._id} data={item} onClick={handleItemOnClick} />)
                 ) : (
                     <div>Žádný dostupný workspace</div>
                 )}
