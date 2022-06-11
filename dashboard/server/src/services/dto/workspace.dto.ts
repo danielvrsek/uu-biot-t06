@@ -1,3 +1,7 @@
+export interface AddUserToWorkspaceDto {
+    username: string;
+}
+
 export interface CreateWorkspaceDto {
     name: string;
 }

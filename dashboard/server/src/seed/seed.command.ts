@@ -43,12 +43,12 @@ export class SeedCommand {
         });
         console.log(workspace1);
 
-        const workspaceMembership1 = await this.workspaceService.addUserToWorkspace(workspace1._id, user1._id, [
+        const workspaceMembership1 = await this.workspaceService.addUserToWorkspaceAsync(workspace1._id, user1._id, [
             UserRole.User,
         ]);
         console.log(workspaceMembership1);
 
-        const workspaceMembership2 = await this.workspaceService.addUserToWorkspace(workspace1._id, user2._id, [
+        const workspaceMembership2 = await this.workspaceService.addUserToWorkspaceAsync(workspace1._id, user2._id, [
             UserRole.Admin,
         ]);
         console.log(workspaceMembership2);
