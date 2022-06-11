@@ -82,6 +82,6 @@ export class AuthService {
             userId,
             workspaceId
         );
-        return membership ? membership.roles : null;
+        return membership ? membership.roles : [];
     }
 }
