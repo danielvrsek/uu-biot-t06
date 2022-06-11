@@ -16,6 +16,7 @@ Content-Type: application/json
 }
 
 ### Get all available workspaces
+
 GET http://localhost:4000/workspaces/user
 
 ### Get all users in workspace

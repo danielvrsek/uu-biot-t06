@@ -16,7 +16,7 @@ const style = {
     p: 4,
 };
 
-const AddWeatherStationUser = () => {
+const AddUser = () => {
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState({
         name: '',
@@ -120,4 +120,4 @@ const AddWeatherStationUser = () => {
     );
 };
 
-export default AddWeatherStationUser;
+export default AddUser;

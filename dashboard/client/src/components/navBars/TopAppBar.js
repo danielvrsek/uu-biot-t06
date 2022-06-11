@@ -26,14 +26,14 @@ export default function MenuAppBar() {
                 <NavLink to="/" className="item">
                     <h4>Hlavní stránka</h4>
                 </NavLink>
+
                 <NavLink to="/customer-info" className="item">
                     <h4>Zákaznické prostředí</h4>
                 </NavLink>
                 {menu ? menu : <div></div>}
                 <div className="right menu">
                     <div className="ui item">
-                        {' '}
-                        <UserLogedIn />{' '}
+                        <UserLogedIn />
                     </div>
                     <div className="ui item" style={{ marginRight: '30px' }}>
                         <h2>- MeteoStanice -</h2>
