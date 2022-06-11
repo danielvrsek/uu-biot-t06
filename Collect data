@@ -1,6 +1,6 @@
 [
     {
-        "id": "121db3a117c67412",
+        "id": "2c1113efbd45dee5",
         "type": "tab",
         "label": "Collect data",
         "disabled": false,
@@ -8,24 +8,24 @@
         "env": []
     },
     {
-        "id": "42f21e940c06118a",
+        "id": "6f7801d8d187f0ed",
         "type": "serial in",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "serialIn",
-        "serial": "0f1594c6977ee81e",
+        "serial": "0ec898aff92b268b",
         "x": 70,
         "y": 80,
         "wires": [
             [
-                "1250c56104a1d92d"
+                "6219d9bd27ebcd76"
             ]
         ],
         "info": "reads data from arduino in json\n{\"temperature\":25.6,\"humidity\":40}"
     },
     {
-        "id": "7cd7876e186d3da8",
+        "id": "58ef3fc6d86bd9bd",
         "type": "debug",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "NoSensorData",
         "active": true,
         "tosidebar": true,
@@ -40,9 +40,9 @@
         "wires": []
     },
     {
-        "id": "adad474adb483b44",
+        "id": "9e8f517b402da712",
         "type": "debug",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -57,9 +57,9 @@
         "wires": []
     },
     {
-        "id": "1250c56104a1d92d",
+        "id": "6219d9bd27ebcd76",
         "type": "json",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "parseFromJson",
         "property": "payload",
         "action": "obj",
@@ -68,14 +68,14 @@
         "y": 80,
         "wires": [
             [
-                "726b2cd6c410a7a0"
+                "43df30bca74f4e99"
             ]
         ]
     },
     {
-        "id": "6dc058e3e0789ca0",
+        "id": "8c3f05e0eef00f25",
         "type": "change",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "setTimestamp",
         "rules": [
             {
@@ -102,14 +102,14 @@
         "y": 160,
         "wires": [
             [
-                "162ec68bacd83941"
+                "2b867d5389fe9d96"
             ]
         ]
     },
     {
-        "id": "726b2cd6c410a7a0",
+        "id": "43df30bca74f4e99",
         "type": "function",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "validateDataInput",
         "func": "if(!msg.payload.temperature || !msg.payload.humidity){\n    return [msg,null];\n    \n}\n\nreturn [null, msg]\n\n",
         "outputs": 2,
@@ -121,17 +121,17 @@
         "y": 220,
         "wires": [
             [
-                "6dc058e3e0789ca0"
+                "8c3f05e0eef00f25"
             ],
             [
-                "2ca1eaedc6356c14"
+                "114deb1fb586ff36"
             ]
         ]
     },
     {
-        "id": "9df195cdc2791ad6",
+        "id": "ae74fd62477ea978",
         "type": "file",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "noDataLog.txt",
         "filename": "",
         "appendNewline": true,
@@ -142,14 +142,14 @@
         "y": 160,
         "wires": [
             [
-                "7cd7876e186d3da8"
+                "58ef3fc6d86bd9bd"
             ]
         ]
     },
     {
-        "id": "162ec68bacd83941",
+        "id": "2b867d5389fe9d96",
         "type": "json",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "parseToJson",
         "property": "payload",
         "action": "",
@@ -158,14 +158,14 @@
         "y": 160,
         "wires": [
             [
-                "c588e867bdf19f86"
+                "e5e9dee30225a2f2"
             ]
         ]
     },
     {
-        "id": "2ca1eaedc6356c14",
+        "id": "114deb1fb586ff36",
         "type": "function",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "setBuffer",
         "func": "let weatherDataFlow = flow.get(\"weatherDataFlow\") || [];\n\n\n\nweatherDataFlow.push(msg.payload)\n\n flow.set(\"weatherDataFlow\", weatherDataFlow)\n\n    msg.payload = weatherDataFlow\n   return msg; \n\n",
         "outputs": 1,
@@ -177,14 +177,14 @@
         "y": 260,
         "wires": [
             [
-                "adad474adb483b44"
+                "9e8f517b402da712"
             ]
         ]
     },
     {
-        "id": "51897050afccc0b1",
+        "id": "c06f04b1bb57a0a6",
         "type": "inject",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "loadWeatherDataBuffer",
         "props": [
             {
@@ -212,14 +212,14 @@
         "y": 400,
         "wires": [
             [
-                "39d19cdd01a024bc"
+                "114f3377d3c3d093"
             ]
         ]
     },
     {
-        "id": "293a5156eeadc366",
+        "id": "9fb43535bb6f522e",
         "type": "change",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "deletePreviousBuffer",
         "rules": [
             {
@@ -237,14 +237,14 @@
         "y": 400,
         "wires": [
             [
-                "e71e66cc6cfe712b"
+                "c89f9281dd926a86"
             ]
         ]
     },
     {
-        "id": "5c8afa1c37497706",
+        "id": "5036f57c65f942a7",
         "type": "mongodb out",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "mongodb": "ecb43e63847ff54b",
         "name": "saveToCollection",
         "collection": "",
@@ -252,14 +252,14 @@
         "upsert": false,
         "multi": false,
         "operation": "store",
-        "x": 1190,
+        "x": 1270,
         "y": 400,
         "wires": []
     },
     {
-        "id": "e71e66cc6cfe712b",
+        "id": "c399719e86f47012",
         "type": "function",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "median",
         "func": "let medianData = {}\nconst keys = Object.keys(msg.payload[0])\n    keys.forEach((key)=>{\n\nlet sorted = msg.payload.slice().sort((a,b)=> (a[key] > b[key]) ? 1 :((b[key] > a[key]  ) ? -1 : 0))\n \n let middle = Math.floor(msg.payload.length / 2)\n  \n   let median = sorted[middle][key]\n   \n   \n   \n   if (msg.payload.length % 2 === 0){\n        median  = (sorted[middle - 1][key] + sorted[middle][key] )/ 2\n      \n    }\n\nmedianData = {\n    ...medianData,\n    [key]: median,\n}\n    })\n    \n    msg.payload = {...medianData}\n\n\n\nreturn msg;",
         "outputs": 1,
@@ -267,18 +267,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
+        "x": 900,
         "y": 400,
         "wires": [
             [
-                "1813a8b3a05f28b2"
+                "185f147f817d286b"
             ]
         ]
     },
     {
-        "id": "1813a8b3a05f28b2",
+        "id": "185f147f817d286b",
         "type": "change",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "setDataProperties",
         "rules": [
             {
@@ -306,18 +306,18 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 950,
+        "x": 1070,
         "y": 400,
         "wires": [
             [
-                "5c8afa1c37497706"
+                "5036f57c65f942a7"
             ]
         ]
     },
     {
-        "id": "39d19cdd01a024bc",
+        "id": "114f3377d3c3d093",
         "type": "switch",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "validateNotEmpty",
         "property": "payload",
         "propertyType": "msg",
@@ -333,14 +333,14 @@
         "y": 400,
         "wires": [
             [
-                "293a5156eeadc366"
+                "9fb43535bb6f522e"
             ]
         ]
     },
     {
-        "id": "c588e867bdf19f86",
+        "id": "e5e9dee30225a2f2",
         "type": "function",
-        "z": "121db3a117c67412",
+        "z": "2c1113efbd45dee5",
         "name": "configFilePath",
         "func": "const DOCS_PATH = env.get(\"DOCS_PATH\")\nconst filename = \"noSensorDataLog.txt\"\nmsg.filename = DOCS_PATH + filename\nreturn msg;",
         "outputs": 1,
@@ -352,14 +352,101 @@
         "y": 160,
         "wires": [
             [
-                "9df195cdc2791ad6"
+                "ae74fd62477ea978"
             ]
         ]
     },
     {
-        "id": "0f1594c6977ee81e",
+        "id": "c89f9281dd926a86",
+        "type": "function",
+        "z": "2c1113efbd45dee5",
+        "name": "isToken",
+        "func": "const token = global.get(\"token\")\nif(!token) return\nreturn msg\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 400,
+        "wires": [
+            [
+                "c399719e86f47012"
+            ]
+        ]
+    },
+    {
+        "id": "4c9c0eebf8ef4757",
+        "type": "file",
+        "z": "2c1113efbd45dee5",
+        "name": "CollectDataErrorLog.txt",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 550,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "76c7442d757845a1",
+        "type": "function",
+        "z": "2c1113efbd45dee5",
+        "name": "configFilePath",
+        "func": "const DOCS_PATH = env.get(\"DOCS_PATH\")\nconst filename = \"CollectDataErrorLog.txt\"\nmsg.filename = DOCS_PATH + filename\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 540,
+        "wires": [
+            [
+                "4c9c0eebf8ef4757"
+            ]
+        ]
+    },
+    {
+        "id": "47520030d34699ac",
+        "type": "catch",
+        "z": "2c1113efbd45dee5",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 80,
+        "y": 500,
+        "wires": [
+            [
+                "62d8cfc0785d1b29",
+                "76c7442d757845a1"
+            ]
+        ]
+    },
+    {
+        "id": "62d8cfc0785d1b29",
+        "type": "debug",
+        "z": "2c1113efbd45dee5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "0ec898aff92b268b",
         "type": "serial-port",
-        "serialport": "COM3",
+        "serialport": "/dev/ttyUSB0",
         "serialbaud": "9600",
         "databits": "8",
         "parity": "none",
