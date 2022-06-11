@@ -81,7 +81,7 @@ export class ExternalAuthController extends ControllerBase {
         const { givenName, surname, mail } = await this.microsoftGraphApi.getUserDetailsAsync(homeAccountId);
 
         const photoBlob = await this.microsoftGraphApi.getUserPhotoAsync(homeAccountId);
-        const profilePhotoUrl = this.assetService.saveProfilePhoto(`${homeAccountId}.jpg`, photoBlob.stream());
+        const profilePhotoUrl = await this.assetService.saveProfilePhotoAsync(`${homeAccountId}.jpg`, photoBlob);
 
         let user = await this.userRepository.findByUsernameAsync(username);
         if (!user) {

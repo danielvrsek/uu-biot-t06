@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import * as fs from 'fs';
+import * as fs from 'fs/promises';
 
 @Injectable()
 export class AssetService {
-    saveProfilePhoto(filename: string, stream: fs.ReadStream) {
+    async saveProfilePhotoAsync(filename: string, blob: Blob) {
         const folder = 'profile-photos/';
         const path = 'public/' + folder + filename;
-        stream.pipe(fs.createWriteStream(path));
-        return '/' + folder + filename;
+
+        await fs.writeFile(path, await blob.stream());
+        return filename;
     }
 }
