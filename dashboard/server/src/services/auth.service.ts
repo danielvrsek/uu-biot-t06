@@ -78,10 +78,10 @@ export class AuthService {
     }
 
     async getUserRolesForWorkspaceAsync(userId: Types.ObjectId, workspaceId: Types.ObjectId): Promise<UserRole[]> {
-        const memberships = await this.workspaceMembershipRepository.getMembershipsForUserByWorkspaceAsync(
+        const membership = await this.workspaceMembershipRepository.getMembershipForUserByWorkspaceAsync(
             userId,
             workspaceId
         );
-        return memberships.roles;
+        return membership ? membership.roles : null;
     }
 }

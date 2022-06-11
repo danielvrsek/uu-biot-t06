@@ -11,6 +11,9 @@ import { GatewayModule } from './gateway.module';
 import { LocalGatewayStrategy } from 'auth/strategies/localGateway.strategy';
 import { SharedModule } from './shared.module';
 import { WorkspaceModule } from './workspace.module';
+import { MicrosoftAuthorizationService } from 'services/microsoftAuthorizationService';
+import { ExternalAuthController } from 'controllers/externalAuth.controller';
+import { MicrosoftGraphApi } from 'services/microsoftGraphApi';
 
 @Module({
     imports: [
@@ -24,8 +27,15 @@ import { WorkspaceModule } from './workspace.module';
         SharedModule,
         WorkspaceModule,
     ],
-    controllers: [AuthController],
-    providers: [AuthService, LocalUserStrategy, LocalGatewayStrategy, JwtStrategy],
+    controllers: [AuthController, ExternalAuthController],
+    providers: [
+        AuthService,
+        LocalUserStrategy,
+        LocalGatewayStrategy,
+        JwtStrategy,
+        MicrosoftGraphApi,
+        MicrosoftAuthorizationService,
+    ],
     exports: [AuthService],
 })
 export class AuthModule {}

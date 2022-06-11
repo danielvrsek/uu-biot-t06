@@ -8,6 +8,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ApiClient from '../api/ApiClient';
 import { useAuth } from '../components/context/AuthContext';
+import MicrosoftLoginButton from '../components/login/MicrosoftLoginButton';
 
 const Login = () => {
     //Style
@@ -107,6 +108,9 @@ const Login = () => {
                         Login
                     </Button>
                 </form>
+                <MicrosoftLoginButton
+                    url={'/external-auth/microsoft-login?returnUrl=' + encodeURIComponent(`https:localhost:3000/`)}
+                />
             </Paper>
         </Container>
     );

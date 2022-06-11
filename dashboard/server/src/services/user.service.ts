@@ -11,12 +11,14 @@ export class UserService {
     constructor(@InjectModel(SchemaConstants.User) private readonly model: Model<User>) {}
 
     async createAsync(user: CreateUserDto): Promise<User> {
-        const passwordHash = encodePassword(user.passwordRaw);
+        const passwordHash = !user.isExternal ? encodePassword(user.passwordRaw) : null;
         const newUser = new this.model({
             firstName: user.firstName,
             lastname: user.lastname,
             email: user.email,
             username: user.username,
+            isExternal: user.isExternal,
+            profilePhotoUrl: user.profilePhotoUrl,
             passwordHash,
         });
         return await newUser.save();

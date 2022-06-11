@@ -22,6 +22,8 @@ export class SeedCommand {
             email: 'user@user.com',
             username: 'user',
             passwordRaw: 'user',
+            isExternal: false,
+            profilePhotoUrl: null,
         });
         console.log(user1);
 
@@ -31,6 +33,8 @@ export class SeedCommand {
             email: 'admin@admin.com',
             username: 'admin',
             passwordRaw: 'admin',
+            isExternal: false,
+            profilePhotoUrl: null,
         });
         console.log(user2);
 

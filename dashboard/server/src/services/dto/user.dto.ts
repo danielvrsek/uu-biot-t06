@@ -7,6 +7,8 @@ export interface CreateUserDto {
     email: string;
     username: string;
     passwordRaw: string;
+    isExternal: boolean;
+    profilePhotoUrl: string;
 }
 
 export interface UpdateUserDto {

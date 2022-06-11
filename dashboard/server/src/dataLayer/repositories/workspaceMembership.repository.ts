@@ -9,7 +9,7 @@ import { WorkspaceMembership } from 'dataLayer/entities/workspaceMembership.enti
 export class WorkspaceMembershipRepository {
     constructor(@InjectModel(SchemaConstants.WorkspaceMembership) private readonly model: Model<WorkspaceMembership>) {}
 
-    async getMembershipsForUserByWorkspaceAsync(
+    async getMembershipForUserByWorkspaceAsync(
         userId: Types.ObjectId,
         workspaceId: Types.ObjectId
     ): Promise<WorkspaceMembership> {
