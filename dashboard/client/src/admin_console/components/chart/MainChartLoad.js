@@ -51,11 +51,9 @@ const MainChartLoad = ({ gatewayId }) => {
         });
     }, [gatewayId, dateFrom, dateTo, granularity]);
 
-    let result;
-
     switch (status) {
         case 'success':
-            result = (
+            return (
                 <MainChartReady
                     data={chartData}
                     dateFrom={dateFrom}
@@ -68,16 +66,11 @@ const MainChartLoad = ({ gatewayId }) => {
                     handleReset={reset}
                 />
             );
-            break;
         case 'error':
-            result = <Error content="Error" />;
-            break;
+            return <Error content="Error" />;
         default:
-            result = <Loading />;
-            break;
+            return <Loading />;
     }
-
-    return result;
 };
 
 const granularityList = [
