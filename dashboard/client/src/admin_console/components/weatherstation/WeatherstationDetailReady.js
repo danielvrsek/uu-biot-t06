@@ -1,4 +1,4 @@
-import { Typography, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Typography, Table, TableBody, TableRow, TableCell, Chip } from '@mui/material';
 
 const WeatherstationDetailReady = ({ data }) => {
     return (
@@ -19,6 +19,14 @@ const WeatherstationDetailReady = ({ data }) => {
                             <Typography sx={{ fontWeight: 'bold' }}>Přidáno</Typography>
                         </TableCell>
                         <TableCell>{new Date(data.createdAt).toLocaleString()}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>
+                            <Typography sx={{ fontWeight: 'bold' }}>Stav</Typography>
+                        </TableCell>
+                        <TableCell>
+                            {data.state ? <Chip label="Aktivní" color="success"/> : <Chip label="Čekající" color="warning"/>}
+                        </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

@@ -48,7 +48,7 @@ const MainChartLoad = ({ gatewayId }) => {
             } else {
                 setStatus('error');
             }
-        });
+        }).catch((e) => setStatus('error'));;
     }, [gatewayId, dateFrom, dateTo, granularity]);
 
     switch (status) {
@@ -67,7 +67,7 @@ const MainChartLoad = ({ gatewayId }) => {
                 />
             );
         case 'error':
-            return <Error content="Error" />;
+            return <Error content="Nepodařilo se načíst data pro graf." />;
         default:
             return <Loading />;
     }
