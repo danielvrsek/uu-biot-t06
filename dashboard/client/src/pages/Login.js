@@ -97,7 +97,10 @@ const Login = () => {
                     </Button>
                 </form>
                 <MicrosoftLoginButton
-                    url={'/external-auth/microsoft-login?returnUrl=' + encodeURIComponent(`https:localhost:3000/`)}
+                    url={
+                        '/external-auth/microsoft-login?returnUrl=' +
+                        encodeURIComponent(`${window.location.protocol}://${window.location.hostname}`)
+                    }
                 />
             </Paper>
         </Container>

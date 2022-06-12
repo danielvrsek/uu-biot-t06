@@ -59,10 +59,6 @@ export class AuthService {
         }
 
         const gateway = await this.gatewayRepository.findByIdAsync(authorization.gatewayId);
-        if (gateway.state != GatewayState.Created) {
-            throw new BadRequestException();
-        }
-
         await this.gatewayService.updateAsync(gateway._id, {
             state: GatewayState.Registered,
         });

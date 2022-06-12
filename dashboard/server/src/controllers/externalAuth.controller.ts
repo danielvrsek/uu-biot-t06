@@ -107,7 +107,7 @@ export class ExternalAuthController extends ControllerBase {
         });
         response.cookie(Cookies.AuthCookie, token, cookieOptions);
 
-        response.redirect('https://localhost:3000');
+        response.redirect(this.configurationProvider.getConfiguration().webUrl);
     }
 
     #getExternalLoginCallbackUrl(req) {
