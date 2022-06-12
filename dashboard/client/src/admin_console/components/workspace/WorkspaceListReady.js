@@ -18,13 +18,13 @@ const WorkspaceListReady = ({ data }) => {
     return (
         <Container sx={{ pt: 4 }}>
             <Typography variant="h3" mb={3}>
-                Seznam workspace
+                Seznam dostupných zón
             </Typography>
             <Grid container spacing={2}>
                 {data.length ? (
                     data.map((item) => <WorkspaceItem key={item._id} data={item} onClick={handleItemOnClick} />)
                 ) : (
-                    <div>Žádný dostupný workspace</div>
+                    <div>Žádná dostupná zóna</div>
                 )}
             </Grid>
         </Container>

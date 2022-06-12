@@ -19,7 +19,7 @@ export default function MenuAppBar() {
 
                 {workspaceContext && workspaceContext.roles.length ? (
                     <NavLink to="/workspaces" className="item">
-                        <h4>Placená zóna</h4>
+                        <h4>Dostupné zóny</h4>
                     </NavLink>
                 ) : (
                     <></>
