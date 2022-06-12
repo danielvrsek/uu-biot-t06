@@ -30,7 +30,7 @@ const AddUser = () => {
     };
     return (
         <div style={{ marginBottom: '10px' }}>
-            <Button onClick={handleOpen} variant="contained" size="large" sx={{ m: 1 }}>
+            <Button onClick={handleOpen} variant="contained">
                 Přidat uživatele
             </Button>
             <Modal

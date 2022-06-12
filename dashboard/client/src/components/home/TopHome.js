@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useUserContext } from '../context/AuthContext';
-import AddUser from '../../admin_console/components/weatherstation/AddUser';
+import AddUser from '../user/AddUser';
 import { Button } from '@mui/material';
 
 const TopHome = () => {

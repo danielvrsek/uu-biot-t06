@@ -31,8 +31,8 @@ const AddUser = () => {
     const submit = () => {};
     return (
         <div style={{ marginBottom: '10px' }}>
-            <Button onClick={handleOpen} variant="contained" size="small">
-                Přidat uživatele
+            <Button onClick={handleOpen} variant="contained" size="large">
+                Registrace
             </Button>
             <Modal
                 open={open}
@@ -46,8 +46,7 @@ const AddUser = () => {
                         variant="h6"
                         component="h2"
                     >
-                        Přidání uživatele
-                    </Typography>
+Registrace                    </Typography>
                     <Typography
                         id="modal-modal-description"
                         sx={{ mt: 2 }}
@@ -112,7 +111,7 @@ const AddUser = () => {
                         color="primary"
                         onClick={submit}
                     >
-                        Přidat uživatele
+                        Registrovat
                     </Button>
                 </Box>
             </Modal>
