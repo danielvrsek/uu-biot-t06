@@ -9,18 +9,19 @@ const CreateUser = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
-    const [role, setRole] = useState('');
 
     function matchPassword() {
         if (verifyPassword !== password) {
-            return <div style={{ color: 'red' }}>"Zadané hesla se neshodují"</div>;
+            return (
+                <div style={{ color: 'red' }}>"Zadané hesla se neshodují"</div>
+            );
         }
     }
     const submit = (e) => {
         e.preventDefault();
-        ApiClient.addUser({ name, surname, email, role }).then(() => {
-            navigate('/');
-        });
+        ApiClient.registerUser({ name, surname, email, password }).then(
+            () => {}
+        );
     };
 
     return (
@@ -59,13 +60,6 @@ const CreateUser = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                        <div className="four wide field">
-                            <select onChange={(e) => setRole(e.target.value)}>
-                                <option value="">Role</option>
-                                <option value="User">User</option>
-                                <option value="Admin">Admin</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <div className="field">
@@ -84,7 +78,9 @@ const CreateUser = () => {
                                 type="password"
                                 name="password2"
                                 placeholder="Ověření hesla"
-                                onChange={(e) => setVerifyPassword(e.target.value)}
+                                onChange={(e) =>
+                                    setVerifyPassword(e.target.value)
+                                }
                             />
                         </div>
                     </div>

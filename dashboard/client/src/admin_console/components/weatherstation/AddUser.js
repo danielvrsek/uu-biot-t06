@@ -19,20 +19,13 @@ const style = {
 
 const AddUser = () => {
     const [open, setOpen] = useState(false);
-    const [username, setUsername] = useState();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const submit = () => {
-        ApiClient.addUserToCurrentWorkspace(username).then(() =>
-            window.location.reload()
-        );
-        setOpen(false);
-    };
     return (
         <div style={{ marginBottom: '10px' }}>
-            <Button onClick={handleOpen} variant="contained" size="small">
+            <Button onClick={handleOpen} variant="contained" size="large">
                 Přidat uživatele
             </Button>
             <Modal
