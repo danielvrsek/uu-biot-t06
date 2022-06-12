@@ -9,6 +9,7 @@ export class ConfigurationProvider {
     getConfiguration(): Configuration {
         return {
             mongoDbUrl: this.#getString(Environment.mongoDbUrl),
+            apiUrl: this.#getString(Environment.apiUrl),
             webUrl: this.#getString(Environment.webUrl),
             auth: {
                 microsoft: {
@@ -32,6 +33,7 @@ export class ConfigurationProvider {
 
 interface Configuration {
     mongoDbUrl: string;
+    apiUrl: string;
     webUrl: string;
     auth: AuthConfiguration;
 }
