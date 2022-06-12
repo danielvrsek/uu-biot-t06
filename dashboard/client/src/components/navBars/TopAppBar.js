@@ -16,11 +16,15 @@ export default function MenuAppBar() {
                 <NavLink to="/customer-info" className="item">
                     <h4>Zákaznické prostředí</h4>
                 </NavLink>
-                <NavLink to="/workspaces" className="item">
-                    <h4>Placená zóna</h4>
-                </NavLink>
-                {workspaceContext &&
-                workspaceContext.roles.some((x) => x === 'User') ? (
+
+                {workspaceContext && workspaceContext.roles.length ? (
+                    <NavLink to="/workspaces" className="item">
+                        <h4>Placená zóna</h4>
+                    </NavLink>
+                ) : (
+                    <></>
+                )}
+                {workspaceContext && workspaceContext.roles.some((x) => x === 'User') ? (
                     <NavLink to="/workspace" className="item">
                         <h4>Klientská sekce</h4>
                     </NavLink>
