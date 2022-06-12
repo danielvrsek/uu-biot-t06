@@ -41,6 +41,27 @@ export class GatewayService {
         return { gateway, secret };
     }
 
+    async createWithIdAsync(
+        workspaceId: Types.ObjectId,
+        createDto: CreateGatewayDto & { _id: Types.ObjectId }
+    ): Promise<CreateGatewayResult> {
+        const gateway = await new this.model({
+            _id: createDto._id,
+            name: createDto.name,
+            state: GatewayState.Created,
+        }).save();
+
+        const secret = this.cryptoHelper.generatePassword(12);
+        await new this.authorizationModel({
+            secret,
+            gatewayId: gateway._id,
+            workspaceId,
+            authorizationType: GatewayAuthorizationType.Master,
+        }).save();
+
+        return { gateway, secret };
+    }
+
     async addSlaveToWorkspace(workspaceId: Types.ObjectId, gatewayId: Types.ObjectId): Promise<GatewayAuthorization> {
         return await new this.authorizationModel({
             gatewayId,

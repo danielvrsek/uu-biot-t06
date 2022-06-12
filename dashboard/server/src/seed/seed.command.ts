@@ -6,6 +6,7 @@ import { WorkspaceService } from 'services/workspace.service';
 import { UserRole } from 'dataLayer/entities/enums/role.enum';
 import { GatewayService } from 'services/gateway.service';
 import { WorkspaceType } from 'dataLayer/entities/enums/workspaceType.enum';
+import { objectId } from 'utils/schemaHelper';
 
 @Injectable()
 export class SeedCommand {
@@ -83,7 +84,8 @@ export class SeedCommand {
         ]);
         console.log(workspaceMembership3);
 
-        const gateway1 = await this.gatewayService.createAsync(workspace1._id, {
+        const gateway1 = await this.gatewayService.createWithIdAsync(workspace1._id, {
+            _id: objectId('629c75a8f54e0f35c1f6bc39'),
             name: 'Default gateway',
         });
         console.log(gateway1);
