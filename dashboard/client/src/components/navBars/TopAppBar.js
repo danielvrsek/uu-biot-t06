@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { useWorkspaceContext } from '../context/AuthContext';
+import React from 'react';
+import { useUserContext, useWorkspaceContext } from '../context/AuthContext';
 import { NavLink } from 'react-router-dom';
 import UserLogedIn from '../login/UserLogedIn';
 
 export default function MenuAppBar() {
     const [workspaceContext] = useWorkspaceContext();
-    const [userContext] = useContext();
+    const [userContext] = useUserContext();
 
     return (
         <div>
