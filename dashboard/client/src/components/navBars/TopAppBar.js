@@ -1,7 +1,6 @@
 import React from 'react';
 import { useWorkspaceContext } from '../context/AuthContext';
 import { NavLink } from 'react-router-dom';
-
 import UserLogedIn from '../login/UserLogedIn';
 
 export default function MenuAppBar() {
@@ -18,9 +17,10 @@ export default function MenuAppBar() {
                     <h4>Zákaznické prostředí</h4>
                 </NavLink>
                 <NavLink to="/workspaces" className="item">
-                    <h4>Workspaces</h4>
+                    <h4>Placená zóna</h4>
                 </NavLink>
-                {workspaceContext && workspaceContext.roles.some((x) => x === 'User') ? (
+                {workspaceContext &&
+                workspaceContext.roles.some((x) => x === 'User') ? (
                     <NavLink to="/workspace" className="item">
                         <h4>Klientská sekce</h4>
                     </NavLink>

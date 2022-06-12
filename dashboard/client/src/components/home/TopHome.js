@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useUserContext } from '../context/AuthContext';
-import AddUser from '../user/AddUser';
+import AddUser from '../../admin_console/components/weatherstation/AddUser';
+import { Button } from '@mui/material';
 
 const TopHome = () => {
     const [userContext] = useUserContext();
-
-    const submit = () => {};
 
     return (
         <div className="ui inverted vertical masthead center aligned segment">
@@ -16,30 +15,18 @@ const TopHome = () => {
                 </h1>
                 <h2>Jednodušší už to být nemůže ...</h2>
                 <NavLink to="/customer-info">
-                    <div className="ui huge primary button" id="topButton">
+                    <Button variant="contained" size="large">
                         Jak vše funguje?
-                        <i className="right arrow icon" />
-                    </div>
-                </NavLink>
+                    </Button>
+                </NavLink>{' '}
                 {userContext === null ? (
                     <>
                         <NavLink to="/login">
-                            <div
-                                className="ui huge primary button"
-                                id="topButton"
-                            >
-                                "Přihlášení"
-                                <i className="right arrow icon" />
-                            </div>
+                            <Button variant="contained" size="large">
+                                Přihlášení
+                            </Button>
                         </NavLink>{' '}
-                        <div
-                            className="ui huge primary button"
-                            id="topButton"
-                            onSubmit={submit}
-                        >
-                            "Chcete se registrovat?"
-                            <i />
-                        </div>
+                        <AddUser />
                     </>
                 ) : (
                     ''

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Grid, TextField, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import CreateUser from '../../../components/adminDashboard/CreateUser';
 import Modal from '@mui/material/Modal';
 import ApiClient from '../../../api/ApiClient';
 
@@ -25,7 +25,9 @@ const AddUser = () => {
     const handleClose = () => setOpen(false);
 
     const submit = () => {
-        ApiClient.addUserToCurrentWorkspace(username).then(() => window.location.reload());
+        ApiClient.addUserToCurrentWorkspace(username).then(() =>
+            window.location.reload()
+        );
         setOpen(false);
     };
     return (
@@ -40,29 +42,7 @@ const AddUser = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Přidání uživatele
-                    </Typography>
-                    <Typography
-                        id="modal-modal-description"
-                        sx={{ mt: 2 }}
-                        style={{ marginBottom: '20px' }}
-                    ></Typography>
-                    <Grid align="center" style={{ marginBottom: '10px' }}>
-                        <TextField
-                            fullWidth
-                            label="Uživatelské jméno"
-                            placeholder="Enter your username"
-                            margin="normal"
-                            onChange={(e) => {
-                                setUsername(e.target.value);
-                            }}
-                        />
-                    </Grid>
-
-                    <Button type="submit" variant="contained" color="primary" onClick={submit}>
-                        Přidat uživatele
-                    </Button>
+                    <CreateUser />
                 </Box>
             </Modal>
         </div>
