@@ -1,7 +1,8 @@
 import React from 'react';
+import { getBasePath } from '../utils/pathHelper';
 
 const MicrosoftLoginButton = ({ url }) => (
-    <a href={'http://localhost:4000' + url}>
+    <a href={getBasePath() + url}>
         <svg xmlns="http://www.w3.org/2000/svg" width="215" height="41" viewBox="0 0 215 41">
             <title>MS-SymbolLockup</title>
             <rect width="215" height="41" fill="#fff" />
