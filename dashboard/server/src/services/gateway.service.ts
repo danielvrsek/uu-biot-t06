@@ -41,13 +41,26 @@ export class GatewayService {
         return { gateway, secret };
     }
 
-    async addToSlaveWorkspace(workspaceId: Types.ObjectId, gatewayId: Types.ObjectId): Promise<GatewayAuthorization> {
+    async addSlaveToWorkspace(workspaceId: Types.ObjectId, gatewayId: Types.ObjectId): Promise<GatewayAuthorization> {
         return await new this.authorizationModel({
             gatewayId,
             workspaceId,
             authorizationType: GatewayAuthorizationType.Slave,
             secret: null,
         }).save();
+    }
+
+    async removeFromWorkspace(workspaceId: Types.ObjectId, gatewayId: Types.ObjectId): Promise<Types.ObjectId> {
+        const authorization = await this.gatewayAuthorizationRepository.getForGatewayByWorkspace(
+            workspaceId,
+            gatewayId
+        );
+        if (!authorization) {
+            return null;
+        }
+
+        await this.authorizationModel.deleteOne({ _id: authorization._id });
+        return authorization._id;
     }
 
     async getAllGatewaysForWorkspace(workspaceId: Types.ObjectId) {

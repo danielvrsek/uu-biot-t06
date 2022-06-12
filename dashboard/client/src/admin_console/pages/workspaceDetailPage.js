@@ -10,8 +10,8 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { Container } from '@mui/material';
-import ListUsers from '../components/weatherstation/ListWeatherStationUsers';
-import { useWorkspaceContext } from '../../components/context/AuthContext';
+import { useSearchParams } from 'react-router-dom';
+import UserListReady from '../components/weatherstation/UserWeatherStationListReady';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -49,16 +49,26 @@ function a11yProps(index) {
 const WorkspaceDetailPage = () => {
     const [gateways, setGateways] = useState();
     const [currentWorkspace, setCurrentWorkspace] = useState();
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(null);
     const [detailStatus, setDetailStatus] = useState('loading');
     const [listStatus, setListStatus] = useState('loading');
 
-    const [workspaceContext] = useWorkspaceContext();
-    console.log(workspaceContext);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    useEffect(() => {
+        const param = parseInt(searchParams.get('tab'));
+        setValue(param ? param : 0);
+    }, []);
+
+    useEffect(() => {
+        if (value !== null) {
+            setSearchParams({ tab: value });
+        }
+    }, [value]);
 
     useEffect(() => {
         ApiClient.getGateways()
@@ -116,11 +126,7 @@ const WorkspaceDetailPage = () => {
             <div style={{ marginBottom: '20px' }}>{detailResult}</div>
             <Box>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        aria-label="basic tabs example"
-                    >
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Seznam stanic" {...a11yProps(0)} />
                         <Tab label="Seznam uživatelů" {...a11yProps(1)} />
                     </Tabs>
@@ -129,7 +135,7 @@ const WorkspaceDetailPage = () => {
                     {listResult}
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <ListUsers />
+                    <UserListReady />
                 </TabPanel>
             </Box>
         </Container>

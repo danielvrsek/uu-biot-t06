@@ -12,6 +12,13 @@ export class GatewayAuthorizationRepository {
         @InjectModel(SchemaConstants.GatewayAuthorization) private readonly model: Model<GatewayAuthorization>
     ) {}
 
+    async getForGatewayByWorkspace(
+        workspaceId: Types.ObjectId,
+        gatewayId: Types.ObjectId
+    ): Promise<GatewayAuthorization> {
+        return await this.model.findOne({ workspaceId, gatewayId });
+    }
+
     async findAllByWorkspaceAsync(workspaceId: Types.ObjectId): Promise<GatewayAuthorization[]> {
         return await this.model.find({ workspaceId });
     }

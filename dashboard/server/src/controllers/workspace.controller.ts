@@ -10,6 +10,7 @@ import {
     UnauthorizedException,
     Res,
     BadRequestException,
+    Delete,
 } from '@nestjs/common';
 import { TokenType } from 'auth/common/tokenType';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
@@ -35,6 +36,7 @@ import { WorkspaceMembershipRepository } from 'dataLayer/repositories/workspaceM
 import { UserRepository } from 'dataLayer/repositories/user.repository';
 import { UserDto } from 'services/dto/user.dto';
 import { WorkspaceType } from 'dataLayer/entities/enums/workspaceType.enum';
+import { GatewayService } from 'services/gateway.service';
 
 @Controller('workspaces')
 @EnforceTokenType(TokenType.User)
@@ -66,6 +68,10 @@ export class WorkspaceController extends ControllerBase {
     @Get('user/current')
     async getCurrentAsync(@Req() request: UserRequest<void>): Promise<CurrentWorkspaceViewModel> {
         const workspace = await this.getCurrentWorkspaceAsync(request);
+        if (!workspace) {
+            throw new UnauthorizedException('No workspace selected.');
+        }
+
         return await this.workspaceRepository.findByIdAsync(workspace._id);
     }
 
@@ -95,7 +101,7 @@ export class WorkspaceController extends ControllerBase {
     async getAllUsersForWorkspaceAsync(@Req() request: UserRequest<void>): Promise<UserDto[]> {
         const workspace = await this.getCurrentWorkspaceAsync(request);
         if (!workspace) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('No workspace selected.');
         }
 
         const memberships = await this.workspaceMembershipRepository.getAllMembershipsByWorkspaceAsync(workspace._id);
@@ -116,7 +122,7 @@ export class WorkspaceController extends ControllerBase {
     ): Promise<void> {
         const workspace = await this.getCurrentWorkspaceAsync(request);
         if (!workspace) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('No workspace selected.');
         }
 
         const user = await this.userRepository.findByUsernameAsync(dto.username);
@@ -125,6 +131,18 @@ export class WorkspaceController extends ControllerBase {
         }
 
         await this.workspaceService.addUserToWorkspaceAsync(workspace._id, user._id, [UserRole.User]);
+    }
+
+    @Delete('current/users/:userId')
+    async deleteUserFromWorkspaceAsync(@Req() request: UserRequest<void>, @Param('userId') userId): Promise<void> {
+        const workspace = await this.getCurrentWorkspaceAsync(request);
+        if (!workspace) {
+            throw new UnauthorizedException('No workspace selected.');
+        }
+
+        if (!(await this.workspaceService.removeUserFromWorkspace(workspace._id, objectId(userId)))) {
+            throw new BadRequestException();
+        }
     }
 
     @Post()

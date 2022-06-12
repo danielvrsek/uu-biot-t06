@@ -5,6 +5,7 @@ import { encodePassword } from 'utils/bcrypt';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { User } from 'dataLayer/entities/user.entity';
 import { SchemaConstants } from 'dataLayer/common/schemaConstants';
+import { WorkspaceMembership } from 'dataLayer/entities/workspaceMembership.entity';
 
 @Injectable()
 export class UserService {

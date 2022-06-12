@@ -17,7 +17,7 @@ const style = {
     p: 4,
 };
 
-const AddUserGateway = () => {
+const AddUser = () => {
     const [open, setOpen] = useState(false);
     const [username, setUsername] = useState();
 
@@ -25,7 +25,7 @@ const AddUserGateway = () => {
     const handleClose = () => setOpen(false);
 
     const submit = () => {
-        ApiClient.addUserToCurrentSpace(username);
+        ApiClient.addUserToCurrentWorkspace(username).then(() => window.location.reload());
         setOpen(false);
     };
     return (
@@ -59,14 +59,10 @@ const AddUserGateway = () => {
                             }}
                         />
                     </Grid>
-
-                    <Button type="submit" variant="contained" color="primary" onClick={submit}>
-                        Přidat uživatele
-                    </Button>
                 </Box>
             </Modal>
         </div>
     );
 };
 
-export default AddUserGateway;
+export default AddUser;

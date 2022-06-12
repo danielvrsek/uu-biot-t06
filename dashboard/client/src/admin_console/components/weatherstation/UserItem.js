@@ -1,26 +1,14 @@
 import React from 'react';
 
-import {
-    Grid,
-    Card,
-    CardActionArea,
-    Divider,
-    CardHeader,
-    CardContent,
-    IconButton,
-    Popover,
-    MenuList,
-    MenuItem,
-} from '@mui/material';
+import { Grid, Card, Divider, CardHeader, CardContent, IconButton, Popover, MenuList, MenuItem } from '@mui/material';
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Line from '../core/Line';
 import { useWorkspaceContext } from '../../../components/context/AuthContext';
 import ApiClient from '../../../api/ApiClient';
 
-const WeatherstationItem = ({ data, onClick }) => {
+const UserItem = ({ data }) => {
     const [workspaceContext] = useWorkspaceContext();
-
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleOpenSettings = (event) => {
@@ -31,8 +19,8 @@ const WeatherstationItem = ({ data, onClick }) => {
         setAnchorEl(null);
     };
 
-    const handleRemoveGateway = () => {
-        ApiClient.removeGatewayFromWokspace(data._id).then(() => window.location.reload());
+    const handleUserRemove = () => {
+        ApiClient.removeUserFromCurrentWokspace(data.userId).then(() => window.location.reload());
     };
 
     const open = Boolean(anchorEl);
@@ -54,7 +42,7 @@ const WeatherstationItem = ({ data, onClick }) => {
                 }}
             >
                 <MenuList>
-                    <MenuItem onClick={handleRemoveGateway}>Odebrat stanici</MenuItem>
+                    <MenuItem onClick={handleUserRemove}>Odebrat uživatele</MenuItem>
                 </MenuList>
             </Popover>
         </div>
@@ -63,19 +51,18 @@ const WeatherstationItem = ({ data, onClick }) => {
     );
 
     return (
-        <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Grid item xs={12} sm={6} md={4} lg={3} key={data.userId}>
             <Card>
-                <CardHeader title={data.name} action={popover} />
+                <CardHeader title={`${data.firstName} ${data.lastname}`} action={popover} />
                 <Divider />
-                <CardActionArea onClick={() => onClick(data)}>
-                    <CardContent>
-                        <Line header="Id" content={data._id} />
-                        <Line header="Přidáno" content={new Date(data.createdAt).toLocaleString()} />
-                    </CardContent>
-                </CardActionArea>
+                <CardContent>
+                    <Line header="User id" content={data.userId} />
+                    <Line header="Email" content={data.email} />
+                    <Line header="Username" content={data.username} />
+                </CardContent>
             </Card>
         </Grid>
     );
 };
 
-export default WeatherstationItem;
+export default UserItem;

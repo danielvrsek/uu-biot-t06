@@ -7,9 +7,9 @@ const WorkspaceItem = ({ data, onClick }) => {
     return (
         <Grid item xs={12} sm={6} md={4} lg={3}>
             <Card>
-                <CardActionArea onClick={() => onClick(data)} style={{ minHeight: '64px' }}>
-                    <CardHeader title={data.name} />
-                    <Divider />
+                <CardHeader title={data.name} />
+                <Divider />
+                <CardActionArea onClick={() => onClick(data)}>
                     <CardContent>
                         <Line header="Id" content={data._id} />
                         <Line header="Vytvořeno" content={created} />

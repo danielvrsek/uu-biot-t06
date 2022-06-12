@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
-import UserWeatherStatuinDetail from './UserWeatherStationDetail';
+import UserListReady from './UserWeatherStationListReady';
 import ApiClient from '../../../api/ApiClient';
 import Error from '../core/Error';
 import Loading from '../core/Loading';
-import AddUserGateway from './AddUserGateway';
+import AddUser from './AddUser';
 import { useWorkspaceContext } from '../../../components/context/AuthContext';
 
-const ListWeateherUsers = () => {
+const WorkspaceUsersList = () => {
     const [users, setUsers] = useState();
     const [detailStatus, setDetailStatus] = useState('loading');
     const [workspaceContext] = useWorkspaceContext();
@@ -25,7 +25,7 @@ const ListWeateherUsers = () => {
     let detailResult;
     switch (detailStatus) {
         case 'success':
-            detailResult = <UserWeatherStatuinDetail data={users} />;
+            detailResult = <UserListReady data={users} />;
             break;
         case 'error':
             detailResult = <Error content="Error" />;
@@ -35,9 +35,9 @@ const ListWeateherUsers = () => {
     }
 
     return (
-        <div style={{margin: "8px 0"}}>
-            {(workspaceContext.roles.includes('Admin')) ? <AddUserGateway /> : <></>}
-            <Grid sx={{pt: 4}} container spacing={2}>
+        <div style={{ margin: '8px 0' }}>
+            {workspaceContext.roles.includes('Admin') ? <AddUser /> : <></>}
+            <Grid sx={{ pt: 4 }} container spacing={2}>
                 {detailResult}
             </Grid>
             <div style={{ height: '100px' }}></div>
@@ -45,4 +45,4 @@ const ListWeateherUsers = () => {
     );
 };
 
-export default ListWeateherUsers;
+export default WorkspaceUsersList;

@@ -79,7 +79,7 @@ const Login = () => {
                         label="Password"
                         margin="normal"
                         onChange={(e) => setPassword(e.target.value)}
-                        endAdornment={
+                        endadornment={
                             <InputAdornment position="end">
                                 <IconButton
                                     aria-label="Toggle password visibility"
@@ -92,7 +92,7 @@ const Login = () => {
                             </InputAdornment>
                         }
                     />
-                    <Button sx={{mb: 2}} type="submit" variant="contained" color="primary">
+                    <Button sx={{ mb: 2 }} type="submit" variant="contained" color="primary">
                         Login
                     </Button>
                 </form>
