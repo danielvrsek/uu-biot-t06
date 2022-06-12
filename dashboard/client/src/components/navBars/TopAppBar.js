@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useWorkspaceContext } from '../context/AuthContext';
 import { NavLink } from 'react-router-dom';
 import UserLogedIn from '../login/UserLogedIn';
 
 export default function MenuAppBar() {
     const [workspaceContext] = useWorkspaceContext();
+    const [userContext] = useContext();
 
     return (
         <div>
@@ -17,7 +18,7 @@ export default function MenuAppBar() {
                     <h4>Zákaznické prostředí</h4>
                 </NavLink>
 
-                {workspaceContext && workspaceContext.roles.length ? (
+                {userContext ? (
                     <NavLink to="/workspaces" className="item">
                         <h4>Dostupné zóny</h4>
                     </NavLink>
