@@ -13,7 +13,7 @@ export class WorkspaceMembershipRepository {
         userId: Types.ObjectId,
         workspaceId: Types.ObjectId
     ): Promise<WorkspaceMembership> {
-        return await this.model.findOne({ userId: userId, workspaceId: workspaceId });
+        return await this.model.findOne({ userId, workspaceId });
     }
 
     async getAllMembershipsForUserAsync(userId: Types.ObjectId): Promise<WorkspaceMembership[]> {

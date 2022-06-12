@@ -59,6 +59,10 @@ const AddUser = () => {
                             }}
                         />
                     </Grid>
+
+                    <Button type="submit" variant="contained" color="primary" onClick={submit}>
+                        Přidat uživatele
+                    </Button>
                 </Box>
             </Modal>
         </div>

@@ -4,11 +4,12 @@ import { Grid, Card, Divider, CardHeader, CardContent, IconButton, Popover, Menu
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Line from '../core/Line';
-import { useWorkspaceContext } from '../../../components/context/AuthContext';
+import { useUserContext, useWorkspaceContext } from '../../../components/context/AuthContext';
 import ApiClient from '../../../api/ApiClient';
 
 const UserItem = ({ data }) => {
     const [workspaceContext] = useWorkspaceContext();
+    const [userContext] = useUserContext();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleOpenSettings = (event) => {
@@ -26,29 +27,30 @@ const UserItem = ({ data }) => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    const popover = workspaceContext.roles.includes('Admin') ? (
-        <div>
-            <IconButton onClick={handleOpenSettings} aria-label="settings">
-                <MoreVertIcon />
-            </IconButton>
-            <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleCloseSettings}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-            >
-                <MenuList>
-                    <MenuItem onClick={handleUserRemove}>Odebrat uživatele</MenuItem>
-                </MenuList>
-            </Popover>
-        </div>
-    ) : (
-        <></>
-    );
+    const popover =
+        userContext.userId !== data.userId && workspaceContext.roles.includes('Admin') ? (
+            <div>
+                <IconButton onClick={handleOpenSettings} aria-label="settings">
+                    <MoreVertIcon />
+                </IconButton>
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleCloseSettings}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                >
+                    <MenuList>
+                        <MenuItem onClick={handleUserRemove}>Odebrat uživatele</MenuItem>
+                    </MenuList>
+                </Popover>
+            </div>
+        ) : (
+            <></>
+        );
 
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} key={data.userId}>

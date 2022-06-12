@@ -43,10 +43,9 @@ export class WorkspaceService {
 
     async removeUserFromWorkspace(workspaceId: Types.ObjectId, userId: Types.ObjectId): Promise<Types.ObjectId> {
         const membership = await this.workspaceMembershipRepository.getMembershipForUserByWorkspaceAsync(
-            workspaceId,
-            userId
+            userId,
+            workspaceId
         );
-        console.log(membership);
         if (!membership) {
             return null;
         }
