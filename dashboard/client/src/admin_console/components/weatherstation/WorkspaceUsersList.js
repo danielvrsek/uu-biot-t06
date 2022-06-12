@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid, Typography } from '@mui/material';
-import UserWeatherStatuinDetail from './UserWeatherStationDetail';
+import { Grid } from '@mui/material';
+import UserListReady from './UserWeatherStationListReady';
 import ApiClient from '../../../api/ApiClient';
 import Error from '../core/Error';
 import Loading from '../core/Loading';
-import AddUserGateway from './AddUserGateway';
+import AddUser from './AddUser';
+import { useWorkspaceContext } from '../../../components/context/AuthContext';
 
-const ListWeateherUsers = () => {
+const WorkspaceUsersList = () => {
     const [users, setUsers] = useState();
     const [detailStatus, setDetailStatus] = useState('loading');
+    const [workspaceContext] = useWorkspaceContext();
+
     useEffect(() => {
         ApiClient.getCurrentWorkspaceUsers()
             .then((response) => {
@@ -22,7 +25,7 @@ const ListWeateherUsers = () => {
     let detailResult;
     switch (detailStatus) {
         case 'success':
-            detailResult = <UserWeatherStatuinDetail data={users} />;
+            detailResult = <UserListReady data={users} />;
             break;
         case 'error':
             detailResult = <Error content="Error" />;
@@ -32,17 +35,14 @@ const ListWeateherUsers = () => {
     }
 
     return (
-        <Container sx={{ pt: 4 }}>
-            <Typography variant="h3" mb={3}>
-                Seznam uživatelů
-            </Typography>
-            <AddUserGateway />
-            <Grid container spacing={2}>
+        <div style={{ margin: '8px 0' }}>
+            {workspaceContext.roles.includes('Admin') ? <AddUser /> : <></>}
+            <Grid sx={{ pt: 4 }} container spacing={2}>
                 {detailResult}
             </Grid>
             <div style={{ height: '100px' }}></div>
-        </Container>
+        </div>
     );
 };
 
-export default ListWeateherUsers;
+export default WorkspaceUsersList;

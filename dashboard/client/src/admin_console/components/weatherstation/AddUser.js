@@ -17,7 +17,7 @@ const style = {
     p: 4,
 };
 
-const AddUserGateway = () => {
+const AddUser = () => {
     const [open, setOpen] = useState(false);
     const [username, setUsername] = useState();
 
@@ -25,7 +25,7 @@ const AddUserGateway = () => {
     const handleClose = () => setOpen(false);
 
     const submit = () => {
-        ApiClient.getCurrentWorkspaceUsers(username);
+        ApiClient.addUserToCurrentWorkspace(username).then(() => window.location.reload());
         setOpen(false);
     };
     return (
@@ -40,11 +40,7 @@ const AddUserGateway = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography
-                        id="modal-modal-title"
-                        variant="h6"
-                        component="h2"
-                    >
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
                         Přidání uživatele
                     </Typography>
                     <Typography
@@ -64,12 +60,7 @@ const AddUserGateway = () => {
                         />
                     </Grid>
 
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        onClick={submit}
-                    >
+                    <Button type="submit" variant="contained" color="primary" onClick={submit}>
                         Přidat uživatele
                     </Button>
                 </Box>
@@ -78,4 +69,4 @@ const AddUserGateway = () => {
     );
 };
 
-export default AddUserGateway;
+export default AddUser;

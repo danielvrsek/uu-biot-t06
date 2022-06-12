@@ -92,7 +92,7 @@ const Login = () => {
                             </InputAdornment>
                         }
                     />
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button sx={{ mb: 2 }} type="submit" variant="contained" color="primary">
                         Login
                     </Button>
                 </form>

@@ -21,15 +21,15 @@ const WorkspaceDetailReady = ({ data }) => {
                                 Id
                             </Typography>
                         </TableCell>
-                        <TableCell>{data.workspaceId}</TableCell>
+                        <TableCell>{data._id}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>
                             <Typography sx={{ fontWeight: 'bold' }}>
-                                Počet stanic
+                                Vytvořeno
                             </Typography>
                         </TableCell>
-                        <TableCell>{data.weatherstations}</TableCell>
+                        <TableCell>{new Date(data.createdAt).toLocaleString()}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

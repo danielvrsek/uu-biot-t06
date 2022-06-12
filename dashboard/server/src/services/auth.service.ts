@@ -45,6 +45,7 @@ export class AuthService {
             username: user.username,
             email: user.email,
             tokenType: TokenType.User,
+            profilePhotoUrl: user.profilePhotoUrl ? user.profilePhotoUrl : 'default.jpg',
         };
     }
 

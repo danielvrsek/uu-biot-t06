@@ -1,4 +1,16 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, Req, UseGuards } from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    NotFoundException,
+    Param,
+    Post,
+    Req,
+    UnauthorizedException,
+    UseGuards,
+} from '@nestjs/common';
 import { TokenType } from 'auth/common/tokenType';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
@@ -50,5 +62,17 @@ export class GatewayController extends ControllerBase {
         const workspace = await this.getCurrentWorkspaceAsync(request);
         // TODO: check user authorization for the workspace
         return this.gatewayService.createAsync(workspace._id, createDto);
+    }
+
+    @Delete(':gatewayId/workspace')
+    async deleteFromWorkspaceAsync(@Req() request: UserRequest<void>, @Param('gatewayId') gatewayId): Promise<void> {
+        const workspace = await this.getCurrentWorkspaceAsync(request);
+        if (!workspace) {
+            throw new UnauthorizedException('No workspace selected.');
+        }
+
+        if (!(await this.gatewayService.removeFromWorkspace(workspace._id, objectId(gatewayId)))) {
+            throw new BadRequestException();
+        }
     }
 }

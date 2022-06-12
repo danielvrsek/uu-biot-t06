@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import MongooseConfig from 'dataLayer/configuration/keys';
 import { AuthModule } from './modules/auth.module';
 import { GatewayModule } from './modules/gateway.module';
 import { UserModule } from './modules/user.module';
@@ -14,7 +13,13 @@ import { ConfigurationProvider } from 'configuration/configuration';
 
 @Module({
     imports: [
-        MongooseModule.forRoot(MongooseConfig.mongoURI),
+        MongooseModule.forRootAsync({
+            imports: [ConfigModule, SharedModule],
+            useFactory: async (configProvider: ConfigurationProvider) => {
+                return { uri: configProvider.getConfiguration().mongoDbUrl };
+            },
+            inject: [ConfigurationProvider],
+        }),
         ConfigModule.forRoot({
             isGlobal: true,
         }),

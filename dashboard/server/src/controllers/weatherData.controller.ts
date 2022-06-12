@@ -40,6 +40,10 @@ export class WeatherDataController extends ControllerBase {
         const dateTo = new Date(dateToString);
 
         let data = await this.weatherDataRepository.findAllByGatewayIdAsync(gatewayId, dateFrom, dateTo);
+        if (data.length === 0) {
+            return [];
+        }
+
         data = this.weatherDataService.sortWeatherData(data);
         let dataDto = this.weatherDataService.mapToWeatherDataDto(data);
 

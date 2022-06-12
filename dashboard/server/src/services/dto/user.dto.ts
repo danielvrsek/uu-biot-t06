@@ -39,6 +39,7 @@ export interface UserInfo extends TokenInfo {
     firstName: string;
     lastname: string;
     email: string;
+    profilePhotoUrl: string;
 }
 
 export interface WorkspaceInfo {

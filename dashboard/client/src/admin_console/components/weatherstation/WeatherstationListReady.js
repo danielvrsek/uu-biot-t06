@@ -1,20 +1,30 @@
 import React from 'react';
 import WeatherstationItem from './WeatherstationItem';
 import AddWeatherStation from './AddWeatherStation';
-import { Container, Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
+import { useWorkspaceContext } from '../../../components/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const WeatherstationListReady = ({ data }) => {
-    return (
-        <Container sx={{ pt: 4 }}>
-            <Typography variant="h3" mb={3}>
-                Seznam stanic
-            </Typography>
+    const [workspaceContext] = useWorkspaceContext();
 
-            <AddWeatherStation />
-            <Grid container spacing={2}>
-                {data.length ? data.map((item) => <WeatherstationItem key={item._id} data={item} />) : <></>}
+    const navigate = useNavigate();
+
+    const handleItemOnClick = (item) => {
+        navigate(`/weatherstations/${item._id}`);
+    };
+
+    return (
+        <div>
+            {workspaceContext.roles.includes('Admin') ? <AddWeatherStation /> : <></>}
+            <Grid container sx={{ pt: 4 }} spacing={2}>
+                {data.length ? (
+                    data.map((item) => <WeatherstationItem key={item._id} data={item} onClick={handleItemOnClick} />)
+                ) : (
+                    <></>
+                )}
             </Grid>
-        </Container>
+        </div>
     );
 };
 

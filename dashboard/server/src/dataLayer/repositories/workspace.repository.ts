@@ -15,6 +15,14 @@ export class WorkspaceRepository {
         return await this.model.find();
     }
 
+    async findAllByIdsAsync(workspaceIds: Types.ObjectId[]): Promise<Workspace[]> {
+        return await this.model.find({
+            _id: {
+                $in: workspaceIds,
+            },
+        });
+    }
+
     async findAllForUserAsync(userId: Types.ObjectId): Promise<Workspace[]> {
         return await this.model.find({ userId });
     }
