@@ -1,4 +1,15 @@
-import { Controller, Req, Post, UseGuards, Res, Get, HttpCode, UnauthorizedException, Body } from '@nestjs/common';
+import {
+    Controller,
+    Req,
+    Post,
+    UseGuards,
+    Res,
+    Get,
+    HttpCode,
+    UnauthorizedException,
+    Body,
+    BadRequestException,
+} from '@nestjs/common';
 import { TokenType } from 'auth/common/tokenType';
 import { EnforceTokenType } from 'auth/decorator/tokenType.decorator';
 import { JwtAuthGuard } from 'auth/guards/jwt.guard';
@@ -29,7 +40,11 @@ export class AuthController extends ControllerBase {
     }
 
     @Post('register')
-    async registerAsync(@Body() payload: RegisterDto): Promise<UserDto> {
+    async registerAsync(@Res({ passthrough: true }) response: Response, @Body() payload: RegisterDto): Promise<void> {
+        if (!(payload.email && payload.firstName && payload.lastname && payload.passwordRaw)) {
+            throw new BadRequestException();
+        }
+
         const user = await this.userService.createAsync({
             email: payload.email,
             username: payload.email,
@@ -40,13 +55,19 @@ export class AuthController extends ControllerBase {
             profilePhotoUrl: null,
         });
 
-        return {
+        const token = this.authService.generateToken({
             userId: user._id.toString(),
             email: user.email,
             username: user.username,
             firstName: user.firstName,
             lastname: user.lastname,
-        };
+            profilePhotoUrl: 'default.jpg',
+            tokenType: TokenType.User,
+        });
+
+        response.cookie(Cookies.AuthCookie, token, cookieOptions);
+        response.status(200);
+        response.end();
     }
 
     @Post('login')

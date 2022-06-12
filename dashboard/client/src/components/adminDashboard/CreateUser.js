@@ -4,30 +4,28 @@ import ApiClient from '../../api/ApiClient';
 
 const CreateUser = () => {
     const navigate = useNavigate();
-    const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
 
     function matchPassword() {
         if (verifyPassword !== password) {
-            return (
-                <div style={{ color: 'red' }}>"Zadané hesla se neshodují"</div>
-            );
+            return <div style={{ color: 'red' }}>"Zadané hesla se neshodují"</div>;
         }
     }
     const submit = (e) => {
         e.preventDefault();
-        ApiClient.registerUser({ name, surname, email, password }).then(
-            () => {}
-        );
+        ApiClient.register({ firstName, lastname, email, passwordRaw: password }).then(() => {
+            window.location.reload();
+        });
     };
 
     return (
         <div>
             <form className="ui form" style={{ marginTop: '10px' }}>
-                <h4 className="ui dividing header">Přidat nového uživatele</h4>
+                <h4 className="ui dividing header">Registrovat</h4>
                 <div className="field">
                     <label>Jméno</label>
                     <div className="two fields">
@@ -36,7 +34,7 @@ const CreateUser = () => {
                                 type="text"
                                 name="shipping[first-name]"
                                 placeholder="Jméno"
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={(e) => setFirstName(e.target.value)}
                             />
                         </div>
                         <div className="field">
@@ -44,7 +42,7 @@ const CreateUser = () => {
                                 type="text"
                                 name="shipping[last-name]"
                                 placeholder="Příjmení"
-                                onChange={(e) => setSurname(e.target.value)}
+                                onChange={(e) => setLastname(e.target.value)}
                             />
                         </div>
                     </div>
@@ -78,9 +76,7 @@ const CreateUser = () => {
                                 type="password"
                                 name="password2"
                                 placeholder="Ověření hesla"
-                                onChange={(e) =>
-                                    setVerifyPassword(e.target.value)
-                                }
+                                onChange={(e) => setVerifyPassword(e.target.value)}
                             />
                         </div>
                     </div>
@@ -88,7 +84,7 @@ const CreateUser = () => {
                 </div>
 
                 <div className="ui button" onClick={submit}>
-                    Vytvořit uživatele
+                    Registrovat
                 </div>
             </form>
         </div>

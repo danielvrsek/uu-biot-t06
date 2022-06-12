@@ -27,11 +27,12 @@ const ApiClient = {
     setUserWorkspace: async (workspaceId) =>
         putMethod('/workspaces/user/current', { workspaceId }, getHeaders()),
     login: async (credentials) => postMethod('/auth/login', credentials),
+    register: (payload) => postMethod('/auth/register', payload),
+    logout: () => postMethod('/auth/logout'),
     getWeatherData: async (gatewayId, dateFrom, dateTo, granularity) =>
         getMethod(
             `/weather-data/gateway/${gatewayId}?dateFrom=${dateFrom.toISOString()}&dateTo=${dateTo.toISOString()}&granularity=${granularity}`
         ),
-    logout: () => postMethod('/auth/logout'),
     createGateway: async (name) => postMethod('/gateways', { name }),
     getGateway: async (id) => getMethod(`/gateways/${id}`),
     getGateways: async () => getMethod(`/gateways`),
