@@ -25,7 +25,7 @@ const CreateUser = () => {
 
     return (
         <div>
-            <form className="ui form" style={{ marginTop: '50px' }}>
+            <form className="ui form" style={{ marginTop: '10px' }}>
                 <h4 className="ui dividing header">Přidat nového uživatele</h4>
                 <div className="field">
                     <label>Jméno</label>
