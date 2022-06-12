@@ -31,7 +31,7 @@ const AddUser = () => {
     return (
         <div style={{ marginBottom: '10px' }}>
             <Button onClick={handleOpen} variant="contained" size="large" sx={{ m: 1 }}>
-                Registrovat
+                Přidat uživatele
             </Button>
             <Modal
                 open={open}
@@ -40,7 +40,24 @@ const AddUser = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <CreateUser />
+                    <div className='field'>
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Username"
+                            onChange={(e)=> setUsername(e.target.value)}
+                            style={{padding: "6px", width: "100%"}}
+                        />
+                    </div>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        onClick={submit}
+                        sx={{
+                            mt: 2
+                        }}
+                    >Přidat</Button>
                 </Box>
             </Modal>
         </div>
